@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Creating a vaccinator</h1>
-<form action="" method="POST">  {% csrf_token %}
-    <input type="text" name="name" id="name" label="nombre">
-    <input type="submit" value="create_vaccinator">
+<h1> Creacion de un vacunador</h1>
+<form action="" method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Crear">
 </form>
+
 
 
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from ..forms.creating_user_form import CreatingUserForm
 
 def administrator_home_view(request):
     return render(request, "administrator_view.html",{})
@@ -6,6 +7,8 @@ def administrator_home_view(request):
 
 def creating_vaccinator_view(request):
 
-    if request.method=="POST":
-        print("Nombre del vacunador: ",request.POST["name"])
-    return render(request, "vaccinator_creation.html",{})
+    user_creation_form=CreatingUserForm(request.POST or None)
+    if user_creation_form.is_valid():
+        print(user_creation_form.cleaned_data)
+        
+    return render(request, "vaccinator_creation.html",{"form": user_creation_form})

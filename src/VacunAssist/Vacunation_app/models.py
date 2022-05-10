@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Usuario(models.Model):
-
+    
     nombre_completo = models.CharField(max_length=50)
     dni = models.IntegerField(max_length=15, unique=True)
     fecha_nac = models.DateField()
@@ -36,3 +36,6 @@ class Vacunador(models.Model):
 
     def __str__(self):
         return f"{self.user}"
+
+from django.contrib.auth.models import (BaseUserManager)
+

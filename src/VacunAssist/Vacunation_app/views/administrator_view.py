@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from ..forms.creating_user_form import CreatingUserForm
+from ..models import Vacunador
 
 
 def administrator_home_view(request):
@@ -17,4 +18,6 @@ def creating_vaccinator_view(request):
 
 
 def vaccinators_list_view(request):
-    return render(request, "vaccinators_list.html", {})
+    queryset = Vacunador.objects.all()
+    context = {"object_list": queryset}
+    return render(request, "vaccinators_list.html", context)

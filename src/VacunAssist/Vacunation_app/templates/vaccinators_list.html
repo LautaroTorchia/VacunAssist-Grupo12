@@ -2,4 +2,11 @@
 
 {% block content %}
     <h1>Ver Listado</h1>
+    {% for instance in object_list %}
+        <p> {{ instance.user.nombre_completo }} / {{ instance.user.dni }} / {{ instance.user.fecha_nac }} </p>
+        <form action="" method="GET">
+            <input type="submit" value="borrar">
+            <input type="submit" value="editar">
+        </form>
+    {% endfor %}
 {% endblock content %}

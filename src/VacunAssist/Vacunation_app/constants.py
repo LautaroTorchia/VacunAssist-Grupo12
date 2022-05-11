@@ -1,0 +1,2 @@
+vacunas_opciones={("Gripe","Gripe comun"),("Covid-F","COVID-PFIEZER"),("Covid-Z","COVID-Astrazeneca"),("fiebreA","Fiebre amarilla")}
+vacunatorio_opciones={("Omnibus","Sede Omnibus"),("Gonnet","Sede Gonnet"),("Plaza Moreno","Sede Plaza Moreno")}

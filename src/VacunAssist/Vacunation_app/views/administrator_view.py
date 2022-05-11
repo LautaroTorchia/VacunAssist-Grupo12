@@ -1,7 +1,9 @@
 import random
 from django.shortcuts import render
+
+from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm
-from ..models import Vacunador
+from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio
 import string
 from django.core.mail import send_mail
 from django.conf import settings
@@ -49,3 +51,21 @@ def vaccinators_list_view(request):
     queryset = Vacunador.objects.all()
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
+
+
+def stock_view(request):
+
+    vaccine_info=VacunaEnVacunatorio.objects.all()
+    vaccination_center_info=Vacunatorio.objects.all()
+    stock_form=StockForm(request.POST or None)
+    
+    #if stock_form.is_valid():
+        #VacunaEnVacunatorio.objects.get(id=)
+        
+
+    context = {
+        "vaccine_info": vaccine_info,
+        "vaccination_center_info":vaccination_center_info,
+        "stock_form":stock_form
+    }
+    return render(request, "stock_view.html", context)

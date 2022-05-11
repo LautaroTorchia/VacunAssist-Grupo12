@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1> Stock de vacunas de Vacunatorios </h1>
+    {% for place in vaccination_center_info %}
+        <h2>{{ place.nombre }}</h2>
+        {% for vaccine in vaccine_info %}
+            {% if place.nombre == vaccine.vacunatorio.nombre %}
+                Vacuna: {{ vaccine.vacuna.nombre }}- Stock:{{ vaccine.stock }}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <form action="" method="post"> {% csrf_token %}
+        {{  stock_form.as_p }}
+        <input type="submit" value="Aumentar stock">
+    </form>
+
+{% endblock content %}

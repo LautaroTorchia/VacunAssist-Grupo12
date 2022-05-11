@@ -1,5 +1,5 @@
 from django import forms
-from models import Usuario
+from ..models import Usuario
 class LoginForm (forms.Form):
     dni_o_mail = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())

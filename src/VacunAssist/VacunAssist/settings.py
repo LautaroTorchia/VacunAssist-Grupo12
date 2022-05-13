@@ -122,14 +122,20 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+AUTHENTICATION_BACKENDS = (
+        'Vacunation_app.models.UsuarioBackend',
+        'django.contrib.auth.backends.ModelBackend',
+        'django.contrib.auth.backends.RemoteUserBackend',
+)
+
+AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-#AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 LOGIN_REDIRECT_URL = "/"
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = 'sendgrid-api-key' # this is your API key
-EMAIL_PORT = 587
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'torchia.lautaro2@gmail.com' # this is the sendgrid email
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "noreply.vacunassist@gmail.com"  
+EMAIL_HOST_PASSWORD = "vacunas123"
+DEFAULT_FROM_EMAIL = "noreply.vacunassist@gmail.com"

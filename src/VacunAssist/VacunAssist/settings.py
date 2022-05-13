@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -125,8 +124,14 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+AUTHENTICATION_BACKENDS = (
+        'Vacunation_app.models.UsuarioBackend',
+        'django.contrib.auth.backends.ModelBackend',
+        'django.contrib.auth.backends.RemoteUserBackend',
+)
+
+AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-#AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 LOGIN_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

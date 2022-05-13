@@ -6,7 +6,7 @@ from ..forms.creating_user_form import CreatingUserForm
 from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio
 import string
 from django.core.mail import send_mail
-from django.conf import settings
+from VacunAssist.settings import DEFAULT_FROM_EMAIL
 
 
 def administrator_home_view(request):
@@ -31,13 +31,14 @@ def creating_vaccinator_view(request):
         user_creation_form = CreatingUserForm()
         success=True
 
-        #send_mail("Registro de vacunador a VacunAssist",
-        #f"""Se ha registrado una cuenta a su nombre aqui estan sus credenciales: 
-                #Contraseña: {instance.contrasenia}
-                #clave:   {instance.clave}""",
-                #settings.DEFAULT_FROM_EMAIL,
-                #["torchia.lautaro2@gmail.com"],
-                #fail_silently=False)
+        send_mail("Registro de vacunador a VacunAssist",
+        f"""Hola, {user_instance.nombre_completo}
+        Se ha registrado una cuenta en VacunAssist a su nombre aqui estan sus credenciales: 
+        Contraseña: {user_instance.contrasenia}
+        clave:   {user_instance.clave}""",
+                DEFAULT_FROM_EMAIL,
+                [user_instance.email],
+                fail_silently=False)
         
     context={ 
         "form": user_creation_form,

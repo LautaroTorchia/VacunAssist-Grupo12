@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,8 +32,6 @@ SECRET_KEY = 'django-insecure-d9$@+pe$lhd$82m%%=#&bkk_j+om0dz3@uj)xctjr)$)z9k)_g
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -126,10 +129,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 LOGIN_REDIRECT_URL = "/"
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = 'sendgrid-api-key' # this is your API key
+EMAIL_HOST_USER = 'noreply.vacunassist@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('GMAIL_KEY') #past the key or password app here
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'torchia.lautaro2@gmail.com' # this is the sendgrid email
+DEFAULT_FROM_EMAIL = 'noreply.vacunassist@gmail.com'

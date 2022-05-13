@@ -123,13 +123,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 AUTHENTICATION_BACKENDS = (
-        'Vacunation_app.models.UsuarioBackend',
+        'Vacunation_app.backends.UsuarioBackend',
         'django.contrib.auth.backends.ModelBackend',
         'django.contrib.auth.backends.RemoteUserBackend',
 )
 
-AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'Vacunation_app.Usuario'
 LOGIN_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

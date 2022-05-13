@@ -1,25 +1,11 @@
-from django.contrib.auth.backends import ModelBackend
 from django.db import models
 from  django.contrib.auth.models import AbstractUser
-from django.core.validators import MaxValueValidator, MinValueValidator
 from .constants import vacunas_opciones,vacunatorio_opciones
 from django.contrib.auth.models import (BaseUserManager)
-from django.core.validators import DecimalValidator
 from django.core.exceptions import ValidationError
 
-class UsuarioBackend(ModelBackend):
-     def authenticate(self, request,**kwargs):
-        dni = kwargs['dni']
-        password = kwargs['password']
-        try:
-            usuario = Usuario.objects.get(dni=dni)
-            if usuario.check_password(password) is True:
-                return usuario.user
-        except usuario.DoesNotExist:
-            pass
-        
 class CustomUserManager( BaseUserManager):#Cambiar para que se vea más como elde la página o create superuser
-    def create_user(self,dni,password,nombre_completo,fecha_nac,email,clave,**other_fields):
+    def create_user(self,dni,password,nombre_completo,fecha_nac,email,clave,**extra_fields):
         if not dni:
             raise ValueError("El dni es obligatorio")
         if not nombre_completo:
@@ -31,25 +17,23 @@ class CustomUserManager( BaseUserManager):#Cambiar para que se vea más como eld
         if not clave:
             raise ValueError("La clave es obligatoria")
         email = self.normalize_email(email)
-        user = self.model(dni,other_fields)
-        user.email = email
+        user = self.model()
         user.dni=dni
+        user.email = email
         user.nombre_completo = nombre_completo
         user.fecha_nac = fecha_nac
         user.clave = clave
         user.set_password(password)
+        user.is_staff=extra_fields["is_staff"]
+        user.is_superuser=extra_fields["is_superuser"]
+        user.is_active=extra_fields["is_active"]
         user.save()
 
     def create_superuser(self,dni,password,**extra_fields):
+        extra_fields["is_staff"]=True
+        extra_fields["is_superuser"]=True
+        extra_fields["is_active"]=True
 
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError(_('Superuser must have is_staff=True.'))
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(dni,password, **extra_fields)
 
 
@@ -78,22 +62,7 @@ class Usuario (AbstractUser):
     def get_full_name(self):
         return self.nombre_completo
     def __str__(self):
-        return self.get_full_name()
-    
-
-#class Usuario(models.Model):
-#    
-#    nombre_completo = models.CharField(max_length=50)
-#    dni = models.IntegerField(unique=True,validators=[MaxValueValidator(999999999999999),MinValueValidator(1)])
-#    fecha_nac = models.DateField()
-#    email = models.EmailField(unique=True)
-#    contrasenia = models.CharField(max_length=50)
-#    clave = models.CharField(max_length=4)
-#    
-#
-#    def __str__(self):
-#        return self.nombre_completo
-
+        return self.get_full_name()+" "+self.dni+self.password
 
 class Paciente(models.Model):
     class Cantidad_dosis(models.IntegerChoices):
@@ -148,3 +117,5 @@ class VacunaEnVacunatorio(models.Model):
     def __str__(self):
         return f"{self.vacunatorio}-{self.vacuna}"
 
+        
+        

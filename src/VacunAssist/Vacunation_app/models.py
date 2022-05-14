@@ -1,8 +1,15 @@
 from django.db import models
 from  django.contrib.auth.models import AbstractUser
-from .constants import vacunas_opciones,vacunatorio_opciones
 from django.contrib.auth.models import (BaseUserManager)
-from django.core.exceptions import ValidationError
+from django.forms import ValidationError
+
+def validate_alpha(nombre):
+        if all(x.isalpha() or x.isspace() for x in nombre) and not nombre.isspace():
+            raise ValidationError (f"El nombre solo puede tener letras y espacios")
+
+def validate_decimal(dni):
+        if not dni.isdecimal():
+            raise ValidationError(f"El dni debe ser numerico")
 
 class CustomUserManager( BaseUserManager):#Cambiar para que se vea más como elde la página o create superuser
     def create_user(self,dni,password,nombre_completo,fecha_nac,email,clave,**extra_fields):
@@ -37,15 +44,9 @@ class CustomUserManager( BaseUserManager):#Cambiar para que se vea más como eld
         return self.create_user(dni,password, **extra_fields)
 
 
-def validate_decimal(dni):
-        if not dni.isdecimal():
-            raise ValidationError (f"El dni debe ser numerico")
 
-def validate_alpha(nombre):
-        if all(x.isalpha() or x.isspace() for x in nombre) and not nombre.isspace():
-            raise ValidationError (f"El nombre solo puede tener letras y espacios")
+class Usuario(AbstractUser):
 
-class Usuario (AbstractUser):
     first_name = None
     last_name = None
     username = None
@@ -59,10 +60,11 @@ class Usuario (AbstractUser):
     USERNAME_FIELD= 'dni'
     EMAIL_FIELD='email'
     is_active=True
+
     def get_full_name(self):
         return self.nombre_completo
     def __str__(self):
-        return self.get_full_name()+" "+self.dni+self.password
+        return "Nombre: "+self.get_full_name()+" DNI: "+self.dni
 
 class Paciente(models.Model):
     class Cantidad_dosis(models.IntegerChoices):

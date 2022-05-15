@@ -24,12 +24,13 @@ urlpatterns = [
          include("Vacunation_app.urls.administrator_urls"),
          name="admin-home-view"),
     path('accounts/login/',
-         CustomLogin.as_view(template_name='registration/login.html')),
+         CustomLogin.as_view(template_name='registration/login.html'),name="login"),
     path(
-        'accounts/loginClave/',
+        'accounts/loginClave/<str:dni>',
         CustomLoginClave.as_view(template_name='registration/loginClave.html'),
         name="loginClave"),
     path('products/<int:id>/delete/',
          vaccinator_delete_view,
          name='vaccinator_delete'),
+   
 ]

@@ -1,29 +1,37 @@
 from django import forms
-from ..models import Usuario
-class LoginForm (forms.Form):
+from django.contrib.auth.forms import AuthenticationForm
+
+
+class LoginForm (AuthenticationForm):
     dni_o_mail = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
-
+    contraseña = forms.CharField(widget=forms.PasswordInput())
+    username=None
+    password=None
+    
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        super(LoginForm, self).__init__(*args, **kwargs)
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
 
-#    def clean_dni_o_mail(self,*args,**kwargs):
-#        dnilogin=self.cleaned_data.get("dni")
-#        usu = Usuario.objects.get(dni = dnilogin)
-#        if not usu:
-#            maillogin=self.cleaned_data.get("email")
-#            usu = Usuario.objects.get(email = maillogin)
-#            if not usu:
-#                raise forms.ValidationError("Usuario inexistente")
-#            return maillogin
-#        return dnilogin
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            raise forms.ValidationError(
+                ("This account is inactive."),
+                code='inactive',
+            )
 
-class LoginClaveForm (forms.Form):
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(LoginClaveForm, self).__init__(*args, **kwargs)
+
+class LoginClaveForm (AuthenticationForm):
     clave = forms.CharField(max_length=4)
-#    def clean_clave(self,*args,**kwargs):
-#        clave=self.cleaned_data.get("clave")
-#        if Usuario.objects.get(id =  )
+    username=None
+    password=None
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
+
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            raise forms.ValidationError(
+                ("This account is inactive."),
+                code='inactive',
+            )

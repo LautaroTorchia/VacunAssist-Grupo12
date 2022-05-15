@@ -1,14 +1,15 @@
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.hashers import check_password
+
 from django.contrib.auth import get_user_model
 
 
 Usuario = get_user_model()
 class UsuarioBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None):
+    def authenticate(self, request, **kwargs):
+        kwargs=kwargs["kwargs"]
         try:
-            user = Usuario.objects.get(dni=username)
-            if user.check_password(password):   
+            user = Usuario.objects.get(dni=kwargs["dni"])
+            if user.clave == kwargs["clave"]:   
                 return user 
             return None
         except Usuario.DoesNotExist:

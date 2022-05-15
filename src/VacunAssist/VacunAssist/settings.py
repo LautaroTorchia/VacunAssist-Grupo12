@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.getenv('SECRET_DJANGO_KEY')
+SECRET_KEY = "aaaa"#os.getenv('SECRET_DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -127,8 +127,6 @@ STATIC_URL = 'static/'
 
 AUTHENTICATION_BACKENDS = (
         'Vacunation_app.backends.UsuarioBackend',
-        'django.contrib.auth.backends.ModelBackend',
-        'django.contrib.auth.backends.RemoteUserBackend',
 )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

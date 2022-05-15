@@ -42,7 +42,7 @@ class CustomLoginClave(LoginView):
             login(request, user)
             return redirect("/")
         else:
-            messages.error(self.request,"hola")
-            return redirect("/accounts/loginClave/")
+            messages.error(self.request,"Clave inválda")
+            return redirect(f"/accounts/loginClave/{dni}")
     
     

@@ -6,6 +6,9 @@ from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
+from django.http import Http404
+
+
 
 
 Usuario = get_user_model()
@@ -13,6 +16,7 @@ class CustomLogin(LoginView):
     template_name="registration/login.html"
     authentication_form= LoginForm
     next_page="accounts/loginClave/"
+    
     def post(self, request, *args, **kwargs):
         dni_o_mail = request.POST['dni_o_mail']
         password = request.POST['contraseña']
@@ -24,18 +28,24 @@ class CustomLogin(LoginView):
             except ObjectDoesNotExist:
                 messages.error(self.request,"Usuario no existe")
                 return redirect("/accounts/login/")
-
         if check_password(password,user.password):
-            return redirect(f"/accounts/loginClave/{user.dni}",user.dni)
+            request.session['dni'] = user.dni
+            return redirect(f"/accounts/loginClave/")
         else:
             messages.error(self.request,"Contraseña incorrecta")
             return redirect("/accounts/login/")
+    
+def get_referer(request):
+    referer = request.META.get('HTTP_REFERER')
+    if not referer:
+        return None
+    return referer
 
 class CustomLoginClave(LoginView):
     authentication_form= LoginClaveForm
     def post(self, request, *args, **kwargs):
         clave=request.POST['clave']
-        dni=kwargs["dni"]
+        dni = request.session['dni']
         user = authenticate(request, kwargs={"dni":dni,"clave":clave})
         print(user)
         if user is not None:
@@ -45,4 +55,7 @@ class CustomLoginClave(LoginView):
             messages.error(self.request,"Clave inválda")
             return redirect(f"/accounts/loginClave/{dni}")
     
-    
+    def get(self, request, *args, **kwargs):
+        if not get_referer(request):
+            raise Http404
+        return LoginView.get(self,request,args,kwargs)

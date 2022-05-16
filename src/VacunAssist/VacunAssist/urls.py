@@ -26,7 +26,7 @@ urlpatterns = [
     path('accounts/login/',
          CustomLogin.as_view(template_name='registration/login.html'),name="login"),
     path(
-        'accounts/loginClave/<str:dni>',
+        'accounts/loginClave/',
         CustomLoginClave.as_view(template_name='registration/loginClave.html'),
         name="loginClave"),
     path('products/<int:id>/delete/',

@@ -18,6 +18,8 @@ class LoginForm (AuthenticationForm):
                 ("This account is inactive."),
                 code='inactive',
             )
+    def clean_dni_o_mail(self):
+        pass
 
 
 class LoginClaveForm (AuthenticationForm):

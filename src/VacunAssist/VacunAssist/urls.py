@@ -17,20 +17,14 @@ from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.vaccinator_list_view import vaccinator_delete_view
+from Vacunation_app.views.home_view import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("administrator/",
-         include("Vacunation_app.urls.administrator_urls"),
-         name="admin-home-view"),
-    path('accounts/login/',
-         CustomLogin.as_view(template_name='registration/login.html'),name="login"),
-    path(
-        'accounts/loginClave/',
-        CustomLoginClave.as_view(template_name='registration/loginClave.html'),
-        name="loginClave"),
-    path('products/<int:id>/delete/',
-         vaccinator_delete_view,
-         name='vaccinator_delete'),
+    path("administrator/",include("Vacunation_app.urls.administrator_urls"), name="admin-home-view"),
+    path('accounts/login/',CustomLogin.as_view(template_name='registration/login.html'),name="login"),
+    path('accounts/loginClave/',CustomLoginClave.as_view(template_name='registration/loginClave.html'),name="loginClave"),
+    path('products/<int:id>/delete/',vaccinator_delete_view,name='vaccinator_delete'),
+    path('',HomeView.as_view(),name='homepage'),
    
 ]

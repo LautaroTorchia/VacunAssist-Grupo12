@@ -53,9 +53,10 @@ class CustomLoginClave(LoginView):
             return redirect("/")
         else:
             messages.error(self.request,"Clave inválda")
-            return redirect(f"/accounts/loginClave/{dni}")
+            return redirect(f"/accounts/loginClave/")
     
     def get(self, request, *args, **kwargs):
         if not get_referer(request):
             raise Http404
         return LoginView.get(self,request,args,kwargs)
+

@@ -1,5 +1,5 @@
 import random
-from django.shortcuts import redirect, render
+from django.shortcuts import  render
 from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm
 from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio

@@ -46,7 +46,7 @@ class CustomLoginClave(LoginView):
     def post(self, request, *args, **kwargs):
         clave=request.POST['clave']
         dni = request.session['dni']
-        user = authenticate(request, kwargs={"dni":dni,"clave":clave})
+        user = authenticate(request, username=dni,password=clave)
         print(user)
         if user is not None:
             login(request, user)

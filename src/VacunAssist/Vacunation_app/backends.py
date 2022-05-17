@@ -5,11 +5,11 @@ from django.contrib.auth import get_user_model
 
 Usuario = get_user_model()
 class UsuarioBackend(ModelBackend):
-    def authenticate(self, request, **kwargs):
-        kwargs=kwargs["kwargs"]
+    def authenticate(self, request, username, password):
+        #kwargs=kwargs["kwargs"]
         try:
-            user = Usuario.objects.get(dni=kwargs["dni"])
-            if user.clave == kwargs["clave"]:   
+            user = Usuario.objects.get(dni=username)
+            if user.clave == password:   
                 return user 
             return None
         except Usuario.DoesNotExist:

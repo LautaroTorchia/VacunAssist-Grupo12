@@ -19,11 +19,14 @@ from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.vaccinator_list_view import vaccinator_delete_view
 from Vacunation_app.views.home_view import HomeView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('accounts/login/',CustomLogin.as_view(),name="login"),
     path('accounts/loginClave/',CustomLoginClave.as_view(),name="loginClave"),
+
+
 
     path("administrator/",include("Vacunation_app.urls.administrator_urls"), name="admin-home-view"),
 

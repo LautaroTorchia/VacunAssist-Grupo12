@@ -3,6 +3,7 @@
 {% block content %}
     <h1> Pagina principal</h1>
     <h1> Bienvenido {{ user.nombre_completo }}</h1>
+    
     <form action="" method="post"> {% csrf_token %}
         <input type="submit"  name="logout" value="Cerrar sesión">
     </form>

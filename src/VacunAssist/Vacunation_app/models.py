@@ -100,13 +100,19 @@ class Vacuna(models.Model):
     def __str__(self):
         return f"{self.nombre}"
 
-class Vacunatorio(models.Model):
-    class Vacunatorios(models.TextChoices):
+class Zona(models.Model):
+    class Zonas(models.TextChoices):
         OMNIBUS = "Sede Omnibus"
         CEMENTERIO= "Sede Cementerio"
         MUNICIPALIDAD= "Sede Municipalidad"
     
-    nombre= models.CharField(max_length=100,choices=Vacunatorios.choices,unique=True)
+    nombre= models.CharField(max_length=100,choices=Zonas.choices,unique=True)
+    
+    def __str__(self):
+        return f"{self.nombre}"
+
+class Vacunatorio(models.Model):
+    nombre= models.CharField(max_length=100,unique=True)
 
     def __str__(self):
         return f"{self.nombre}"

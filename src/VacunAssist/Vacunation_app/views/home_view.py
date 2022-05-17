@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import  render
 from django.contrib.auth import get_user_model
 Usuario=get_user_model()
 

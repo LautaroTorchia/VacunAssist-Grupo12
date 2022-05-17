@@ -7,6 +7,7 @@ import string
 from django.core.mail import send_mail
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from ..custom_functions import check_dni
+from django.views.generic.base import TemplateView
 
 
 def administrator_home_view(request):
@@ -74,3 +75,8 @@ def stock_view(request):
         "stock_form":stock_form
     }
     return render(request, "stock_view.html", context)
+
+
+
+#TODO class NameUpdate(TemplateView):
+    

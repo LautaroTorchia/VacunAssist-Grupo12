@@ -4,6 +4,7 @@ from ..constants import *
 
 class StockForm (forms.ModelForm):
 
+    
     class Meta:
         model = VacunaEnVacunatorio
         fields = ["vacunatorio", "vacuna", 

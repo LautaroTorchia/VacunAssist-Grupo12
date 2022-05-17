@@ -16,5 +16,8 @@
         {{  stock_form.as_p }}
         <input type="submit" value="Aumentar stock">
     </form>
+    {% if updated %}
+        <h3>Stock actualizado</h3>
+    {% endif %}
 
 {% endblock content %}

@@ -122,6 +122,7 @@ class VacunaEnVacunatorio(models.Model):
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
     stock= models.IntegerField()
 
+
     def __str__(self):
         return f"{self.vacunatorio}-{self.vacuna}"
 

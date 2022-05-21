@@ -7,7 +7,7 @@ import string
 from django.core.mail import send_mail
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from ..custom_functions import check_dni
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 from ..forms.update_name_form import NameUpdateForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -94,26 +94,22 @@ def stock_view(request):
     return render(request, "stock_view.html", context)
 
 
-class NameUpdate(TemplateView):
+class NameUpdate(FormView):
     form=NameUpdateForm
     template_name="vacunatorio_name_update.html"
     def post(self, request, *args, **kwargs):
-        print(self.form)
-        nombre_actual=request.POST['nombre_actual']
-        nombre_nuevo=request.POST['nombre_nuevo']
+        instance_form=self.get_form(form_class=self.form)
+        instance_form.is_valid()
+        vacunatorio=instance_form.cleaned_data["nombre_actual"]
+        nombre_nuevo=instance_form.cleaned_data["nombre_nuevo"]
         try:
             Vacunatorio.objects.get(nombre=nombre_nuevo)
             messages.error(self.request,"Vacunatorio ya existe")
-        except ObjectDoesNotExist:
-            print(nombre_actual+"--"*500)
-            #vacunatorio=Vacunatorio.objects.get(nombre=nombre_actual)
-            vacunatorio=nombre_actual
+        except Vacunatorio.DoesNotExist:
             vacunatorio.nombre=nombre_nuevo
             vacunatorio.save()
             messages.success(self.request,"Vacunatorio cambiado")
         return redirect("/administrator/cambiarNombre/")
-    
+
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name,{"form":self.form})
-    
-

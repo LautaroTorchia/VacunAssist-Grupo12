@@ -10,7 +10,7 @@ from django.http import Http404
 
 
 
-
+#TODO: Usar isvalid para los datos como en cambiarNombre
 Usuario = get_user_model()
 class CustomLogin(LoginView):
     template_name="registration/login.html"

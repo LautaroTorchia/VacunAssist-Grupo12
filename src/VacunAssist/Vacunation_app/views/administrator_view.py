@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render
 from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm, EnteringDniForm
-from ..models import Vacuna, VacunaEnVacunatorio, Vacunador, Vacunatorio
+from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio
 import string
 from django.core.mail import send_mail
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
@@ -11,23 +11,35 @@ from django.views.generic.edit import FormView
 from ..forms.update_name_form import NameUpdateForm
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import user_passes_test,login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
 
+
+
+@login_required(login_url="/accounts/login")
 def administrator_home_view(request):
+    print(request.user)
     return render(request, "administrator_view.html", {})
 
 
+
+
+@login_required(login_url="/accounts/login")
 def validating_dni_for_vaccinator_view(request):
     dni_form = EnteringDniForm(request.POST or None)
     print(dni_form.is_valid())
     if dni_form.is_valid():
         #requests.get()
-        request.session['dni']= dni_form.cleaned_data.get("dni")
+        request.session['dni_to_create']= dni_form.cleaned_data.get("dni")
         return redirect("/administrator/create_vaccinator/step2")
     
     return render(request,"dni_validation_view.html",{"form":dni_form})
 
 
+
+
+@login_required(login_url="/accounts/login")
 def creating_vaccinator_view(request):
     letters = string.ascii_lowercase
     numbers= string.digits
@@ -40,7 +52,7 @@ def creating_vaccinator_view(request):
         user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
         password = ''.join(random.choice(letters) for i in range(10))
         user_instance.set_password(password)
-        user_instance.dni = request.session["dni"]
+        user_instance.dni = request.session["dni_to_create"]
         user_instance.save()
 
         vaccinator_instance = Vacunador.objects.create(user=user_instance)
@@ -64,12 +76,18 @@ def creating_vaccinator_view(request):
     return render(request, "vaccinator_creation.html", context)
 
 
+
+
+@login_required(login_url="/accounts/login")
 def vaccinators_list_view(request):
     queryset = Vacunador.objects.all()
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
 
+
+
+@login_required(login_url="/accounts/login")
 def stock_view(request):
 
     vaccine_info = VacunaEnVacunatorio.objects.all()
@@ -98,7 +116,10 @@ def stock_view(request):
     return render(request, "stock_view.html", context)
 
 
-class NameUpdate(FormView):
+
+
+
+class NameUpdate(LoginRequiredMixin,FormView):
     form=NameUpdateForm
     template_name="vacunatorio_name_update.html"
     def post(self, request, *args, **kwargs):

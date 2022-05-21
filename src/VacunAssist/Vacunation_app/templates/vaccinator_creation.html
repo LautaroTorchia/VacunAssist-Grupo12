@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="../static/vaccinator_creation_step2.css">
+{% endblock css %}
 
 {% block content %}
 
 <h1> Creacion de un vacunador</h1>
-<h3 color="green"> El dni esta validado</h3>
+<h3> El dni esta validado</h3>
 <form action="" method="post"> {% csrf_token %}
     {{ form.as_p }}
     <p></p>

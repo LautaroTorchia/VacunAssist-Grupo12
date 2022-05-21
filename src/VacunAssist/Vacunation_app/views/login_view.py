@@ -18,8 +18,11 @@ class CustomLogin(LoginView):
     next_page="accounts/loginClave/"
     
     def post(self, request, *args, **kwargs):
-        dni_o_mail = request.POST['dni_o_mail']
-        password = request.POST['contraseña']
+        instance_form=self.get_form(form_class=self.authentication_form)
+        instance_form.is_valid()
+        dni_o_mail = instance_form.cleaned_data["dni_o_mail"]
+        password = instance_form.cleaned_data["contraseña"]
+        print(dni_o_mail,password)
         try:
             user = Usuario.objects.get(dni=dni_o_mail)
         except ObjectDoesNotExist:
@@ -44,7 +47,9 @@ def get_referer(request):
 class CustomLoginClave(LoginView):
     authentication_form= LoginClaveForm
     def post(self, request, *args, **kwargs):
-        clave=request.POST['clave']
+        instance_form=self.get_form(form_class=self.authentication_form)
+        instance_form.is_valid()
+        clave = instance_form.cleaned_data["clave"]
         dni = request.session['dni']
         user = authenticate(request, username=dni,password=clave)
         print(user)
@@ -57,6 +62,6 @@ class CustomLoginClave(LoginView):
     
     def get(self, request, *args, **kwargs):
         if not get_referer(request):
-            raise Http404
+            return redirect("/accounts/login/")
         return LoginView.get(self,request,args,kwargs)
 

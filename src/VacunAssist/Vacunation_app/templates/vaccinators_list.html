@@ -14,12 +14,9 @@
                 }
             }
             </script>
+        </form>
+        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
             <input type="submit" value="editar">
         </form>
     {% endfor %}
 {% endblock content %}
-
-<!<form action="" method="GET">
-    <!  <input type="submit" value="borrar">
-    <!  <input type="submit" value="editar">
-<!</form>

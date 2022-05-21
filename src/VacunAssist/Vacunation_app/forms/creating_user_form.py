@@ -9,6 +9,7 @@ class CreatingUserForm(forms.ModelForm):
         fields = ["nombre_completo",
         "fecha_nac", "email"]
 
+class EnteringDniForm(forms.Form):
     dni=forms.CharField()
     
     

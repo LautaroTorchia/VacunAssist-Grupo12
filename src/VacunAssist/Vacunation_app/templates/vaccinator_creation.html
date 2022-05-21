@@ -3,17 +3,11 @@
 {% block content %}
 
 <h1> Creacion de un vacunador</h1>
+<h3 color="green"> El dni esta validado</h3>
 <form action="" method="post"> {% csrf_token %}
     {{ form.as_p }}
     <p></p>
-    <input type="submit"  name="dni-validation" value="Validar DNI">
-    {% if dni_validated  %}
-        <h3 color="green"> El dni esta validado</h3>
-        <input type="submit" name="create-account" value="Crear cuenta">
-    {% else %}
-        <h3 color="red"> El dni es Incorrecto</h3>
-        <input type="submit" name="create-account" value="Crear cuenta" disabled="true">
-    {% endif %}
+    <input type="submit" name="create-account" value="Crear cuenta">
     
 </form>
 

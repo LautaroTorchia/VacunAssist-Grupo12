@@ -19,4 +19,7 @@ urlpatterns = [
     path('vaccinator/<int:id>/',
          edit_vaccinator_profile_view,
          name="edit_vaccinator_profile"),
+    path('vaccinator/<int:id>/delete',
+         vaccinator_delete_view,
+         name="vaccinator_delete"),
 ]

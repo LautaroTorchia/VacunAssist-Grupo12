@@ -2,6 +2,7 @@ from django.db import models
 from  django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import (BaseUserManager)
 from django.forms import ValidationError
+from django.core.validators import MinValueValidator
 
 def validate_alpha(nombre):
         if all(x.isalpha() or x.isspace() for x in nombre) and not nombre.isspace():
@@ -120,7 +121,7 @@ class Vacunatorio(models.Model):
 class VacunaEnVacunatorio(models.Model):
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
-    stock= models.IntegerField()
+    stock= models.IntegerField(validators=[MinValueValidator(1,"Debe ingresar un numero mayor a 1")])
 
 
     def __str__(self):

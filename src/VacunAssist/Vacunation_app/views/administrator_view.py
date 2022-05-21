@@ -20,6 +20,7 @@ def administrator_home_view(request):
 def creating_vaccinator_view(request):
 
     letters = string.ascii_lowercase
+    numbers= string.digits
     user_creation_form = CreatingUserForm(request.POST or None)
     success = False
     dni_validated = False
@@ -32,8 +33,7 @@ def creating_vaccinator_view(request):
             user_instance = user_creation_form.save()
             password = ''.join(random.choice(letters) for i in range(10))
             user_instance.set_password(password)
-            user_instance.clave = ''.join(
-                random.choice(letters) for i in range(4))
+            user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
             user_instance.dni = user_creation_form.cleaned_data.get("dni")
             user_instance.save()
 

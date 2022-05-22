@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from ..models import Usuario
 from django.contrib.auth.decorators import login_required
+from ..forms.updating_user_form import UpdatingUserForm
 
 
 @login_required(login_url="/accounts/login")
@@ -18,5 +19,9 @@ def vaccinator_delete_view(request, id):
 @login_required(login_url="/accounts/login")
 def edit_vaccinator_profile_view(request, id):
     vacunador = Usuario.objects.get(id=id)
-    context = {"vacunador": vacunador}
+    vacunador_update_form = UpdatingUserForm(request.POST or None)
+    if vacunador_update_form.is_valid():
+        vacunador.set_password(vacunador_update_form.cleaned_data["password"])
+        vacunador.save()
+    context = {"vacunador": vacunador, "form": vacunador_update_form}
     return render(request, "edit_vaccinator_profile_view.html", context)

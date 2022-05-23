@@ -19,7 +19,6 @@ import requests
 
 @login_required(login_url="/accounts/login")
 def administrator_home_view(request):
-    print(request.user)
     return render(request, "administrator_view.html", {})
 
 
@@ -28,9 +27,16 @@ def administrator_home_view(request):
 @login_required(login_url="/accounts/login")
 def validating_dni_for_vaccinator_view(request):
     dni_form = EnteringDniForm(request.POST or None)
-    print(dni_form.is_valid())
+    params={"dni":14276579}
+    headers={
+        "X-Api-Key": "jn7ROnxjDFz8CMprjTyd2jFVJG4gchEaHxrzhZg3",
+        "Content-Type": "application/json",
+    }
     if dni_form.is_valid():
-        #requests.get()
+        response = requests.post("https://hhvur3txna.execute-api.sa-east-1.amazonaws.com/dev/person/lookup", 
+        data=params,headers=headers)
+        print(response.status_code)
+        print(response.text)
         request.session['dni_to_create']= dni_form.cleaned_data.get("dni")
         return redirect("/administrator/create_vaccinator/step2")
     

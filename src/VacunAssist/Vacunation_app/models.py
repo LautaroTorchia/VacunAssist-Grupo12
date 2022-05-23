@@ -64,7 +64,7 @@ class Usuario(AbstractUser):
     dni = models.CharField(max_length=15,
                            validators=[validate_decimal],
                            unique=True)
-    fecha_nac = models.DateField(null=True)
+    fecha_nac = models.DateTimeField()
     email = models.EmailField(unique=True)
     clave = models.CharField(max_length=4)
     USERNAME_FIELD = 'dni'

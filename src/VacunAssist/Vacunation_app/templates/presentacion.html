@@ -1,0 +1,12 @@
+{% load static %}
+<div class="text_container container-fluid">    
+    <div class="presentacion_container container-fluid">
+        <h1 id="titulo">Bienvenido, {{ request.user.nombre_completo }}</h1>
+        <h5 id="slogan">Vacunate, mas facil</h5>
+    </div>
+    <div class="perfil_container">
+        <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile">
+        <h5>Mi perfil</h5>
+        <img src="flechita" alt="">
+    </div>
+</div>

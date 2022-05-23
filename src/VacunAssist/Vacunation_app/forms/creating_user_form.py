@@ -6,8 +6,13 @@ class CreatingUserForm(forms.ModelForm):
     
     class Meta:
         model = Usuario
-        fields = ["nombre_completo",
-        "fecha_nac", "email"]
+        fields = ["email"]
+        error_messages = {
+            'email' : {
+                'unique' : ("Registro fallido por email ya registrado")
+            }
+        }
+
 
 class EnteringDniForm(forms.Form):
     dni=forms.CharField()

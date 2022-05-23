@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.http import Http404
+from ..custom_functions import get_referer
 
 
 
@@ -38,11 +38,7 @@ class CustomLogin(LoginView):
             messages.error(self.request,"Contraseña incorrecta")
             return redirect("/accounts/login/")
     
-def get_referer(request):
-    referer = request.META.get('HTTP_REFERER')
-    if not referer:
-        return None
-    return referer
+
 
 class CustomLoginClave(LoginView):
     template_name="registration/loginClave.html"

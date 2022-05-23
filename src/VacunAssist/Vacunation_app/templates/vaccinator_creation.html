@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="../static/vaccinator_creation_step2.css">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'vaccinator_creation_step2.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
-
 {% block content %}
-
-<h1> Creacion de un vacunador</h1>
-<h3> El dni esta validado</h3>
-<form action="" method="post"> {% csrf_token %}
-    {{ form.as_p }}
-    <p></p>
-    <input type="submit" name="create-account" value="Crear cuenta">
-    
-</form>
-
-{% if success %}
-    <h3 color="green"> Cuenta creada con exito </h3>
-{% endif %}
-
+<div class="total_container container-fluid d-flex flex-row">
+    {% include "navbar.html" %}
+    <div class="main_container">
+        {% include "presentacion.html" %}
+        <div class="creacion_container">
+            <div class="texto_container d-flex flex-column">
+                <h1> Creacion de un vacunador</h1>
+                <h5>Paso 2/2</h5>
+            </div>
+            <h3 id="success"> El dni esta validado</h3>
+            <form action="" method="post"> {% csrf_token %}
+                {{ form.as_p }}
+                <p></p>
+                <input type="submit" name="create-account" value="Crear cuenta">
+                
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -4,22 +4,12 @@
     <h1>Ver Listado</h1>
     {% for instance in object_list %}
         <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
-        <form action="" method="GET">
-            <input type="submit" onclick="return confirm('¿Estás seguro?')" value="borrar">
-            <script>
-            function clickled(e)
-            {
-                if(!confirm('¿Estás seguro?')) {
-                    e.preventDefault();
-                }
-            }
-            </script>
+        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
+            <input type="submit" value="borrar">
+        </form>
+        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
             <input type="submit" value="editar">
         </form>
     {% endfor %}
 {% endblock content %}
 
-<!<form action="" method="GET">
-    <!  <input type="submit" value="borrar">
-    <!  <input type="submit" value="editar">
-<!</form>

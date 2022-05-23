@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Editar Perfil de Vacunador{% endblock title%}
+{% block content %}
+    <h1>Editando el Perfil de {{ vacunador.nombre_completo }} </h1>
+    <br/><br/>
+
+    <div class="form-group">
+<form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Aceptar</button>
+    </div>
+
+    
+{% endblock content %}

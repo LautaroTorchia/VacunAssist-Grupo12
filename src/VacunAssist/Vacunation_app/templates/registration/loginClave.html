@@ -1,37 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static 'login_clave.css' %}">
 {% endblock css %}
 {% block content %}
 
-<div class="clave_container">
-    <div class="clave_blob_container">
-        <div class="clave_valija_container">
-            <img src="{% static 'img/valija.png' %}" alt="" class=valija >
-            <div class="clave_container">
+<div class="clave_main_container">
+    <img src="{% static 'img/valija.png' %}" alt="" class=valija >
+    <div class="clave_container">
 
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Login</button>
-                </form>
-                
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class=login >Iniciar Sesión</button>
+            </form>
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-        </div>
-        <img src="{% static 'img/Blob.svg' %}" alt="" class=blob>
+            </ul>
+            {% endif %}
+            <a href="" class= olvidaste_clave >Olvidaste tu clave?</a>
     </div>
-    <img src="{% static 'img/Semicircles.svg' %}" alt="" >
-
 </div>
-    
-    
 
 {% endblock %}

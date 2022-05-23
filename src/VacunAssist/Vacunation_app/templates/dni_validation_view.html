@@ -4,7 +4,17 @@
     <h1> Creacion de un vacunador</h1>  
     <form action="" method="post"> {% csrf_token %}
         {{ form.as_p }}
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
         <input type="submit" value="Validar DNI">
     </form>
+    {% if created_correctly == "True" %}
+        <h3>Cuenta creada correctamente</h3>
+    {% endif %}
 
 {% endblock content %}

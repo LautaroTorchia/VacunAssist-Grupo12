@@ -14,7 +14,6 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-import requests
 
 
 @login_required(login_url="/accounts/login")
@@ -24,21 +23,30 @@ def administrator_home_view(request):
 
 @login_required(login_url="/accounts/login")
 def validating_dni_for_vaccinator_view(request):
-    dni_form = EnteringDniForm(request.POST or None)
-    params={"dni":14276579}
-    headers={
-        "X-Api-Key": "jn7ROnxjDFz8CMprjTyd2jFVJG4gchEaHxrzhZg3",
-        "Content-Type": "application/json",
-    }
-    if dni_form.is_valid():
-        response = requests.post("https://hhvur3txna.execute-api.sa-east-1.amazonaws.com/dev/person/lookup", 
-        data=params,headers=headers)
-        print(response.status_code)
-        print(response.text)
-        request.session['dni_to_create']= dni_form.cleaned_data.get("dni")
-        return redirect("/administrator/create_vaccinator/step2")
 
-    return render(request, "dni_validation_view.html", {"form": dni_form})
+    dni_form = EnteringDniForm(request.POST or None)
+    if len(request.GET)>0:
+        created_correctly=request.GET["success"]
+    else:
+        created_correctly="false"
+    success=False
+    data={}
+
+    if dni_form.is_valid():
+        dni_to_validate=dni_form.cleaned_data.get("dni")
+        success,data=check_dni(dni_to_validate)
+        if success:
+
+            request.session['dni_to_create']= dni_to_validate
+            request.session['fecha_to_create']= data["fecha_nacimiento"]
+            request.session['nombre_to_create']= data["nombre"]
+            return redirect("/administrator/create_vaccinator/step2")
+
+        else:
+            messages.error(request,data["mensaje de error"])
+            dni_form=EnteringDniForm()
+
+    return render(request, "dni_validation_view.html", {"form": dni_form,"created_correctly":created_correctly})
 
 
 @login_required(login_url="/accounts/login")
@@ -46,20 +54,22 @@ def creating_vaccinator_view(request):
     letters = string.ascii_lowercase
     numbers = string.digits
     user_creation_form = CreatingUserForm(request.POST or None)
-    success = False
 
     if user_creation_form.is_valid():
 
         user_instance = user_creation_form.save(commit=False)
-        user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
+
         password = ''.join(random.choice(letters) for i in range(10))
+        user_instance.nombre_completo=request.session["nombre_to_create"]
+        #user_instance.fecha_nac=request.session["fecha_to_create"]
+        user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
         user_instance.set_password(password)
         user_instance.dni = request.session["dni_to_create"]
+
         user_instance.save()
 
         vaccinator_instance = Vacunador.objects.create(user=user_instance)
         vaccinator_instance.save()
-        success = True
         user_creation_form = CreatingUserForm()
 
         send_mail("Registro de vacunador a VacunAssist",
@@ -69,10 +79,10 @@ def creating_vaccinator_view(request):
         clave:   {user_instance.clave}""",
                   DEFAULT_FROM_EMAIL, [user_instance.email],
                   fail_silently=False)
+        return redirect("/administrator/create_vaccinator?success=True")
 
     context = {
         "form": user_creation_form,
-        "success": success,
     }
 
     return render(request, "vaccinator_creation.html", context)

@@ -17,7 +17,7 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-            self.extra_context={'user': Usuario.objects.get(dni=request.session['dni'])}
+           
             return TemplateView.get(self,request,args,kwargs)
         except:
             return redirect("accounts/login/")

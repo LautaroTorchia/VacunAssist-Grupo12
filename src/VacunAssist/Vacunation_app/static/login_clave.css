@@ -47,7 +47,7 @@ order: 1;
 flex-grow: 0;
 }
 
-.clave_valija_container{
+.calave_valija_container{
 /* Auto layout */
 display: flex;
 flex-direction: column;

@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+
 @login_required(login_url="/accounts/login")
 def administrator_home_view(request):
     return render(request, "administrator_view.html", {})
@@ -63,7 +64,7 @@ def creating_vaccinator_view(request):
 
         password = ''.join(random.choice(letters) for i in range(10))
         user_instance.nombre_completo=request.session["nombre_to_create"]
-        #user_instance.fecha_nac=request.session["fecha_to_create"]
+        user_instance.fecha_nac=request.session["fecha_to_create"]
         user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
         user_instance.set_password(password)
         user_instance.dni = request.session["dni_to_create"]

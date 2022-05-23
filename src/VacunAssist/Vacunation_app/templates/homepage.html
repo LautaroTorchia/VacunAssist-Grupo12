@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'home_page.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
 
 {% block content %}
-    <h1> Pagina principal</h1>
-    <h1> Bienvenido {{ user.nombre_completo }}</h1>
+    <div class="main_container container-fluid d-flex flex-row">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container align-self-start">
+            {% include "presentacion.html" %}
+            <div class="pagina_principal">
+                <h1> Pagina principal</h1>
+                <h3>Coming soon!</h3>
+                <form action="" method="post"> {% csrf_token %}
+                    <input type="submit"  name="logout" value="Cerrar sesión">
+                </form>
+            </div>
+        </div>
+    </div>  
     
-    <form action="" method="post"> {% csrf_token %}
-        <input type="submit"  name="logout" value="Cerrar sesión">
-    </form>
 
 {% endblock content %}

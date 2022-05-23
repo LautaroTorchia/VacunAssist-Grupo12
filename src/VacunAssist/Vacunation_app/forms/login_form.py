@@ -21,7 +21,8 @@ class LoginForm (AuthenticationForm):
 
 
 class LoginClaveForm (AuthenticationForm):
-    clave = forms.CharField(max_length=4)
+    clave = forms.CharField(max_length=4, label='',
+            widget=forms.TextInput(attrs={'placeholder': 'Clave'}))
     username=None
     password=None
 

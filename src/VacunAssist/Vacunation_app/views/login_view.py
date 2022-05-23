@@ -45,6 +45,7 @@ def get_referer(request):
     return referer
 
 class CustomLoginClave(LoginView):
+    template_name="registration/loginClave.html"
     authentication_form= LoginClaveForm
     def post(self, request, *args, **kwargs):
         instance_form=self.get_form(form_class=self.authentication_form)

@@ -6,13 +6,13 @@
 {% block content %}
 
 <div class="clave_main_container">
-    <img src="{% static 'img/valija.png' %}" alt="" class=valija >
+    <img src="{% static 'img/valija.png' %}" alt="" class="valija" >
     <div class="clave_container">
 
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class=login >Iniciar Sesión</button>
+                <button type="submit" class="login" >Iniciar Sesión</button>
             </form>
 
             {% if messages %}
@@ -22,7 +22,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            <a href="" class= olvidaste_clave >Olvidaste tu clave?</a>
+            <a href="" class= "olvidaste_clave" >Olvidaste tu clave?</a>
     </div>
 </div>
 

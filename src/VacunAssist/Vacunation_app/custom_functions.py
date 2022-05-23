@@ -38,3 +38,10 @@ def check_dni(dni):
         except requests.exceptions.ConnectionError as e:
             datos_de_la_persona['mensaje de error']="Ocurrio un error en la conexion con el servidor de validacion"
             return False, datos_de_la_persona
+
+
+def get_referer(request):
+    referer = request.META.get('HTTP_REFERER')
+    if not referer:
+        return None
+    return referer

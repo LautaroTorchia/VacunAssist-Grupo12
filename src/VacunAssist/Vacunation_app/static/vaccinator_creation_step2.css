@@ -91,3 +91,10 @@ h5{
     line-height: 19px;
     color: #7C8DA6;
 }
+
+li{
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 500;
+    line-height: 19px;
+}

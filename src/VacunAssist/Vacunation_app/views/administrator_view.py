@@ -1,18 +1,17 @@
 import random
 from django.shortcuts import render
-#from matplotlib.style import context
 from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm, EnteringDniForm
 from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio
 import string
 from django.core.mail import send_mail
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from ..custom_functions import check_dni
+from ..custom_functions import check_dni, get_referer
 from django.views.generic.edit import FormView
 from ..forms.update_name_form import NameUpdateForm
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -51,6 +50,9 @@ def validating_dni_for_vaccinator_view(request):
 
 @login_required(login_url="/accounts/login")
 def creating_vaccinator_view(request):
+    if not get_referer(request):
+            return redirect("/administrator/create_vaccinator/")
+            
     letters = string.ascii_lowercase
     numbers = string.digits
     user_creation_form = CreatingUserForm(request.POST or None)

@@ -1,19 +1,20 @@
+{% load static %}
 <nav>
-    <div class="icon_container ">
-        <img src="../static/img/menu_icon.svg" alt="menu_icon">
-        <p id="menu_text">Menú</p>
+    <div class="icon_container container-fluid">
+        <img src="{% static 'img/menu_icon.svg' %}" alt="menu_icon">
+        <div id="menu_text">Menú</div>
     </div>
-    <div class="options_container">
-        <div class="element_container">
-            <img src="../static/img/location_icon.svg" alt="loc_icon">
+    <div class="options_container container-fluid">
+        <div class="element_container container-fluid">
+            <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
             <a class="text_form" href="/zona">Zona</a>
         </div>
         <div class="element_container">
-            <img src="../static/img/notification_icon.svg" alt="loc_icon" class="icon_form">
+            <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
             <a class="text_form" href="/notifications">Notificaciones</a>
         </div>
         <div class="element_container">
-            <img src="../static/img/contact_icon.svg" alt="loc_icon">
+            <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon">
             <a class="text_form" href="/contact">Contactenos</a>
         </div>
     </div>

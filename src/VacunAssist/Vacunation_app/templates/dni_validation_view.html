@@ -1,20 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'vaccinator_creation.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
 
 {% block content %}
-    <h1> Creacion de un vacunador</h1>  
-    <form action="" method="post"> {% csrf_token %}
-        {{ form.as_p }}
-        {% if messages %}
-            <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        <input type="submit" value="Validar DNI">
-    </form>
-    {% if created_correctly == "True" %}
-        <h3>Cuenta creada correctamente</h3>
-    {% endif %}
+    <div class="total_container container-fluid d-flex flex-row">
+        {% include "navbar.html" %}
+        <div class="main_container">
+            {% include "presentacion.html" %}
+            <div class="creacion_container">
+                <div class="texto_container d-flex flex-column">
+                    <h3> Cree un vacunador aqui</h3>
+                    <h5>Paso 1/2</h5>
+                </div>
+                <form action="" method="post"> {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <input type="submit" value="Validar DNI">
+                </form>
+                {% if created_correctly == "True" %}
+                    <h3 id="success">Cuenta creada correctamente</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+   
 
 {% endblock content %}

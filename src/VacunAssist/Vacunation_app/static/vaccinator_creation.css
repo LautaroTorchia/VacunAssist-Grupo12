@@ -34,7 +34,7 @@
     flex-grow: 0;
 }
 
-input[type="email"]{
+input[type="text"]{
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -81,7 +81,7 @@ input[type="submit"]{
 }
 
 #success{
-    color:green;
+    color:#027D0E;
 }
 
 h5{
@@ -90,4 +90,11 @@ h5{
     font-weight: 100;
     line-height: 19px;
     color: #7C8DA6;
+}
+
+.error{
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 500;
+    line-height: 19px;
 }

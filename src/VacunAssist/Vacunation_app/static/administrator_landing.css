@@ -4,57 +4,7 @@
     position: relative;
     background: #FFFFFF;
 }
-/* NavBar */
-.navbar_container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 3px 14px;
-    gap: 42px;
-    background: linear-gradient(90deg, rgba(224, 224, 224, 0.22) -43.55%, #FBFAF8 118.41%);
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-.icon_container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    background: #E9F9DD;
 
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-.options_container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 30px;
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-
-}
-
-.element_container{
-display: flex;
-flex-direction: row;
-align-items: center;
-padding: 0px;
-gap: 14px;
-flex: none;
-order: 0;
-flex-grow: 0;
-}
 
 /* Principal */
 .main_fields_container{
@@ -67,23 +17,6 @@ flex-grow: 0;
     flex-grow: 0;
 
 }
-/* Nombres */
-.text_container{
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 30px 40px;
-    gap: 10px;
-    
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-   /* Botones */
-
 .button_container{
     /* Auto layout */
 
@@ -105,7 +38,7 @@ flex-grow: 0;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;
+    padding: 30px;
     gap: 30px;
     /* Inside auto layout */
     flex: none;
@@ -126,49 +59,14 @@ input{
     order: 1;
     flex-grow: 0;
     font-family: 'Montserrat';
+    font-size: 25px;
     font-style: normal;
     font-weight: 500;
-    font-size: 25px;
     line-height: 30px;
 
     color: #FFFFFF;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 0;
-flex-grow: 0;
-}
-
-#menu_text{
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 28px;
-
-    color: #739F52;
-
-    /* Inside auto layout */
-
     flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-.text_form{
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 18px;
-    color: #555658;
-
-    flex: none;
-    order: 1;
+    order: 0;
     flex-grow: 0;
 }
 
@@ -178,3 +76,4 @@ flex-grow: 0;
     order: 0;
     flex-grow: 0;
 }
+

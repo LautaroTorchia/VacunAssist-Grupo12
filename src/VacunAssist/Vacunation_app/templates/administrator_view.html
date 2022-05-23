@@ -4,18 +4,19 @@
 {% block css %}
     {% load bootstrap4 %}
     {% bootstrap_css %}
-    <link rel="stylesheet" href="../static/administrator_landing.css">
+    <link rel="stylesheet" href="{% static 'administrator_landing.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
 
 {% block content %}
     <div class="main_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
+        <div class="navbar_container ">
             {% include "navbar.html" %}
         </div>
         <div class="main_fields_container align-self-start ">
-            <div class="text_container">    
-                <h1> Vista del administrador</h1>
-            </div>
+            {% include "presentacion.html" %}
+            
             <div class="button_container">
                 <div class="row_container">
                     <form method="GET" action="create_vaccinator/">
@@ -28,7 +29,18 @@
                         <input type="submit" class="text_button_form" value="Ver stock en los vacunatorios"/>
                     </form>
                 </div>
-            </div>
+                <div class="row_container">
+                    <form method="GET" action="create_vaccinator/">
+                        <input type="submit" class="text_button_form" value="Crear cuenta de vacunador"/>
+                    </form>
+                    <form method="GET" action="vaccinators_list/">
+                        <input type="submit" class="text_button_form" value="Ver listado de vacunadores"/>
+                    </form>
+                    <form method="GET" action="stock/">
+                        <input type="submit" class="text_button_form" value="Ver stock en los vacunatorios"/>
+                    </form>
+                </div>
+            </div>  
         </div>
     </div>
 

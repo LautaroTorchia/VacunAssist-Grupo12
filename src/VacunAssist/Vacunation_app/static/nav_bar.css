@@ -13,6 +13,7 @@
     order: 0;
     flex-grow: 0;
 }
+
 .icon_container{
     display: flex;
     flex-direction: row;
@@ -59,9 +60,10 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    line-height: 20px;
+    font-size: 15px;
+    line-height: 18px;
     /* identical to box height */
-    color: #555658;
+    color: #000000;
     flex: none;
     order: 1;
     flex-grow: 0;

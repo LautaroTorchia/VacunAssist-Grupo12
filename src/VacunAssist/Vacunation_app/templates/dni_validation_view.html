@@ -11,7 +11,9 @@
 
 {% block content %}
     <div class="total_container container-fluid d-flex flex-row">
-        {% include "navbar.html" %}
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
         <div class="main_container">
             {% include "presentacion.html" %}
             <div class="creacion_container">

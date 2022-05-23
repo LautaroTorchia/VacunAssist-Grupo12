@@ -43,8 +43,9 @@ class CustomUserManager(BaseUserManager):  #Cambiar para que se vea más como el
         user.is_superuser = extra_fields["is_superuser"]
         user.is_active = True
         user.save()
-        print(permissions)
-        user.user_permissions.set(list([permissions]))
+        user.user_permissions.set([permissions])
+        
+        return user
 
     def create_vaccinator(self, dni, password,nombre_completo, fecha_nac, email,
                     clave):

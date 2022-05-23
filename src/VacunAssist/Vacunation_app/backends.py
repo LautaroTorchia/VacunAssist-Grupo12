@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 Usuario = get_user_model()
 class UsuarioBackend(ModelBackend):
     def authenticate(self, request, username, password):
-        #kwargs=kwargs["kwargs"]
         try:
             user = Usuario.objects.get(dni=username)
             if user.clave == password:   

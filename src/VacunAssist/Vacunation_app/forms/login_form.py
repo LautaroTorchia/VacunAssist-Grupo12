@@ -3,8 +3,9 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class LoginForm (AuthenticationForm):
-    dni_o_mail = forms.CharField()
-    contraseña = forms.CharField(widget=forms.PasswordInput())
+    dni_o_mail = forms.CharField(label='',
+            widget=forms.TextInput(attrs={'placeholder': 'Usuario'}))
+    contraseña = forms.CharField(label='',widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
     username=None
     password=None
     

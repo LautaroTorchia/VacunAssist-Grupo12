@@ -51,7 +51,7 @@ order: 1;
 flex-grow: 0;
 }
 
-input[type="text"]{
+input[type="text"],input[type="password"]{
 
 /* Clave_field */
 
@@ -70,6 +70,8 @@ height: 40px;
 border: 1px solid #2D2C2C;
 border-radius: 4px;
 
+
+
 /* Inside auto layout */
 flex: none;
 order: 0;
@@ -79,7 +81,7 @@ flex-grow: 0;
 ::placeholder{
  /* Clave_placeholder */
 
-width: 47px;
+width: 300px;
 height: 20px;
 
 font-family: 'Montserrat';
@@ -88,7 +90,7 @@ font-weight: 300;
 font-size: 14px;
 line-height: 20px;
 /* identical to box height, or 143% */
-text-align: center;
+text-align: start;
 text-transform: uppercase;
 
 color: #2D2C2C;

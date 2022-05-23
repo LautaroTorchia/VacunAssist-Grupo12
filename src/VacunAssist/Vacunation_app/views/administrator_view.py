@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render
 from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm, EnteringDniForm
-from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio
+from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio,CustomUserManager
 import string
 from django.core.mail import send_mail
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
@@ -11,17 +11,17 @@ from django.views.generic.edit import FormView
 from ..forms.update_name_form import NameUpdateForm
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
-@login_required(login_url="/accounts/login")
+@permission_required("Administrador")
+@login_required()
 def administrator_home_view(request):
     return render(request, "administrator_view.html", {})
 
-
-@login_required(login_url="/accounts/login")
+@permission_required("Administrador")
+@login_required()
 def validating_dni_for_vaccinator_view(request):
 
     dni_form = EnteringDniForm(request.POST or None)
@@ -48,8 +48,8 @@ def validating_dni_for_vaccinator_view(request):
 
     return render(request, "dni_validation_view.html", {"form": dni_form,"created_correctly":created_correctly})
 
-
-@login_required(login_url="/accounts/login")
+@permission_required("Administrador")
+@login_required()
 def creating_vaccinator_view(request):
     if not get_referer(request):
             return redirect("/administrator/create_vaccinator/")
@@ -59,20 +59,13 @@ def creating_vaccinator_view(request):
     user_creation_form = CreatingUserForm(request.POST or None)
 
     if user_creation_form.is_valid():
-
         user_instance = user_creation_form.save(commit=False)
-
+        vaccinator= CustomUserManager()
         password = ''.join(random.choice(letters) for i in range(10))
-        user_instance.nombre_completo=request.session["nombre_to_create"]
-        user_instance.fecha_nac=request.session["fecha_to_create"]
-        user_instance.clave = ''.join(random.choice(numbers) for i in range(4))
-        user_instance.set_password(password)
-        user_instance.dni = request.session["dni_to_create"]
+        clave= ''.join(random.choice(numbers) for i in range(4))
+        vaccinator.create_vaccinator(request.session["dni_to_create"],
+        password,request.session["nombre_to_create"],request.session["fecha_to_create"],user_instance.email,clave)
 
-        user_instance.save()
-
-        vaccinator_instance = Vacunador.objects.create(user=user_instance)
-        vaccinator_instance.save()
         user_creation_form = CreatingUserForm()
 
         send_mail("Registro de vacunador a VacunAssist",
@@ -90,15 +83,15 @@ def creating_vaccinator_view(request):
 
     return render(request, "vaccinator_creation.html", context)
 
-
-@login_required(login_url="/accounts/login")
+@permission_required("Administrador")
+@login_required()
 def vaccinators_list_view(request):
     queryset = Vacunador.objects.all()
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
-
-@login_required(login_url="/accounts/login")
+@permission_required("Administrador")
+@login_required()
 def stock_view(request):
 
     vaccine_info = VacunaEnVacunatorio.objects.all()

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import (BaseUserManager)
 from django.forms import ValidationError
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import Permission
 
 
 def validate_alpha(nombre):
@@ -16,11 +17,9 @@ def validate_decimal(dni):
         raise ValidationError(f"El dni debe ser numerico")
 
 
-class CustomUserManager(
-        BaseUserManager
-):  #Cambiar para que se vea más como elde la página o create superuser
+class CustomUserManager(BaseUserManager):  #Cambiar para que se vea más como elde la página o create superuser
     def create_user(self, dni, password, nombre_completo, fecha_nac, email,
-                    clave, **extra_fields):
+                    clave,permissions, **extra_fields):
         if not dni:
             raise ValueError("El dni es obligatorio")
         if not nombre_completo:
@@ -32,6 +31,7 @@ class CustomUserManager(
         if not clave:
             raise ValueError("La clave es obligatoria")
         email = self.normalize_email(email)
+        self.model=Usuario
         user = self.model()
         user.dni = dni
         user.email = email
@@ -41,15 +41,37 @@ class CustomUserManager(
         user.set_password(password)
         user.is_staff = extra_fields["is_staff"]
         user.is_superuser = extra_fields["is_superuser"]
-        user.is_active = extra_fields["is_active"]
+        user.is_active = True
         user.save()
+        print(permissions)
+        user.user_permissions.set(list([permissions]))
+
+    def create_vaccinator(self, dni, password,nombre_completo, fecha_nac, email,
+                    clave):
+        extra_fields={}
+        extra_fields["is_staff"] = False
+        extra_fields["is_superuser"] = False
+        user= self.create_user(dni, password,nombre_completo, fecha_nac, email,
+                    clave,permissions=Permission.objects.get(codename="Vacunador"), **extra_fields)
+        vaccinator_instance = Vacunador.objects.create(user=user)
+        vaccinator_instance.save()
+        return user
+
+    def create_administrator(self, dni, password,nombre_completo, fecha_nac, email,
+                    clave, **extra_fields):
+        extra_fields["is_staff"] = False
+        extra_fields["is_superuser"] = False
+        user= self.create_user(dni, password,nombre_completo, fecha_nac, email,
+                    clave,permissions=Permission.objects.get(codename="Administrador"), **extra_fields)
+        administrator_instance = Administrador.objects.create(user=user)
+        administrator_instance.save()
+        return user
 
     def create_superuser(self, dni, password, **extra_fields):
         extra_fields["is_staff"] = True
         extra_fields["is_superuser"] = True
-        extra_fields["is_active"] = True
 
-        return self.create_user(dni, password, **extra_fields)
+        return self.create_user(dni, password,permissions=Permission.objects.all(), **extra_fields)
 
 
 class Usuario(AbstractUser):
@@ -59,8 +81,7 @@ class Usuario(AbstractUser):
     username = None
     REQUIRED_FIELDS = ["nombre_completo", "fecha_nac", "email", "clave"]
     objects = CustomUserManager()
-    nombre_completo = models.CharField(
-        max_length=50)  # ,validators=[validate_alpha])
+    nombre_completo = models.CharField(max_length=50)  # ,validators=[validate_alpha])
     dni = models.CharField(max_length=15,
                            validators=[validate_decimal],
                            unique=True)
@@ -98,10 +119,22 @@ class Paciente(models.Model):
 
 class Vacunador(models.Model):
     user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    class Meta:
+        permissions = [
+            ("Vacunador", "Correspondiente al rol de Vacunador en la documentación"),
+        ]
 
     def __str__(self):
         return f"{self.user}"
 
+class Administrador(models.Model):
+    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    class Meta:
+        permissions = [
+            ("Administrador", "Correspondiente al rol de administrador en la documentación"),
+        ]
+    def __str__(self):
+        return f"{self.user}"
 
 class Vacuna(models.Model):
     class Vacunas(models.TextChoices):

@@ -13,7 +13,7 @@ from ..custom_functions import get_referer
 #TODO: Usar isvalid para los datos como en cambiarNombre
 Usuario = get_user_model()
 class CustomLogin(LoginView):
-    template_name="registration/login.html"
+    template_name="registration/loginClave.html"
     authentication_form= LoginForm
     next_page="accounts/loginClave/"
     

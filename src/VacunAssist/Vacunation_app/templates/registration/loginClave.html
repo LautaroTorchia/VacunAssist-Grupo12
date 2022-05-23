@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'login_clave.css' %}">
 {% endblock css %}
 {% block content %}

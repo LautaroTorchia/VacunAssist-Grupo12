@@ -8,23 +8,24 @@
 {% block content %}
 
 <div class="clave_main_container">
-    <img src="{% static 'img/valija.png' %}" alt="" class="valija" >
-    <div class="clave_container">
+    <div class="elements d-flex flex-column align-items-center">
+        <img src="{% static 'img/Valija.png' %}" alt="" class="valija" >
+        <div class="clave_container">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class=login >Iniciar Sesión</button>
+                </form>
 
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="login" >Iniciar Sesión</button>
-            </form>
-
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <a href="" class= "olvidaste_clave" >Olvidaste tu clave?</a>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <a href="" class="olvidaste_clave align-self-start" >¿Olvidaste tu clave?</a>
+        </div>
     </div>
 </div>
 

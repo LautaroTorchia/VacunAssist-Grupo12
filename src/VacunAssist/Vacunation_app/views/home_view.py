@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth import logout
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,7 +17,17 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
+           
             return TemplateView.get(self,request,args,kwargs)
         except:
             return redirect("accounts/login/")
-    
+
+
+def zona_view(request):
+    return render(request,"zona.html",{})   
+
+def notification_view(request):
+    return render(request,"notifications.html",{})   
+
+def contact_view(request):
+    return render(request,"contact.html",{})   

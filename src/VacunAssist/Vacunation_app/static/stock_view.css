@@ -1,0 +1,150 @@
+.main_container{
+    padding: 0px;
+    position: relative;
+    background: #FFFFFF;
+}
+
+.stock_container{
+    display: flex;
+    flex-direction:row;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.vaccination_center_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 0px 20px;
+
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.vaccines_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 0px 20px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.title{
+
+    padding: 15px;
+    gap: 10px;
+    background: #4E4E4E;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 20px;
+
+
+    color: #FFFFFF;
+
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.item{
+
+    padding: 10px;
+    gap: 10px;
+    background: #54CBFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #FFFFFF;
+
+
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 0px 10px;
+
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+input,select{
+
+    padding: 10px;
+    gap: 10px;
+    background: #FFFFFF;
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+input[type="submit"]{
+
+    padding: 10px 77px;
+    gap: 10px;
+    background: #54CBFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 30px;
+    color: #FFFFFF;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+::placeholder{
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 100;
+    font-size: 25px;
+    line-height: 29px;
+
+    color: #C8CBD0;
+
+}
+
+#actualizado{
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+}

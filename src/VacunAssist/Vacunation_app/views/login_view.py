@@ -29,7 +29,7 @@ class CustomLogin(LoginView):
             try:
                 user = Usuario.objects.get(email=dni_o_mail)
             except ObjectDoesNotExist:
-                messages.error(self.request,"Usuario no existe")
+                messages.error(self.request,"Usuario no registrado")
                 return redirect("/accounts/login/")
         if check_password(password,user.password):
             request.session['dni'] = user.dni

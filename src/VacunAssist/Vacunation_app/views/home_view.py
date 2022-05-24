@@ -17,7 +17,6 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-           
             return TemplateView.get(self,request,args,kwargs)
         except:
             return redirect("accounts/login/")

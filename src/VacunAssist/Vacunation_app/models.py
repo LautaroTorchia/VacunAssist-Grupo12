@@ -19,7 +19,7 @@ def validate_decimal(dni):
 
 class CustomUserManager(BaseUserManager):  #Cambiar para que se vea más como elde la página o create superuser
     def create_user(self, dni, password, nombre_completo, fecha_nac, email,
-                    clave,permissions, **extra_fields):
+                    clave, **extra_fields):
         if not dni:
             raise ValueError("El dni es obligatorio")
         if not nombre_completo:
@@ -52,23 +52,26 @@ class CustomUserManager(BaseUserManager):  #Cambiar para que se vea más como el
         extra_fields={}
         extra_fields["is_staff"] = False
         extra_fields["is_superuser"] = False
-        user= self.create_user(dni, password,nombre_completo, fecha_nac, email,
-                    clave,permissions=Permission.objects.get(codename="Vacunador"), **extra_fields)
+        user= self.create_user(dni, password,nombre_completo, fecha_nac, email,clave, **extra_fields)
+        user.user_permissions.set([Permission.objects.get(codename="Vacunador")])
         vaccinator_instance = Vacunador.objects.create(user=user)
         vaccinator_instance.save()
         return user
 
     def create_administrator(self, dni, password,nombre_completo, fecha_nac, email,
-                    clave, **extra_fields):
+                    clave):
+        extra_fields={}
         extra_fields["is_staff"] = False
         extra_fields["is_superuser"] = False
         user= self.create_user(dni, password,nombre_completo, fecha_nac, email,
-                    clave,permissions=Permission.objects.get(codename="Administrador"), **extra_fields)
+        clave, **extra_fields)
+        user.user_permissions.set([Permission.objects.get(codename="Administrador")])
         administrator_instance = Administrador.objects.create(user=user)
         administrator_instance.save()
         return user
 
-    def create_superuser(self, dni, password, **extra_fields):
+    def create_superuser(self, dni, password):
+        extra_fields={}
         extra_fields["is_staff"] = True
         extra_fields["is_superuser"] = True
 

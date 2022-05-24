@@ -15,12 +15,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def administrator_home_view(request):
     return render(request, "administrator_view.html", {})
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def validating_dni_for_vaccinator_view(request):
 
@@ -48,7 +48,7 @@ def validating_dni_for_vaccinator_view(request):
 
     return render(request, "dni_validation_view.html", {"form": dni_form,"created_correctly":created_correctly})
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def creating_vaccinator_view(request):
     if not get_referer(request):
@@ -83,24 +83,14 @@ def creating_vaccinator_view(request):
 
     return render(request, "vaccinator_creation.html", context)
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def vaccinators_list_view(request):
     queryset = Vacunador.objects.all()
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
->>>>>>> parent of b23d763 (agrego el script para crear administradores)
-=======
-
-
->>>>>>> d4f20e74ec224613d4096e967bf594f2fe6841ab
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def stock_view(request):
 

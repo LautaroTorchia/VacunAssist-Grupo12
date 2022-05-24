@@ -3,7 +3,7 @@ from ..models import Usuario
 from django.contrib.auth.decorators import login_required, permission_required
 from ..forms.updating_user_form import UpdatingUserForm
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def vaccinator_delete_view(request, id):
     vacunador = Usuario.objects.get(id=id)
@@ -15,7 +15,7 @@ def vaccinator_delete_view(request, id):
     context = {"vacunador": vacunador}
     return render(request, "vaccinator_delete.html", context)
 
-@permission_required("Administrador")
+@permission_required("Vacunation_app.Administrador")
 @login_required()
 def edit_vaccinator_profile_view(request, id):
     vacunador = Usuario.objects.get(id=id)

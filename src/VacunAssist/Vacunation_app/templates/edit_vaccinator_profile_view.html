@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'edit_vaccinator.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
+
 {% block title %}Editar Perfil de Vacunador{% endblock title%}
 {% block content %}
-    <h1>Editando el Perfil de {{ vacunador.nombre_completo }} </h1>
-    <br/><br/>
-
-    <div class="form-group">
-<form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-secondary">Aceptar</button>
+    <div class="main_container d-flex container-fluid">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container">
+            {% include "presentacion.html" %}
+            <div class="list_cointainer">
+                <h1>Editando el Perfil de {{ vacunador.nombre_completo }} </h1>
+                <br/><br/>
+                <div class="form-group">
+                    <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Aceptar</button>
+                    {% if success %}
+                        <h3>Cuenta editada con exito</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
+    
 
     
 {% endblock content %}

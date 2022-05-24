@@ -1,23 +1,43 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'stock_view.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
 
 {% block content %}
-
-    <h1> Stock de vacunas de Vacunatorios </h1>
-    {% for place in vaccination_center_info %}
-        <h2>{{ place.nombre }}</h2>
-        {% for vaccine in vaccine_info %}
-            {% if place.nombre == vaccine.vacunatorio.nombre %}
-                Vacuna: {{ vaccine.vacuna.nombre }}- Stock:{{ vaccine.stock }}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-
-    <form action="" method="post"> {% csrf_token %}
-        {{  stock_form.as_p }}
-        <input type="submit" value="Aumentar stock">
-    </form>
-    {% if updated %}
-        <h3>Stock actualizado</h3>
-    {% endif %}
-
+    <div class="main_container container-fluid d-flex flex-row">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container">
+            {% include "presentacion.html" %}
+            <div class="stock_container container-fluid">
+                {% for place in vaccination_center_info %}
+                    <div class="vaccination_center_container">
+                        <h2 class='title'>{{ place.nombre | capfirst }}</h2>
+                        <div class="vaccines_container">
+                        {% for vaccine in vaccine_info %}
+                            {% if place.nombre == vaccine.vacunatorio.nombre %}
+                                <p class="item">Vacunas de {{ vaccine.vacuna.nombre }} en Stock: {{ vaccine.stock }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                        <form action="" method="post"> {% csrf_token %}
+                            {{  stock_form.as_p }}
+                            <input type="submit" value="Aumentar stock">
+                        </form>
+                        {% if updated %}
+                        <h3 id="actualizado">Stock actualizado</h3>
+                        {% endif %}
+            </div>
+               
+            </div>
+        </div>
+    </div>
 {% endblock content %}

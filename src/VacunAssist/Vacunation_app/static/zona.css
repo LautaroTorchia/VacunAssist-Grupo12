@@ -1,0 +1,28 @@
+.main_container{
+    padding: 0px;
+    position: relative;
+    background: #FFFFFF;
+}
+
+.zona_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    
+}
+
+.zona{
+    width: 60vw;
+    height: 70vh;
+    background-size:cover;
+    background-image: url(img/zona.png);
+}
+
+.text{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+}

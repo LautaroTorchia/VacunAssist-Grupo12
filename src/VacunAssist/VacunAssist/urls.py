@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
-from Vacunation_app.views.home_view import HomeView
+from Vacunation_app.views.home_view import HomeView, contact_view, notification_view, zona_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +27,8 @@ urlpatterns = [
          include("Vacunation_app.urls.administrator_urls"),
          name="admin-home-view"),
     path('', HomeView.as_view(), name='homepage'),
+    path("zona",zona_view,name="zona"),
+    path("notifications",notification_view,name="notifications"),
+    path("contact",contact_view,name="contact_us")
+
 ]

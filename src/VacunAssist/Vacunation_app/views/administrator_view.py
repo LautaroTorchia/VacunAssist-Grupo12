@@ -90,7 +90,9 @@ def vaccinators_list_view(request):
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
-@permission_required("Vacunation_app.Administrador")
+
+
+@permission_required("Administrador")
 @login_required()
 def stock_view(request):
 

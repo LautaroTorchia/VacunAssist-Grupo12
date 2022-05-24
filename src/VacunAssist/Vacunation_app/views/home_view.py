@@ -17,6 +17,8 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
+            if request.user.has_perm("Vacunation_app.Administrador"):
+                return redirect("/administrator")
             return TemplateView.get(self,request,args,kwargs)
         except:
             return redirect("accounts/login/")

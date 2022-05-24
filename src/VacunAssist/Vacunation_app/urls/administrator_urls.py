@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 
 from ..views.administrator_view import *
 from ..views.vaccinator_list_view import *
+from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
     path("", administrator_home_view, name="admin-home-view"),
@@ -16,7 +17,7 @@ urlpatterns = [
          name="create_vaccinator_step2"),
     path("vaccinators_list/", vaccinators_list_view, name="vaccinators_list"),
     path("stock/", stock_view, name="stock_view"),
-    path('cambiarNombre/', NameUpdate.as_view(), name="cambiarNombre"),
+    path('change_name/', NameUpdate.as_view(), name="change_name"),
     path('vaccinator/<int:id>/',
          edit_vaccinator_profile_view,
          name="edit_vaccinator_profile"),

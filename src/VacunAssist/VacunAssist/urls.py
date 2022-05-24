@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.home_view import HomeView, contact_view, notification_view, zona_view
+from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),

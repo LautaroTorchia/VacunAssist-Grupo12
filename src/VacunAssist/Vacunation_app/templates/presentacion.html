@@ -7,6 +7,9 @@
     <div class="perfil_container">
         <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile">
         <h5>Mi perfil</h5>
-        <img src="flechita" alt="">
+        <form action="" method="post"> {% csrf_token %}
+            <input type="submit"  name="logout" value="Cerrar sesión">
+        </form>
     </div>
+    
 </div>

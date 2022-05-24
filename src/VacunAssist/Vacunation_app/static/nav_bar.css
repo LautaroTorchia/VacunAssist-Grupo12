@@ -86,3 +86,7 @@
     order: 1;
     flex-grow: 0;
 }
+
+a:hover {
+    text-decoration: none;
+}

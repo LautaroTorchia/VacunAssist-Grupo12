@@ -20,8 +20,11 @@ def vaccinator_delete_view(request, id):
 def edit_vaccinator_profile_view(request, id):
     vacunador = Usuario.objects.get(id=id)
     vacunador_update_form = UpdatingUserForm(request.POST or None)
+    success=False
     if vacunador_update_form.is_valid():
         vacunador.set_password(vacunador_update_form.cleaned_data["password"])
         vacunador.save()
-    context = {"vacunador": vacunador, "form": vacunador_update_form}
+        success=True
+        vacunador_update_form = UpdatingUserForm()
+    context = {"vacunador": vacunador, "form": vacunador_update_form,"success":success}
     return render(request, "edit_vaccinator_profile_view.html", context)

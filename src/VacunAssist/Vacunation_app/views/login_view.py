@@ -52,9 +52,11 @@ class CustomLoginClave(LoginView):
         print(user)
         if user is not None:
             login(request, user)
+            if user.has_perm("Vacunation_app.Administrador"):
+                return redirect("/administrator")
             return redirect("/")
         else:
-            messages.error(self.request,"Clave inválda")
+            messages.error(self.request,"Código incorrecto")
             return redirect(f"/accounts/loginClave/")
     
     def get(self, request, *args, **kwargs):

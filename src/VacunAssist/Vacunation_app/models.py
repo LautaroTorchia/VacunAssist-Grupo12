@@ -43,7 +43,6 @@ class CustomUserManager(BaseUserManager):  #Cambiar para que se vea más como el
         user.is_superuser = extra_fields["is_superuser"]
         user.is_active = True
         user.save()
-        user.user_permissions.set([permissions])
         
         return user
 

@@ -91,10 +91,15 @@ def vaccinators_list_view(request):
     return render(request, "vaccinators_list.html", context)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> parent of b23d763 (agrego el script para crear administradores)
+=======
+
+
+>>>>>>> d4f20e74ec224613d4096e967bf594f2fe6841ab
 @permission_required("Administrador")
 @login_required()
 def stock_view(request):

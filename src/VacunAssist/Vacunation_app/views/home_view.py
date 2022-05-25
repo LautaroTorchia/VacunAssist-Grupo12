@@ -23,7 +23,10 @@ class HomeView(LoginRequiredMixin,TemplateView):
         except:
             return redirect("accounts/login/")
 
-
+def logout_view(request):
+    logout(request)
+    return redirect("/accounts/login/")
+    
 def zona_view(request):
     return render(request,"zona.html",{})   
 

@@ -87,19 +87,8 @@
     flex-grow: 0;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px 0px 10px;
 
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-input,select{
+input[type="text"],select{
 
     padding: 10px;
     gap: 10px;
@@ -111,8 +100,7 @@ input,select{
     flex-grow: 0;
 }
 
-input[type="submit"]{
-
+.btn-submit{
     padding: 10px 77px;
     gap: 10px;
     background: #54CBFF;

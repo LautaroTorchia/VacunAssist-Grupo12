@@ -30,7 +30,7 @@
                     {% endfor %}
                         <form action="" method="post"> {% csrf_token %}
                             {{  stock_form.as_p }}
-                            <input type="submit" value="Aumentar stock">
+                            <input type="submit" class="btn-submit" value="Aumentar stock">
                         </form>
                         {% if updated %}
                         <h3 id="actualizado">Stock actualizado</h3>

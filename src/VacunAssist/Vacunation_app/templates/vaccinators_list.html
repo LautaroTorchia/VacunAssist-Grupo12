@@ -1,15 +1,34 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'vaccinator_list.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
 
 {% block content %}
-    <h1>Ver Listado</h1>
-    {% for instance in object_list %}
-        <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
-        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
-            <input type="submit" value="borrar">
-        </form>
-        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
-            <input type="submit" value="editar">
-        </form>
-    {% endfor %}
-{% endblock content %}
+    <div class="main_container container-fluid d-flex flex-row">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container align-self-start ">
+            {% include "presentacion.html" %}
+            <div class="vaccinator_list_container">
+                <h1>Ver Listado</h1>
+                {% for instance in object_list %}
+                    <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
+                    <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
+                        <input type="submit" value="borrar">
+                    </form>
+                    <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
+                        <input type="submit" value="editar">
+                    </form>
+                {% endfor %}
+            </div>  
+        </div>
+    </div>
 
+{% endblock content %}

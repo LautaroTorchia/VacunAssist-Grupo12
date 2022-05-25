@@ -54,7 +54,8 @@ input[type="text"]{
     flex-grow: 0;
 }
 
-input[type="submit"]{
+
+.btn-submit{
     display: flex;
     flex-direction: row;
     justify-content: center;

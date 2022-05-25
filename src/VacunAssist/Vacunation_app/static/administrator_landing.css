@@ -46,7 +46,7 @@
     flex-grow: 0;
 }
 
-input{
+.text_button_form{
     display: flex;
     flex-direction: row;
     align-items: flex-start;

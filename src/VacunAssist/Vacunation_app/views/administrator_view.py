@@ -137,11 +137,11 @@ class NameUpdate(LoginRequiredMixin,PermissionRequiredMixin, FormView):
         nombre_nuevo = instance_form.cleaned_data["nombre_nuevo"]
         try:
             Vacunatorio.objects.get(nombre=nombre_nuevo)
-            messages.error(self.request, "Vacunatorio ya existe")
+            messages.error(self.request, "Nombre de vacunatorio en uso")
         except Vacunatorio.DoesNotExist:
             vacunatorio.nombre = nombre_nuevo
             vacunatorio.save()
-            messages.success(self.request, "Vacunatorio cambiado")
+            messages.success(self.request, f"Vacunatorio cambiado a: {vacunatorio.nombre}")
         return redirect("/administrator/change_name/")
 
     def get(self, request, *args, **kwargs):

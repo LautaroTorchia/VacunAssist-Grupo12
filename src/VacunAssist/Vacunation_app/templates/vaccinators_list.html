@@ -16,18 +16,23 @@
         </div>
         <div class="main_fields_container align-self-start ">
             {% include "presentacion.html" %}
-            <div class="vaccinator_list_container">
-                <h1>Ver Listado</h1>
-                {% for instance in object_list %}
-                    <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Zona: {{ instance.user.zona }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
-                    <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
-                        <input type="submit" value="borrar">
-                    </form>
-                    <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
-                        <input type="submit" value="editar">
-                    </form>
+            <h1>Ver Listado</h1>
+            {% for instance in object_list %}
+            <div class="vaccinator_list_container align-self-start">
+                    <p> Nombre: {{ instance.user.nombre_completo }}
+                        <br> DNI: {{ instance.user.dni }} 
+                        <br> Zona: {{ instance.user.zona }} 
+                        <br> Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
+                    <div class="button_container ml-auto p-2 align-self-end">
+                        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
+                            <input type="submit" value="borrar">
+                        </form>
+                        <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}'>
+                            <input type="submit" value="editar">
+                        </form>
+                    </div>
+                </div>  
                 {% endfor %}
-            </div>  
         </div>
     </div>
 

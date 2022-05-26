@@ -6,7 +6,7 @@ from ..models import Usuario
 class UpdatingUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ["password"]
+        fields = ["password","zona"]
         widget = {
             "password":
             forms.CharField(

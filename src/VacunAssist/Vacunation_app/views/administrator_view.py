@@ -2,21 +2,21 @@ import random
 from django.shortcuts import render
 from Vacunation_app.forms.stock_form import StockForm
 from ..forms.creating_user_form import CreatingUserForm, EnteringDniForm
-from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio,CustomUserManager
+from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
 import string
 from django.core.mail import send_mail
-from VacunAssist.settings import DEFAULT_FROM_EMAIL,PERMISSION_DENIED_URL
+from VacunAssist.settings import DEFAULT_FROM_EMAIL, PERMISSION_DENIED_URL
 from ..custom_functions import check_dni, get_referer
 from django.views.generic.edit import FormView
 from ..forms.update_name_form import NameUpdateForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import logout
 
 
-@permission_required("Vacunation_app.Administrador",raise_exception=True)
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def administrator_home_view(request):
     if "logout" in request.POST:
@@ -24,51 +24,59 @@ def administrator_home_view(request):
         return redirect("/accounts/login/")
     return render(request, "administrator_view.html", {})
 
-@permission_required("Vacunation_app.Administrador",raise_exception=True)
+
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def validating_dni_for_vaccinator_view(request):
 
     dni_form = EnteringDniForm(request.POST or None)
-    if len(request.GET)>0:
-        created_correctly=request.GET["success"]
+    if len(request.GET) > 0:
+        created_correctly = request.GET["success"]
     else:
-        created_correctly="false"
-    success=False
-    data={}
+        created_correctly = "false"
+    success = False
+    data = {}
 
     if dni_form.is_valid():
-        dni_to_validate=dni_form.cleaned_data.get("dni")
-        success,data=check_dni(dni_to_validate)
+        dni_to_validate = dni_form.cleaned_data.get("dni")
+        success, data = check_dni(dni_to_validate)
         if success:
 
-            request.session['dni_to_create']= dni_to_validate
-            request.session['fecha_to_create']= data["fecha_nacimiento"]
-            request.session['nombre_to_create']= data["nombre"]
+            request.session['dni_to_create'] = dni_to_validate
+            request.session['fecha_to_create'] = data["fecha_nacimiento"]
+            request.session['nombre_to_create'] = data["nombre"]
             return redirect("/administrator/create_vaccinator/step2")
 
         else:
-            messages.error(request,data["mensaje de error"])
-            dni_form=EnteringDniForm()
+            messages.error(request, data["mensaje de error"])
+            dni_form = EnteringDniForm()
 
-    return render(request, "dni_validation_view.html", {"form": dni_form,"created_correctly":created_correctly})
+    return render(request, "dni_validation_view.html", {
+        "form": dni_form,
+        "created_correctly": created_correctly
+    })
 
-@permission_required("Vacunation_app.Administrador",raise_exception=True)
+
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def creating_vaccinator_view(request):
     if not get_referer(request):
-            return redirect("/administrator/create_vaccinator/")
-            
+        return redirect("/administrator/create_vaccinator/")
+
     letters = string.ascii_lowercase
     numbers = string.digits
     user_creation_form = CreatingUserForm(request.POST or None)
 
     if user_creation_form.is_valid():
         user_instance = user_creation_form.save(commit=False)
-        vaccinator= CustomUserManager()
+        vaccinator = CustomUserManager()
         password = ''.join(random.choice(letters) for i in range(10))
-        clave= ''.join(random.choice(numbers) for i in range(4))
-        user_instance= vaccinator.create_vaccinator(request.session["dni_to_create"],
-        password,request.session["nombre_to_create"],request.session["fecha_to_create"],user_instance.email,clave)
+        clave = ''.join(random.choice(numbers) for i in range(4))
+        user_instance = vaccinator.create_vaccinator(
+            request.session["dni_to_create"], password,
+            request.session["nombre_to_create"],
+            request.session["fecha_to_create"], user_instance.email, clave,
+            user_instance.zona)
 
         user_creation_form = CreatingUserForm()
 
@@ -87,14 +95,16 @@ def creating_vaccinator_view(request):
 
     return render(request, "vaccinator_creation.html", context)
 
-@permission_required("Vacunation_app.Administrador",raise_exception=True)
+
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def vaccinators_list_view(request):
     queryset = Vacunador.objects.all()
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
-@permission_required("Vacunation_app.Administrador",raise_exception=True)
+
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def stock_view(request):
 
@@ -124,11 +134,11 @@ def stock_view(request):
     return render(request, "stock_view.html", context)
 
 
-class NameUpdate(LoginRequiredMixin,PermissionRequiredMixin, FormView):
+class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     form = NameUpdateForm
     template_name = "vacunatorio_name_update.html"
-    permission_required= ("Vacunation_app.Administrador",)
-    raise_exception=True
+    permission_required = ("Vacunation_app.Administrador", )
+    raise_exception = True
 
     def post(self, request, *args, **kwargs):
         instance_form = self.get_form(form_class=self.form)

@@ -19,7 +19,7 @@
             <div class="vaccinator_list_container">
                 <h1>Ver Listado</h1>
                 {% for instance in object_list %}
-                    <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
+                    <p> Nombre: {{ instance.user.nombre_completo }} / DNI: {{ instance.user.dni }} / Zona: {{ instance.user.zona }} / Fecha de Nacimiento: {{ instance.user.fecha_nac }} </p>
                     <form method="GET" action='/administrator{{ instance.user.get_absolute_url }}/delete'>
                         <input type="submit" value="borrar">
                     </form>

@@ -3,18 +3,15 @@ from ..models import Usuario
 
 
 class CreatingUserForm(forms.ModelForm):
-    
     class Meta:
         model = Usuario
-        fields = ["email"]
+        fields = ["email", "zona"]
         error_messages = {
-            'email' : {
-                'unique' : ("Registro fallido por email ya registrado")
+            'email': {
+                'unique': ("Registro fallido por email ya registrado")
             }
         }
 
 
 class EnteringDniForm(forms.Form):
-    dni=forms.CharField()
-    
-    
+    dni = forms.CharField()

@@ -1,0 +1,51 @@
+.main_container {
+    padding: 0px;
+    position: relative;
+    background: #FFFFFF;
+}
+
+.title {
+    padding: 15px;
+    gap: 10px;
+    background: #4E4E4E;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: auto;
+    color: #FFFFFF;
+    display: inline-block;
+    margin: 0 40px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.btn-submit {
+    padding: 10px 77px;
+    gap: 10px;
+    background: #54CBFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 30px;
+    color: #FFFFFF;
+    margin: 10px 0 0 40px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+
+}
+
+#cancelar:hover {
+    text-decoration: none;
+}

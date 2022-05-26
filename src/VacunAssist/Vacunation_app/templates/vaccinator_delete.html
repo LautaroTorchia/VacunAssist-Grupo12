@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'vaccinator_delete_view.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
 
 {% block content %}
+<div class="main_container container-fluid d-flex flex-row">
+    <div class="navbar_container">
+        {% include "navbar.html" %}
+    </div>
+    <div class="main_fields_container align-self-start ">
+        {% include "presentacion.html" %}
 <form action="" method="POST">{% csrf_token %}
-    <h1>¿Está seguro que quiere borrar al vacunador "{{ vacunador.nombre_completo }}"?</h1>
-    <p><input type="submit" value="Si" /> <a href='../../vaccinators_list/?'>Cancelar</a></p>
+    <h1 class="title">¿Está seguro que quiere borrar al vacunador "{{ vacunador.nombre_completo }}"?</h1>
+    <p><input class="btn-submit" type="submit" value="Aceptar" /> <a id="cancelar" class="btn-submit" href='../../vaccinators_list/?'>Cancelar</a></p>
 </form>
 {% endblock content %}

@@ -8,7 +8,7 @@
         <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile">
         <h5>Mi perfil</h5>
         <form action="/logout" method="post"> {% csrf_token %}
-            <input type="submit" class="logout"  name="logout" value="Cerrar sesión">
+            <input type="submit" class="logout"  name="logout" value="Cerrar sesión" id="logout">
         </form>
     </div>
     

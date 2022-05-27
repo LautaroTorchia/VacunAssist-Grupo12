@@ -1,4 +1,4 @@
-.navbar_container{
+.navbar_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +14,7 @@
     flex-grow: 0;
 }
 
-.icon_container{
+.icon_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -31,7 +31,7 @@
 
 }
 
-.options_container{
+.options_container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -44,7 +44,7 @@
 
 }
 
-.element_container{
+.element_container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -55,7 +55,7 @@
     flex-grow: 0;
 }
 
-.text_form{
+.text_form {
 
     font-family: 'Roboto';
     font-style: normal;
@@ -67,10 +67,11 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-    
-    
+
+
 }
-#menu_text{
+
+#menu_text {
 
     font-family: 'Roboto';
     font-style: normal;

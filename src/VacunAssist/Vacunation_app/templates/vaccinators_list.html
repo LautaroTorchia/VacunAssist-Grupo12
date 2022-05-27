@@ -18,6 +18,9 @@
             {% include "presentacion.html" %}
             <h1>Ver Listado</h1>
             <div class="card_container">
+                {% if not object_list %}
+                    <h2>Listado vacio</h2>
+                {% endif %}
                 {% for instance in object_list %}
                 <div class="vaccinator_list_container align-self-center">
                     <p class="vaccinator_text"> Nombre: {{ instance.user.nombre_completo }}

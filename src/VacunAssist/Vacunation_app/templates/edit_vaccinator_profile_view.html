@@ -17,14 +17,14 @@
         </div>
         <div class="main_fields_container">
             {% include "presentacion.html" %}
-            <div class="list_cointainer">
+            <div class="list-container">
                 <h1>Editando el Perfil de {{ vacunador.nombre_completo }} </h1>
-                <br/><br/>
                 <div class="form-group">
-                    <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button class="btn btn-secondary">Aceptar</button>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn-submit" value="Aceptar"></input>
+                    </form>
                     {% if success %}
                         <h3>Cuenta editada con exito</h3>
                     {% endif %}

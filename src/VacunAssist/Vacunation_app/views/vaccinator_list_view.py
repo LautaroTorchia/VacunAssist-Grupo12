@@ -1,3 +1,4 @@
+from distutils.command.clean import clean
 from django.shortcuts import render, redirect
 from ..models import Usuario
 from django.contrib.auth.decorators import login_required, permission_required
@@ -20,13 +21,18 @@ def vaccinator_delete_view(request, id):
 @login_required()
 def edit_vaccinator_profile_view(request, id):
     vacunador = Usuario.objects.get(id=id)
-    vacunador_update_form = UpdatingUserForm(request.POST or None,initial={"zona":vacunador.zona})
+    vacunador_update_form = UpdatingUserForm(request.POST or None,
+                                             initial={"zona": vacunador.zona})
     success = False
     if vacunador_update_form.is_valid():
-        vacunador.set_password(vacunador_update_form.cleaned_data["password"])
+        if vacunador_update_form.cleaned_data["password"] != "":
+            vacunador.set_password(
+                vacunador_update_form.cleaned_data["password"])
+        vacunador.zona = vacunador_update_form.cleaned_data["zona"]
         vacunador.save()
         success = True
-        vacunador_update_form = UpdatingUserForm()
+        vacunador_update_form = UpdatingUserForm(
+            initial={"zona": vacunador.zona})
     context = {
         "vacunador": vacunador,
         "form": vacunador_update_form,

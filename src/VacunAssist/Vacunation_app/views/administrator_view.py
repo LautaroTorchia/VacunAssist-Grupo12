@@ -41,13 +41,13 @@ def validating_dni_for_vaccinator_view(request):
         dni_to_validate = dni_form.cleaned_data.get("dni")
         success, data = check_dni(dni_to_validate)
         if success:
-
             request.session['dni_to_create'] = dni_to_validate
             request.session['fecha_to_create'] = data["fecha_nacimiento"]
             request.session['nombre_to_create'] = data["nombre"]
             return redirect("/administrator/create_vaccinator/step2")
 
         else:
+            created_correctly = "false"
             messages.error(request, data["mensaje de error"])
             dni_form = EnteringDniForm()
 
@@ -151,7 +151,8 @@ class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
         except Vacunatorio.DoesNotExist:
             vacunatorio.nombre = nombre_nuevo
             vacunatorio.save()
-            messages.success(self.request, f"Vacunatorio cambiado a: {vacunatorio.nombre}")
+            messages.success(self.request,
+                             f"Vacunatorio cambiado a: {vacunatorio.nombre}")
         return redirect("/administrator/change_name/")
 
     def get(self, request, *args, **kwargs):

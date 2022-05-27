@@ -20,7 +20,7 @@ def vaccinator_delete_view(request, id):
 @login_required()
 def edit_vaccinator_profile_view(request, id):
     vacunador = Usuario.objects.get(id=id)
-    vacunador_update_form = UpdatingUserForm(request.POST or None)
+    vacunador_update_form = UpdatingUserForm(request.POST or None,initial={"zona":vacunador.zona})
     success = False
     if vacunador_update_form.is_valid():
         vacunador.set_password(vacunador_update_form.cleaned_data["password"])

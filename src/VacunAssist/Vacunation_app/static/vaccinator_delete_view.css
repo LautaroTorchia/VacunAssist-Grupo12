@@ -37,7 +37,7 @@
     line-height: 30px;
     color: #FFFFFF;
     margin: 10px 0 0 40px;
-
+    border: none;
     /* Inside auto layout */
 
     flex: none;
@@ -46,6 +46,7 @@
 
 }
 
-#cancelar:hover {
+a:hover {
     text-decoration: none;
+    color: #FFFFFF;
 }

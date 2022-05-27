@@ -33,6 +33,7 @@ def edit_vaccinator_profile_view(request, id):
         success = True
         vacunador_update_form = UpdatingUserForm(
             initial={"zona": vacunador.zona})
+
     context = {
         "vacunador": vacunador,
         "form": vacunador_update_form,

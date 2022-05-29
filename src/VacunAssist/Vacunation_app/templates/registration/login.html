@@ -1,21 +1,38 @@
 {% extends "base.html" %}
-
+{% load static %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'login_clave.css' %}">
+{% endblock css %}
 {% block content %}
 
+<div class="clave_main_container">
+    <div class="elements d-flex flex-column align-items-center">
+        <img src="{% static 'img/Valija.png' %}" alt="" class="valija" >
+        <h1 class="vacunassist_text">Vacunassist</h1>
+        <div class="clave_container">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class=login >Iniciar Sesión</button>
+                </form>
 
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+                {% if "loginClave" in request.path %}
+                    <a href="" class="olvidaste_clave align-self-start" >¿Olvidaste tu clave?</a>
+                    {% else %}
+                    <a href="" class="olvidaste_clave align-self-start" >¿Olvidaste tu contraseña?</a>
+                {% endif %}
+                
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

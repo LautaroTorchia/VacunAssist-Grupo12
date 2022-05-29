@@ -29,6 +29,10 @@
     order: 0;
     flex-grow: 0;
 }
+
+.vacunassist_text{
+    color: #6B954C;
+}
     
 .clave_container{
     /* Clave */
@@ -158,7 +162,7 @@ flex-grow: 0;
 
 /* ¿Olvidaste tu clave? */
 
-width: 161px;
+
 height: 20px;
 
 font-family: 'Montserrat';
@@ -170,10 +174,8 @@ line-height: 20px;
 
 
 color: #2D2C2C;
+}
 
-
-/* Inside auto layout */
-flex: none;
-order: 2;
-flex-grow: 0;
+a:hover {
+    text-decoration: none;
 }

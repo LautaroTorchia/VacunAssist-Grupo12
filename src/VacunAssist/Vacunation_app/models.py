@@ -148,6 +148,13 @@ class Paciente(models.Model):
     dosis_covid = models.IntegerField(choices=Cantidad_dosis.choices)
     fecha_gripe = models.DateField()
 
+    class Meta:
+        permissions = [
+            ("Paciente",
+             "Correspondiente al rol de Paciente en la documentación"),
+        ]
+
+
     def __str__(self):
         return f"{self.user}"
 

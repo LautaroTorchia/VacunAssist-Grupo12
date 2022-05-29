@@ -22,15 +22,13 @@ from django.contrib.auth.decorators import login_required, permission_required
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', CustomLogin.as_view(), name="login"),
-    path('accounts/loginClave/', CustomLoginClave.as_view(),
-         name="loginClave"),
-    path("administrator/",
-         include("Vacunation_app.urls.administrator_urls"),
-         name="admin-home-view"),
+    path('accounts/loginClave/', CustomLoginClave.as_view(),name="loginClave"),
+    path("logout",logout_view,name="logout"),
+    path("administrator/",include("Vacunation_app.urls.administrator_urls"),name="admin-home-view"),
+    path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator-home-view"),
+    path("patient/",include("Vacunation_app.urls.patient_urls"),name="patient-home-view"),
     path('', HomeView.as_view(), name='homepage'),
     path("zona",zona_view,name="zona"),
     path("notifications",notification_view,name="notifications"),
     path("contact",contact_view,name="contact_us"),
-    path("logout",logout_view,name="logout")
-
 ]

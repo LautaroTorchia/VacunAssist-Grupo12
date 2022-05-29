@@ -1,8 +1,8 @@
+from distutils.command.clean import clean
 from django import forms
 from ..models import Usuario
 
 
-#!difiere de la HU en que tiene dos campos de contrasenias
 class UpdatingUserForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(

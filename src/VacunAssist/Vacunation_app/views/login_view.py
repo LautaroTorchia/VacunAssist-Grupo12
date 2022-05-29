@@ -13,7 +13,7 @@ Usuario = get_user_model()
 
 
 class CustomLogin(LoginView):
-    template_name = "registration/loginClave.html"
+    template_name = "registration/login.html"
     authentication_form = LoginForm
     next_page = "accounts/loginClave/"
 
@@ -22,7 +22,6 @@ class CustomLogin(LoginView):
         instance_form.is_valid()
         dni_o_mail = instance_form.cleaned_data["dni_o_mail"]
         password = instance_form.cleaned_data["contraseña"]
-        print(dni_o_mail, password)
         try:
             user = Usuario.objects.get(dni=dni_o_mail)
         except ObjectDoesNotExist:
@@ -40,7 +39,7 @@ class CustomLogin(LoginView):
 
 
 class CustomLoginClave(LoginView):
-    template_name = "registration/loginClave.html"
+    template_name = "registration/login.html"
     authentication_form = LoginClaveForm
 
     def post(self, request, *args, **kwargs):

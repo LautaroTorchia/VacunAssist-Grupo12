@@ -1,11 +1,6 @@
-from django import views
-from django.contrib import admin
 from django.urls import path
-from django.contrib.auth import views as auth_views
-
 from ..views.administrator_view import *
 from ..views.vaccinator_list_view import *
-from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
     path("", administrator_home_view, name="admin-home-view"),

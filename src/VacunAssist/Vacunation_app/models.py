@@ -125,7 +125,10 @@ class Usuario(AbstractUser):
     zona = models.ForeignKey(Zona, on_delete=models.RESTRICT, null=True)
     USERNAME_FIELD = 'dni'
     EMAIL_FIELD = 'email'
-    is_active = True
+    is_active = models.BooleanField(
+        "activo",
+        default=True,
+    )
 
     def get_absolute_url(self):
         return f"/vaccinator/{self.id}"

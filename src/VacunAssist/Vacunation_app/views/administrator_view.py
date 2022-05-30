@@ -77,6 +77,7 @@ def creating_vaccinator_view(request):
             request.session["nombre_to_create"],
             request.session["fecha_to_create"], user_instance.email, clave,
             user_instance.zona)
+        
 
         user_creation_form = CreatingUserForm()
 

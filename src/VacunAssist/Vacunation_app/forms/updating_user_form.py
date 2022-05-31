@@ -1,7 +1,7 @@
 from distutils.command.clean import clean
 from django import forms
 from ..models import Usuario
-
+from django.contrib.auth.forms import PasswordChangeForm
 
 class UpdatingUserForm(forms.ModelForm):
     password = forms.CharField(

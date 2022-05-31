@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.home_view import HomeView, contact_view, logout_view, notification_view, zona_view
-from django.contrib.auth.decorators import login_required, permission_required
-import django.contrib.auth.urls
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', CustomLogin.as_view(), name="login"),

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from Vacunation_app.models import Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 
@@ -13,10 +14,14 @@ class ProfileUpdate(UpdateView):
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
         self.initial={"zona": self.get_object().zona}
+        try:
+            success=request.session["success"]
+        except:
+            success=False
         context  = {
             "usuario": self.get_object(),
             "form": self.get_form(),
-            "success": request.session["success"]
+            "success": success
         }
         return render(request, self.template_name, context)
 
@@ -25,6 +30,20 @@ class ProfileUpdate(UpdateView):
         form= self.get_form()
         user= self.get_object()
         request.session["success"]=form.is_valid()
-        if (form.cleaned_data["password"]=="" or user.check_password(form.cleaned_data["password"])) and user.zona==form.cleaned_data["zona"]:
-            request.session["success"]=False
+
+        request.session["success"]=any([zona_check(user,form.cleaned_data),password_check(user,form.cleaned_data)])
+        if request.session["success"]:
+            user.save()
         return super().post(request, *args, **kwargs)
+
+def zona_check(user,cleaned_data):
+    if user.zona!=cleaned_data["zona"]:
+        user.zona=cleaned_data["zona"]
+        return True
+    return False
+
+def password_check(user,cleaned_data):
+    if not (cleaned_data["password"]=="" or user.check_password(cleaned_data["password"])):
+        user.set_password(cleaned_data["password"])
+        return True
+    return False

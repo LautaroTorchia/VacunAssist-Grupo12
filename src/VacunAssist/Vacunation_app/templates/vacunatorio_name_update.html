@@ -23,18 +23,12 @@
                 </div>
                 <form action="" method="post"> {% csrf_token %}
                     {{ form.as_p }}
-                    {% if messages %}
-                        <ul class="messages">
-                        {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
                     <input type="submit" class="btn-submit" value="Actualizar nombre">
+                    {% include "messages.html" %}
                 </form>
             </div>
         </div>
     </div>
    
-
+{% bootstrap_javascript jquery='full' %}
 {% endblock content %}

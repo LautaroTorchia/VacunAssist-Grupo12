@@ -5,11 +5,18 @@
         <h5 id="slogan">Vacunate, mas facil</h5>
     </div>
     <div class="perfil_container">
-        <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile">
+        <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile" class="perfil">
         <h5>Mi perfil</h5>
-        <form action="/logout" method="post"> {% csrf_token %}
-            <input type="submit" class="logout"  name="logout" value="Cerrar sesión" id="logout">
-        </form>
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{% static 'img/profile_arrow.svg' %}" alt="" class="flecha">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/editar_perfil/{{ request.user.id }}">Editar Perfil</a>
+              <a class="dropdown-item" href="/contact">Soporte y ayuda</a>
+              <a class="dropdown-item" href="/logout">Cerrar sesion</a>
+            </div>
+        </div>
     </div>
     
 </div>

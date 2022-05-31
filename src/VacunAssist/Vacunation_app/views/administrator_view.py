@@ -1,7 +1,7 @@
 import random
 from django.shortcuts import render
 from Vacunation_app.forms.stock_form import StockForm
-from ..forms.creating_user_form import CreatingUserForm, EnteringDniForm
+from ..forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
 from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
 import string
 from django.core.mail import send_mail
@@ -30,10 +30,6 @@ def administrator_home_view(request):
 def validating_dni_for_vaccinator_view(request):
 
     dni_form = EnteringDniForm(request.POST or None)
-    if len(request.GET) > 0:
-        created_correctly = request.GET["success"]
-    else:
-        created_correctly = "false"
     success = False
     data = {}
 
@@ -45,15 +41,12 @@ def validating_dni_for_vaccinator_view(request):
             request.session['fecha_to_create'] = data["fecha_nacimiento"]
             request.session['nombre_to_create'] = data["nombre"]
             return redirect("/administrator/create_vaccinator/step2")
-
         else:
-            created_correctly = "false"
             messages.error(request, data["mensaje de error"])
             dni_form = EnteringDniForm()
 
     return render(request, "dni_validation_view.html", {
         "form": dni_form,
-        "created_correctly": created_correctly
     })
 
 
@@ -65,7 +58,7 @@ def creating_vaccinator_view(request):
 
     letters = string.ascii_lowercase
     numbers = string.digits
-    user_creation_form = CreatingUserForm(request.POST or None)
+    user_creation_form = CreatingVaccinatorForm(request.POST or None)
 
     if user_creation_form.is_valid():
         user_instance = user_creation_form.save(commit=False)
@@ -77,9 +70,7 @@ def creating_vaccinator_view(request):
             request.session["nombre_to_create"],
             request.session["fecha_to_create"], user_instance.email, clave,
             user_instance.zona)
-        
-
-        user_creation_form = CreatingUserForm()
+        user_creation_form = CreatingVaccinatorForm()
 
         send_mail("Registro de vacunador a VacunAssist",
                   f"""Hola, {user_instance.nombre_completo}
@@ -88,10 +79,14 @@ def creating_vaccinator_view(request):
         clave:   {user_instance.clave}""",
                   DEFAULT_FROM_EMAIL, [user_instance.email],
                   fail_silently=False)
-        return redirect("/administrator/create_vaccinator?success=True")
+        messages.success(request, "Cuenta creada Correctamente")
+        return redirect("/administrator/create_vaccinator?success=true")
+
 
     context = {
         "form": user_creation_form,
+        "DNI": request.session["dni_to_create"],
+        "nombre": request.session["nombre_to_create"],
     }
 
     return render(request, "vaccinator_creation.html", context)
@@ -112,7 +107,6 @@ def stock_view(request):
     vaccine_info = VacunaEnVacunatorio.objects.all()
     vaccination_center_info = Vacunatorio.objects.all()
     stock_form = StockForm(request.POST or None)
-    updated = False
 
     if stock_form.is_valid():
 
@@ -123,14 +117,13 @@ def stock_view(request):
             vacuna=vacuna, vacunatorio=vacunatorio)
         vacunation_to_update.stock += stock_form.cleaned_data.get("stock")
         vacunation_to_update.save()
-        updated = True
+        messages.success(request,"Stock actualizado")
         stock_form = StockForm()
 
     context = {
         "vaccine_info": vaccine_info,
         "vaccination_center_info": vaccination_center_info,
         "stock_form": stock_form,
-        "updated": updated
     }
     return render(request, "stock_view.html", context)
 

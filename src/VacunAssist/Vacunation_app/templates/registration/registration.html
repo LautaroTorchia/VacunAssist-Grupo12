@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'login_clave.css' %}">
+{% endblock css %}
+{% block content %}
+    <form action="" method="post">
+        {{ form.as_p }}
+        <input type="submit" value="Crear cuenta">
+    </form>
+
+{% endblock content %}

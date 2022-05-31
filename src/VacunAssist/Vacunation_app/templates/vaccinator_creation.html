@@ -19,14 +19,27 @@
                 <h1> Creacion de un vacunador</h1>
                 <h5>Paso 2/2</h5>
             </div>
-            <h3 id="success"> El dni esta validado</h3>
+            <div class="texto_validado">
+                <h3>DNI validado: {{ DNI }}</h3>
+                <h3>{{ nombre }}</h3>
+            </div>
             <form action="" method="post"> {% csrf_token %}
                 {{ form.as_p }}
                 <p></p>
                 <input type="submit" name="create-account" class="btn-submit" value="Crear cuenta">
-                
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %} 
+                            <div class="alert alert-danger">
+                               {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                {% include "messages.html" %}
             </form>
         </div>
     </div>
 </div>
+{% bootstrap_javascript jquery='full' %}
 {% endblock content %}

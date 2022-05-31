@@ -4,19 +4,23 @@
     background: #FFFFFF;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .title {
     padding: 15px;
     gap: 10px;
-    background: #4E4E4E;
     border-radius: 10px;
     font-family: 'Montserrat';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 30px;
     line-height: 30px;
     text-align: center;
     width: auto;
-    color: #FFFFFF;
     display: inline-block;
     margin: 0 40px;
     flex: none;
@@ -27,7 +31,7 @@
 .btn-submit {
     padding: 10px 77px;
     gap: 10px;
-    background: #54CBFF;
+    background: #739F52;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     font-family: 'Montserrat';

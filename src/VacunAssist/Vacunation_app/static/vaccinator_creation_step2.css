@@ -64,7 +64,7 @@ select {
     gap: 10px;
     width: 363px;
     height: 50px;
-    background: #54CBFF;
+    background: #739F52;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     flex: none;
@@ -79,10 +79,17 @@ select {
     flex: none;
     order: 0;
     flex-grow: 0;
+    margin-bottom: 10px;
 }
 
-#success {
-    color: green;
+.texto_validado {
+    display: flex;
+    flex-direction: column;
+    color: #739F52;
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 500;
+    line-height: 19px;
 }
 
 h5 {

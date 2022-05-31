@@ -218,3 +218,10 @@ class VacunaEnVacunatorio(models.Model):
 
     def __str__(self):
         return f"{self.vacunatorio}-{self.vacuna}"
+
+
+class Turno(models.Model):
+    fecha=models.DateTimeField()
+    vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
+    paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
+    vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)

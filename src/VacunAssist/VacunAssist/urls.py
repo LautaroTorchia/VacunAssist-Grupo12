@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.home_view import HomeView, contact_view, logout_view, notification_view, zona_view
+from Vacunation_app.views.registration_view import registration_view
 
 
 urlpatterns = [
@@ -31,5 +32,6 @@ urlpatterns = [
     path("zona",zona_view,name="zona"),
     path("notifications",notification_view,name="notifications"),
     path("contact",contact_view,name="contact_us"),
+    path("registration",registration_view,name="registrate"),
     path('accounts/', include('django.contrib.auth.urls')),#!Revisar recuperar contraseña
 ]

@@ -18,9 +18,6 @@
 }
 
 .creacion_container{
-
-    /* Auto layout */
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -32,6 +29,12 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 input[type="text"]{
@@ -64,7 +67,7 @@ input[type="text"]{
     gap: 10px;
     width: 363px;
     height: 50px;
-    background: #54CBFF;
+    background: #739F52;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     flex: none;
@@ -79,6 +82,7 @@ input[type="text"]{
     flex: none;
     order: 0;
     flex-grow: 0;
+    margin-bottom: 10px;
 }
 
 #success{

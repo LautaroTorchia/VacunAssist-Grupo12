@@ -33,13 +33,20 @@
                                 {{  stock_form.as_p }}
                                 <input type="submit" class="btn-submit" value="Aumentar stock">
                             </form>
-                            {% if updated %}
-                            <h3 id="actualizado">Stock actualizado</h3>
+                            {% if stock_form.errors %}
+                                {% for field in stock_form %}
+                                    {% for error in field.errors %} 
+                                        <div class="alert alert-danger">
+                                            {{ error|escape }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
                             {% endif %}
+                            {% include "messages.html" %}
                         </div>
-            </div>
-               
+            </div> 
             </div>
         </div>
     </div>
+{% bootstrap_javascript jquery='full' %}
 {% endblock content %}

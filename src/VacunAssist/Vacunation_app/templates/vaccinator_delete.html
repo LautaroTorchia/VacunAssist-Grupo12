@@ -16,8 +16,9 @@
     </div>
     <div class="main_fields_container align-self-start ">
         {% include "presentacion.html" %}
-<form action="" method="POST">{% csrf_token %}
-    <h1 class="title">¿Está seguro que quiere borrar al vacunador "{{ vacunador.nombre_completo }}"?</h1>
-    <p><input class="btn-submit" type="submit" value="Aceptar" /> <a id="cancelar" class="btn-submit" href='../../vaccinators_list/?'>Cancelar</a></p>
-</form>
+        <form action="" method="POST">{% csrf_token %}
+            <h1 class="title">¿Está seguro que quiere borrar al vacunador "{{ vacunador.nombre_completo }}"?</h1>
+            <p><input class="btn-submit" type="submit" value="Aceptar" /> <a id="cancelar" class="btn-submit" href='../../vaccinators_list/?'>Cancelar</a></p>
+        </form>
+{% bootstrap_javascript jquery='full' %}
 {% endblock content %}

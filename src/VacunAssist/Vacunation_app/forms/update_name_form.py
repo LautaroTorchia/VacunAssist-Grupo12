@@ -8,5 +8,4 @@ class NameUpdateForm(forms.Form):
                                            queryset=Vacunatorio.objects.all())
     nombre_nuevo = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(
-            attrs={'oninvalid': "setCustomValidity('Completa este campo')"}))
+        widget=forms.TextInput())

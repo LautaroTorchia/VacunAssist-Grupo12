@@ -3,7 +3,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from Vacunation_app.models import Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
-
+from django.urls import reverse
 
 
 class ProfileUpdate(UpdateView):

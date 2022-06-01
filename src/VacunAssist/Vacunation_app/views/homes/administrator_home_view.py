@@ -13,6 +13,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse
 
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
@@ -20,8 +21,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 def administrator_home_view(request):
     if "logout" in request.POST:
         logout(request)
-        return redirect("/accounts/login/")
-    return render(request, "administrator_view.html", {})
+        return redirect(reverse("login"))
+    return render(request, "administrator/administrator_view.html", {})
 
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
@@ -39,7 +40,7 @@ def validating_dni_for_vaccinator_view(request):
             request.session['dni_to_create'] = dni_to_validate
             request.session['fecha_to_create'] = data["fecha_nacimiento"]
             request.session['nombre_to_create'] = data["nombre"]
-            return redirect("/administrator/create_vaccinator/step2")
+            return redirect(reverse("create_vaccinator_step2"))
         else:
             messages.error(request, data["mensaje de error"])
             dni_form = EnteringDniForm()
@@ -53,7 +54,7 @@ def validating_dni_for_vaccinator_view(request):
 @login_required()
 def creating_vaccinator_view(request):
     if not get_referer(request):
-        return redirect("/administrator/create_vaccinator/")
+        return redirect(reverse("create_vaccinator"))
 
     letters = string.ascii_lowercase
     numbers = string.digits
@@ -79,7 +80,7 @@ def creating_vaccinator_view(request):
                   DEFAULT_FROM_EMAIL, [user_instance.email],
                   fail_silently=False)
         messages.success(request, "Cuenta creada Correctamente")
-        return redirect("/administrator/create_vaccinator?success=true")
+        return redirect(reverse("creating-vaccinator-view"))
 
 
     context = {

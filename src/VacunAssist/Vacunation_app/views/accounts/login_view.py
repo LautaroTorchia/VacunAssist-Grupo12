@@ -1,12 +1,12 @@
 from django.contrib.auth.views import LoginView
-from ...forms.login_form import LoginForm, LoginClaveForm
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model,login, authenticate
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
-from ...custom_functions import get_referer
+from django.urls import reverse
+from Vacunation_app.forms.login_form import LoginForm, LoginClaveForm
+from Vacunation_app.custom_functions import get_referer
 
 #TODO: Usar isvalid para los datos como en cambiarNombre
 Usuario = get_user_model()
@@ -29,13 +29,13 @@ class CustomLogin(LoginView):
                 user = Usuario.objects.get(email=dni_o_mail)
             except ObjectDoesNotExist:
                 messages.error(self.request, "Usuario no registrado")
-                return redirect("/accounts/login/")
+                return redirect(reverse("login"))
         if check_password(password, user.password):
             request.session['dni'] = user.dni
-            return redirect(f"/accounts/loginClave/")
+            return redirect(reverse("loginClave"))
         else:
             messages.error(self.request, "Contraseña incorrecta")
-            return redirect("/accounts/login/")
+            return redirect(reverse("login"))
 
 
 class CustomLoginClave(LoginView):
@@ -50,18 +50,12 @@ class CustomLoginClave(LoginView):
         user = authenticate(request, username=dni, password=clave)
         if user is not None:
             login(request, user)
-            if user.has_perm("Vacunation_app.Administrador"):
-                return redirect("/administrator")
-            if user.has_perm("Vacunation_app.Vacunador"):
-                return redirect("/vaccinator")
-            if user.has_perm("Vacunation_app.Paciente"):
-                return redirect("/patient")
             return redirect("/")
         else:
             messages.error(self.request, "Código incorrecto")
-            return redirect(f"/accounts/loginClave/")
+            return redirect(reverse("loginClave"))
 
     def get(self, request, *args, **kwargs):
         if not get_referer(request):
-            return redirect("/accounts/login/")
+            return redirect(reverse("login"))
         return LoginView.get(self, request, args, kwargs)

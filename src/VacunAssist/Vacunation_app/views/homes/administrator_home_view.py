@@ -1,19 +1,18 @@
 import random
-from django.shortcuts import render
-from Vacunation_app.forms.stock_form import StockForm
-from ..forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
-from ..models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
 import string
-from django.core.mail import send_mail
-from VacunAssist.settings import DEFAULT_FROM_EMAIL, PERMISSION_DENIED_URL
-from ..custom_functions import check_dni, get_referer
 from django.views.generic.edit import FormView
-from ..forms.update_name_form import NameUpdateForm
+from VacunAssist.settings import DEFAULT_FROM_EMAIL
+from Vacunation_app.forms.stock_form import StockForm
+from Vacunation_app.forms.update_name_form import NameUpdateForm
+from Vacunation_app.custom_functions import check_dni, get_referer
+from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
+from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.contrib.auth import logout
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth import logout
 
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)

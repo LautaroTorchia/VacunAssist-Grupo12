@@ -28,10 +28,10 @@ def logout_view(request):
     return redirect("/accounts/login/")
     
 def zona_view(request):
-    return render(request,"zona.html",{})   
+    return render(request,"zona.html",{})
 
 def notification_view(request):
-    return render(request,"notifications.html",{})   
+    return render(request,"notifications.html",{})
 
 def contact_view(request):
-    return render(request,"contact.html",{})   
+    return render(request,"contact.html",{})

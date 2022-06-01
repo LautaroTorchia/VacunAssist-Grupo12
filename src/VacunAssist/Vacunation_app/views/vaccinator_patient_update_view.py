@@ -5,6 +5,7 @@ from Vacunation_app.models import Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 
 
+
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm
     model = Usuario

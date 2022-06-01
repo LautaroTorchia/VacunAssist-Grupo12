@@ -1,12 +1,12 @@
 from django.contrib.auth.views import LoginView
-from ..forms.login_form import LoginForm, LoginClaveForm
+from ...forms.login_form import LoginForm, LoginClaveForm
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from ..custom_functions import get_referer
+from ...custom_functions import get_referer
 
 #TODO: Usar isvalid para los datos como en cambiarNombre
 Usuario = get_user_model()
@@ -52,6 +52,10 @@ class CustomLoginClave(LoginView):
             login(request, user)
             if user.has_perm("Vacunation_app.Administrador"):
                 return redirect("/administrator")
+            if user.has_perm("Vacunation_app.Vacunador"):
+                return redirect("/vaccinator")
+            if user.has_perm("Vacunation_app.Paciente"):
+                return redirect("/patient")
             return redirect("/")
         else:
             messages.error(self.request, "Código incorrecto")

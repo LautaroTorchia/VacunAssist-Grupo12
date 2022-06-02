@@ -5,7 +5,7 @@
         <h5 id="slogan">Vacunate, mas facil</h5>
     </div>
     <div class="perfil_container">
-        <img src="{% static 'img/profile_pic.png' %}" alt="profile" id="profile" class="perfil">
+        <img src="/static/{{request.user.profile_pic.url}}" alt="profile" id="profile" class="perfil profile-pic">
         <h5>Mi perfil</h5>
         <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

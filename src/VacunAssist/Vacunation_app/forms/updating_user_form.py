@@ -11,4 +11,4 @@ class UpdatingUserForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ["zona"]
+        fields = ["zona","profile_pic"]

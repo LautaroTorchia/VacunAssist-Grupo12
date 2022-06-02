@@ -123,6 +123,7 @@ class Usuario(AbstractUser):
     email = models.EmailField(unique=True)
     clave = models.CharField(max_length=4)
     zona = models.ForeignKey(Zona, on_delete=models.RESTRICT, null=True)
+    profile_pic=models.ImageField(default="profile_pic.png",blank=True,null=True)
     USERNAME_FIELD = 'dni'
     EMAIL_FIELD = 'email'
     is_active = models.BooleanField(

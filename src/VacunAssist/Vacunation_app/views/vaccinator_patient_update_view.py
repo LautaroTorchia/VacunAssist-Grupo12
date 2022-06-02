@@ -38,13 +38,16 @@ class ProfileUpdate(UpdateView):
         return super().post(request, *args, **kwargs)
 
 def zona_check(user,cleaned_data):
-    if user.zona!=cleaned_data["zona"]:
-        user.zona=cleaned_data["zona"]
-        return True
-    return False
+    if user.zona==cleaned_data["zona"]:
+        return False
+    user.zona=cleaned_data["zona"]
+    return True
 
 def password_check(user,cleaned_data):
-    if not (cleaned_data["password"]=="" or user.check_password(cleaned_data["password"])):
-        user.set_password(cleaned_data["password"])
-        return True
-    return False
+    if cleaned_data["password"]=="":
+        return False
+    if user.check_password(cleaned_data["password"]):
+        
+        return False
+    user.set_password(cleaned_data["password"])
+    return True

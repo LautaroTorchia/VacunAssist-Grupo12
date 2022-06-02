@@ -26,7 +26,7 @@ class ProfileUpdate(UpdateView):
         user= self.get_object()
         if form.is_valid():
             success=any([zona_check(user,form.cleaned_data),
-            password_check(request,user,form.cleaned_data),profile_pic_check(request,user,form.cleaned_data)])
+            password_check(request,user,form.cleaned_data),profile_pic_check(user,form.cleaned_data)])
             if success:
                 user.save()
                 messages.success(request,"Cuenta editada con exito")
@@ -47,7 +47,7 @@ def password_check(request,user,cleaned_data):
     user.set_password(cleaned_data["password"])
     return True
 
-def profile_pic_check(request,user,cleaned_data):
+def profile_pic_check(user,cleaned_data):
     if not cleaned_data["profile_pic"]:
         return False
     user.profile_pic=cleaned_data["profile_pic"]

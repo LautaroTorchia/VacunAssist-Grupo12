@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView
-from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from Vacunation_app.models import Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
-from django.urls import reverse
+from django.contrib import messages
 
 
 class ProfileUpdate(UpdateView):
@@ -15,14 +14,9 @@ class ProfileUpdate(UpdateView):
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
         self.initial={"zona": self.get_object().zona}
-        try:
-            success=request.session["success"]
-        except:
-            success=False
         context  = {
             "usuario": self.get_object(),
             "form": self.get_form(),
-            "success": success
         }
         return render(request, self.template_name, context)
 
@@ -30,11 +24,12 @@ class ProfileUpdate(UpdateView):
         self.success_url= self.request.path_info
         form= self.get_form()
         user= self.get_object()
-        request.session["success"]=form.is_valid()
-
-        request.session["success"]=any([zona_check(user,form.cleaned_data),password_check(user,form.cleaned_data)])
-        if request.session["success"]:
-            user.save()
+        if form.is_valid():
+            success=any([zona_check(user,form.cleaned_data),
+            password_check(request,user,form.cleaned_data),profile_pic_check(request,user,form.cleaned_data)])
+            if success:
+                user.save()
+                messages.success(request,"Cuenta editada con exito")
         return super().post(request, *args, **kwargs)
 
 def zona_check(user,cleaned_data):
@@ -43,11 +38,17 @@ def zona_check(user,cleaned_data):
     user.zona=cleaned_data["zona"]
     return True
 
-def password_check(user,cleaned_data):
+def password_check(request,user,cleaned_data):
     if cleaned_data["password"]=="":
         return False
     if user.check_password(cleaned_data["password"]):
-        
+        messages.error(request,"La contraseña no puede ser la misma")
         return False
     user.set_password(cleaned_data["password"])
+    return True
+
+def profile_pic_check(request,user,cleaned_data):
+    if not cleaned_data["profile_pic"]:
+        return False
+    user.profile_pic=cleaned_data["profile_pic"]
     return True

@@ -1,183 +1,186 @@
-.clave_main_container{
+.clave_main_container {
 
     /* ClaveFrame */
-    
+
     /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0px;
-    
+
     position: relative;
     width: 100vw;
     height: 100vh;
 
-    background-size:cover;
+    background-size: cover;
     background-image: url(img/bg.svg);
 }
-    
-.valija{
+
+.valija {
     /* Valija */
-    
+
     width: 141px;
     height: 124px;
-    
-    
+
+
     /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
 }
 
-.vacunassist_text{
+.vacunassist_text {
     color: #6B954C;
 }
-    
-.clave_container{
+
+.clave_container {
     /* Clave */
-    
+
     /* Auto layout */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 5px 23px;
     gap: 8px;
-    
+
     border-radius: 10px;
-    
+
     /* Inside auto layout */
     flex: none;
-order: 1;
-flex-grow: 0;
+    order: 1;
+    flex-grow: 0;
 }
 
-input[type="text"],input[type="password"],
-input[type="email"],select,input[type="number"]{
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+input[type="number"],
+input[type="date"] {
 
-/* Clave_field */
+    /* Clave_field */
 
-box-sizing: border-box;
+    box-sizing: border-box;
 
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: center;
-padding: 2px 4px 2px 10px;
-gap: 10px;
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 4px 2px 10px;
+    gap: 10px;
 
-width: 300px;
-height: 40px;
+    width: 300px;
+    height: 40px;
 
-border: 1px solid #2D2C2C;
-border-radius: 4px;
+    border: 1px solid #2D2C2C;
+    border-radius: 4px;
 
 
 
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }
 
-::placeholder{
- /* Clave_placeholder */
+::placeholder {
+    /* Clave_placeholder */
 
-width: 300px;
-height: 20px;
+    width: 300px;
+    height: 20px;
 
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 300;
-font-size: 14px;
-line-height: 20px;
-/* identical to box height, or 143% */
-text-align: start;
-text-transform: uppercase;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    /* identical to box height, or 143% */
+    text-align: start;
+    text-transform: uppercase;
 
-color: #2D2C2C;
-
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-
-}
-
-    
-.login{
-/* Login btn */
-
-/* Auto layout */
-display: flex;
-flex-direction: column;
-justify-content: flex-end;
-align-items: center;
-padding: 0px;
-
-width: 300px;
-height: 40px;
-
-background: #FFFFFF;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-border-radius: 4px;
-border: none;
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
+    color: #2D2C2C;
 
 
-/* INICIAR SESIÓN */
-
-width: 298px;
-height: 26px;
-
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 20px;
-/* or 125% */
-text-align: center;
-text-transform: uppercase;
-
-color: #6B954C;
-
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 
 }
 
 
+.login {
+    /* Login btn */
 
-.olvidaste_clave{
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+
+    width: 300px;
+    height: 40px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    border: none;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 
 
-/* ¿Olvidaste tu clave? */
+    /* INICIAR SESIÓN */
+
+    width: 298px;
+    height: 26px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    /* or 125% */
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #6B954C;
 
 
-height: 20px;
-
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 20px;
-/* identical to box height */
+}
 
 
-color: #2D2C2C;
+
+.olvidaste_clave {
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+
+    /* ¿Olvidaste tu clave? */
+
+
+    height: 20px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+
+
+    color: #2D2C2C;
 }
 
 a:hover {
     text-decoration: none;
 }
 
-.buttons{
+.buttons {
     gap: 10px;
 }

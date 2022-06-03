@@ -13,25 +13,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, reverse
 from Vacunation_app.views.accounts.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.accounts.registration_view import registration_view
-from Vacunation_app.views.homes.vaccinator_home_view import  contact_view, logout_view, notification_view, zona_view
+from Vacunation_app.views.homes.vaccinator_home_view import contact_view, logout_view, notification_view, zona_view
 from Vacunation_app.views.redirect_view import HomeRedirectView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', CustomLogin.as_view(), name="login"),
-    path('accounts/loginClave/', CustomLoginClave.as_view(),name="loginClave"),
-    path("accounts/registration",registration_view,name="registrate"),
-    path("logout",logout_view,name="logout"),
+    path('accounts/loginClave/', CustomLoginClave.as_view(),
+         name="loginClave"),
+    path("accounts/registration", registration_view, name="registrate"),
+    path("logout", logout_view, name="logout"),
     path('', HomeRedirectView.as_view(), name='redirectHome'),
-    path("zona",zona_view,name="zona"),
-    path("notifications",notification_view,name="notifications"),
-    path("contact",contact_view,name="contact_us"),
-    path("administrator/",include("Vacunation_app.urls.administrator_urls"),name="admin_views"),
-    path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator_views"),
-    path("patient/",include("Vacunation_app.urls.patient_urls"),name="patient_views"),
-    path('accounts/', include('django.contrib.auth.urls')),#!Revisar recuperar contraseña
+    path("zona", zona_view, name="zona"),
+    path("notifications", notification_view, name="notifications"),
+    path("contact", contact_view, name="contact_us"),
+    path("administrator/",
+         include("Vacunation_app.urls.administrator_urls"),
+         name="admin_views"),
+    path("vaccinator/",
+         include("Vacunation_app.urls.vaccinator_urls"),
+         name="vaccinator_views"),
+    path("patient/",
+         include("Vacunation_app.urls.patient_urls"),
+         name="patient_views"),
+    path('accounts/',
+         include('django.contrib.auth.urls')),  #!Revisar recuperar contraseña
 ]

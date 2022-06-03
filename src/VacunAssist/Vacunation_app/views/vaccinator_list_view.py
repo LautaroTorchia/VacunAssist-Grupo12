@@ -14,4 +14,3 @@ def vaccinator_delete_view(request, id):
         return redirect(reverse("vaccinators_list"))
     context = {"vacunador": vacunador}
     return render(request, "vaccinator_delete.html", context)
-

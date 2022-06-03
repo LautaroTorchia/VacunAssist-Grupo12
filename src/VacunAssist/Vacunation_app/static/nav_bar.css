@@ -19,6 +19,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 5px;
     padding: 0px;
     background: #E9F9DD;
     width: 13vw;
@@ -86,6 +87,11 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+}
+
+.menu-icon{
+    height: 40px;
+    width: 40px;
 }
 
 a:hover {

@@ -17,20 +17,13 @@
                     {{ form.as_p }}
                     <button type="submit" class=login >Iniciar Sesión</button>
                 </form>
-
                 {% if "loginClave" in request.path %}
                     <a href="" class="olvidaste_clave align-self-start" >¿Olvidaste tu clave?</a>
                     {% else %}
                     <a href="" class="olvidaste_clave align-self-start" >¿Olvidaste tu contraseña?</a>
                 {% endif %}
-                
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                <a href="/accounts/registration" class="olvidaste_clave align-self-start">¿No tienes cuenta? Registrate </a>
+                {% include "messages.html" %}
         </div>
     </div>
 </div>

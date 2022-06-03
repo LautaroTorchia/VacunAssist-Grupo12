@@ -6,9 +6,35 @@
     <link rel="stylesheet" href="{% static 'login_clave.css' %}">
 {% endblock css %}
 {% block content %}
-    <form action="" method="post">
-        {{ form.as_p }}
-        <input type="submit" value="Crear cuenta">
-    </form>
+
+    <div class="clave_main_container">
+        <div class="elements d-flex flex-column align-items-center">
+            <img src="{% static 'img/Valija.png' %}" alt="" class="valija" >
+            <h1 class="vacunassist_text">Vacunassist</h1>
+            <div class="clave_container">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="buttons d-flex flex-column">
+                            <input type="submit" name="validar_dni" value="Validar DNI" id="">
+                            <input type="submit" name="crear_cuenta" value="Crear cuenta">
+                        </div>
+                        <a href="/accounts/login" class="olvidaste_clave align-self-start">¿Ya tenes cuenta? Inicia sesion </a>
+                        {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %} 
+                                <div class="alert alert-danger">
+                                {{ error|escape }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                        {% include "messages.html" %}
+                    </form>
+                    
+            </div>
+        </div>
+    </div>
+    
 
 {% endblock content %}

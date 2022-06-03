@@ -4,7 +4,7 @@ from django.views.generic.edit import FormView
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from Vacunation_app.forms.stock_form import StockForm
 from Vacunation_app.forms.update_name_form import NameUpdateForm
-from Vacunation_app.custom_functions import check_dni, get_referer
+from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
 from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
 from django.contrib import messages
@@ -56,15 +56,13 @@ def creating_vaccinator_view(request):
     if not get_referer(request):
         return redirect(reverse("create_vaccinator"))
 
-    letters = string.ascii_lowercase
-    numbers = string.digits
     user_creation_form = CreatingVaccinatorForm(request.POST or None)
 
     if user_creation_form.is_valid():
         user_instance = user_creation_form.save(commit=False)
         vaccinator = CustomUserManager()
-        password = ''.join(random.choice(letters) for i in range(10))
-        clave = ''.join(random.choice(numbers) for i in range(4))
+        password = generate_random_password()
+        clave = generate_keycode()
         user_instance = vaccinator.create_vaccinator(
             request.session["dni_to_create"], password,
             request.session["nombre_to_create"],

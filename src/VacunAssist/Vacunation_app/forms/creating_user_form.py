@@ -22,5 +22,24 @@ class CreatingPatientForm(forms.ModelForm):
         model= Usuario
         fields=["dni","email",
         "zona","password"]
-    ultima_gripe=forms.DateField()
-    cantidad_dosis_covid=forms.IntegerField(max_value=2)
+        error_messages = {
+            'email': {
+                'unique': ("Registro fallido por email ya registrado")
+            }
+        }
+        widgets = {
+            'dni': forms.TextInput(attrs={'placeholder': 'DNI'}),
+            'email': forms.TextInput(attrs={'placeholder': 'email'}),
+            'zona': forms.Select(attrs={'placeholder': 'Zona'}),
+            'password': forms.PasswordInput(attrs={'placeholder': 'Contraseña'}),
+        }
+        labels = {
+            "dni":"",
+            "email":"",
+            "password":"",
+            "dni":"",
+    }
+    ultima_gripe=forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Fecha de ultima gripe'}),label="")
+    cantidad_dosis_covid=forms.IntegerField(max_value=2,min_value=0,label="",
+    widget=forms.TextInput(attrs={'placeholder': 'Cantidad de dosis COVID'}))
+    tuvo_amarilla=forms.BooleanField()

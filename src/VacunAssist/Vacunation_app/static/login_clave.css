@@ -44,9 +44,6 @@
     padding: 5px 23px;
     gap: 8px;
     
-    width: 346px;
-    height: 120px;
-    
     border-radius: 10px;
     
     /* Inside auto layout */
@@ -55,7 +52,8 @@ order: 1;
 flex-grow: 0;
 }
 
-input[type="text"],input[type="password"]{
+input[type="text"],input[type="password"],
+input[type="email"],select,input[type="number"]{
 
 /* Clave_field */
 
@@ -178,4 +176,8 @@ color: #2D2C2C;
 
 a:hover {
     text-decoration: none;
+}
+
+.buttons{
+    gap: 10px;
 }

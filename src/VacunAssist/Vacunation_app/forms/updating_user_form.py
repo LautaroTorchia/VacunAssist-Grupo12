@@ -12,3 +12,10 @@ class UpdatingUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ["zona","profile_pic"]
+        labels = {
+            "profile_pic": "Foto de perfil",
+        }
+        error_messages = {
+                 'Upload a valid image':"El formato de imagen no es el correcto"
+                 }
+    

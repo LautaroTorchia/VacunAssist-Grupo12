@@ -4,6 +4,7 @@ from django.contrib.auth.models import (BaseUserManager)
 from django.forms import ValidationError
 from django.core.validators import MinValueValidator, MinLengthValidator
 from django.contrib.auth.models import Permission
+import os
 
 
 def validate_alpha(nombre):
@@ -47,6 +48,20 @@ class CustomUserManager(
         user.is_active = True
         user.save()
 
+        return user
+
+    def create_patient(self, dni, password, nombre_completo, fecha_nac,
+                          email, clave,zona,covid,gripe,fiebre_amarilla):
+        extra_fields = {}
+        extra_fields["is_staff"] = False
+        extra_fields["is_superuser"] = False
+        user = self.create_user(dni, password, nombre_completo, fecha_nac,
+                                email, clave, zona, **extra_fields)
+
+        user.user_permissions.set([Permission.objects.get(codename="Paciente")])
+        patient_instance = Paciente.objects.create(user=user,dosis_covid=covid,
+        fecha_gripe=gripe,tuvo_fiebre_amarilla=fiebre_amarilla)
+        patient_instance.save()
         return user
 
     def create_vaccinator(self, dni, password, nombre_completo, fecha_nac,

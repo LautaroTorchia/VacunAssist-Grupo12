@@ -1,4 +1,6 @@
 import os
+import random
+import string
 from .models import Usuario
 import requests
 from dotenv import load_dotenv
@@ -52,3 +54,12 @@ def get_referer(request):
     if not referer:
         return None
     return referer
+
+
+def generate_keycode():
+    numbers = string.digits
+    return ''.join(random.choice(numbers) for i in range(4))
+
+def generate_random_password():
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(10))

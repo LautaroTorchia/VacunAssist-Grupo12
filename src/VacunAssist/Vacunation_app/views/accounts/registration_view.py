@@ -26,6 +26,7 @@ def registration_view(request):
         if form.is_valid():
             user=CustomUserManager()
             clave=generate_keycode()
+            print("dosis_covid",form.cleaned_data["cantidad_dosis_covid"])
             nombre=request.session["data"].get("nombre")
             fecha_nac=request.session["data"].get("fecha_nacimiento")
             patient=user.create_patient(

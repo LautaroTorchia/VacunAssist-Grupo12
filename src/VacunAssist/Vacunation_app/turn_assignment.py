@@ -9,7 +9,6 @@ class TurnAssigner():
         self.vacunatorio=Vacunatorio.objects.get(zona=patient.user.zona)
         self.patient=patient
         self.gripe_date=gripe_date
-        print("fecha de turno potencial de gripe:",self.gripe_date)
         self.cant_in_vacunatorio=len(list(filter(lambda vacunador: (vacunador.user.zona==patient.user.zona), Vacunador.objects.all())))
         self.turnos=Turno.objects.all()
 
@@ -21,15 +20,13 @@ class TurnAssigner():
         pass #abstract
 
     def needs_gripe_vaccine(self):
-        print("fecha",self.patient.fecha_gripe)
         return self.patient.fecha_gripe+relativedelta(years=1) < date.today()
     
     def needs_covid_vaccine(self):
-        print("dosis",self.patient.dosis_covid)
         return self.patient.dosis_covid < 2
     
     def today_turns_are_full(self,date):
-        return len(list(filter(lambda turno: turno.fecha==date,self.turnos)))
+        return len(list(filter(lambda turno: turno.fecha==date,self.turnos)))==8*4*self.cant_in_vacunatorio
     
     def create_turn(self,date):
         while self.today_turns_are_full(date):
@@ -67,6 +64,6 @@ class TurnAssignerNonRisk(TurnAssigner):
         listaDeEsperaCovid.objects.create(vacunatorio=self.vacunatorio,vacuna=self.vacuna,paciente=self.patient)
 
     def assign_covid_turn(self):
-        if self.needs_covid_vaccine:
+        if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
             self.create_wait_list_request()

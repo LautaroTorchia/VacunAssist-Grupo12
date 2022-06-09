@@ -158,9 +158,9 @@ class Usuario(AbstractUser):
 
 class Paciente(models.Model):
     class Cantidad_dosis(models.IntegerChoices):
-        ZERO = 1
-        ONE = 2
-        TWO = 3
+        ZERO = 0
+        ONE = 1
+        TWO = 2
 
     user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
     tuvo_fiebre_amarilla = models.BooleanField()

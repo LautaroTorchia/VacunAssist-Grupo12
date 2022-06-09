@@ -19,7 +19,13 @@
             
             <div class="zona_container">
                <h1>Estas en Notificaciones</h1>
-               <h2>Coming soon!!</h2>
+               {% for turn in turns %}
+                <div class="turn">
+                    {{ turn.vacunatorio.nombre }}
+                    {{ turn.fecha }}
+                    {{ turn.vacuna.nombre }}
+                </div>
+               {% endfor %}
                <img src="" alt="">
                 </div>
             </div>  

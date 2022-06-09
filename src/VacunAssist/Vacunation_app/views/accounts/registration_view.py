@@ -1,13 +1,11 @@
-import string
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode
 from django.contrib import messages
 
-from Vacunation_app.models import CustomUserManager, Paciente
-from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk, assign_turns
+from Vacunation_app.models import CustomUserManager
+from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
 
 
 def registration_view(request):
@@ -36,6 +34,7 @@ def registration_view(request):
                 form.cleaned_data["cantidad_dosis_covid"],form.cleaned_data["ultima_gripe"],
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
+
             if patient.es_de_riesgo:
                 assigner=TurnAssignerRisk(patient)
             else:

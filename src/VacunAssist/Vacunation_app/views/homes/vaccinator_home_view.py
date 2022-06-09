@@ -21,16 +21,3 @@ class HomeView(LoginRequiredMixin,TemplateView):
             return redirect("accounts/login/")
         return redirect("/")
 
-
-def logout_view(request):
-    logout(request)
-    return redirect("/accounts/login/")
-    
-def zona_view(request):
-    return render(request,"zona.html",{})
-
-def notification_view(request):
-    return render(request,"notifications.html",{})
-
-def contact_view(request):
-    return render(request,"contact.html",{})

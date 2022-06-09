@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path, reverse
 from Vacunation_app.views.accounts.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.accounts.registration_view import registration_view
-from Vacunation_app.views.homes.vaccinator_home_view import contact_view, logout_view, notification_view, zona_view
+from Vacunation_app.views.homes.patient_home_view import contact_view, logout_view, notification_view, zona_view
 from Vacunation_app.views.redirect_view import HomeRedirectView
 from django.contrib.auth import views as auth_views
 

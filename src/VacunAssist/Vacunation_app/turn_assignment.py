@@ -1,32 +1,72 @@
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 import random
-from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio
+from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid
 
-def today(turnos,date):
-    print(list(filter(lambda turno: turno.fecha==date,turnos)))
-    return len(list(filter(lambda turno: turno.fecha==date,turnos)))
+class TurnAssigner():
 
-def assign_vaccine_turn(date,max_turns,vacunatorio,paciente,vacuna):
-    vacuna=Vacuna.objects.get(nombre=vacuna)
-    turnos=Turno.objects.all()
-    while today(turnos,date)==max_turns:
-        date+timedelta(days=1)
-    Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=paciente,vacuna=vacuna)
+    def __init__(self,patient,gripe_date) -> None:
+        self.vacunatorio=Vacunatorio.objects.get(zona=patient.user.zona)
+        self.patient=patient
+        self.gripe_date=gripe_date
+        print("fecha de turno potencial de gripe:",self.gripe_date)
+        self.cant_in_vacunatorio=len(list(filter(lambda vacunador: (vacunador.user.zona==patient.user.zona), Vacunador.objects.all())))
+        self.turnos=Turno.objects.all()
+
+    def assign_turns(self):
+        self.assign_covid_turn()
+        self.assing_gripe_turn()
+    
+    def assign_covid_turn(self):
+        pass #abstract
+
+    def needs_gripe_vaccine(self):
+        print("fecha",self.patient.fecha_gripe)
+        return self.patient.fecha_gripe+relativedelta(years=1) < date.today()
+    
+    def needs_covid_vaccine(self):
+        print("dosis",self.patient.dosis_covid)
+        return self.patient.dosis_covid < 2
+    
+    def today_turns_are_full(self,date):
+        return len(list(filter(lambda turno: turno.fecha==date,self.turnos)))
+    
+    def create_turn(self,date):
+        while self.today_turns_are_full(date):
+            date+timedelta(days=1)
+        Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
+    
+    def assing_gripe_turn(self):
+        if self.needs_gripe_vaccine():
+            self.vacuna=Vacuna.objects.get(nombre="Gripe")
+            self.create_turn(self.gripe_date)
+            
+    
 
 
-def assign_turns(patient):
-    vacunatorio=Vacunatorio.objects.get(zona=patient.user.zona)
-    vacunadores=Vacunador.objects.all()
-    cant_in_vacunatorio=len(list(filter(lambda vacunador: (vacunador.user.zona==patient.user.zona), vacunadores)))
-    max_turns=8*4*cant_in_vacunatorio
-    print(Vacuna.objects.get(nombre="Gripe"))
-    if patient.es_de_riesgo:
-        covid_date=date.today()+timedelta(days=7)
+class TurnAssignerRisk(TurnAssigner):
+    def __init__(self, patient) -> None:
+        self.covid_date=date.today()+timedelta(days=7)
         gripe_date=date.today()+relativedelta(months=+3)
-        assign_vaccine_turn(covid_date,max_turns,vacunatorio,patient,random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
-    else:
-        gripe_date=date.today()+relativedelta(months=+6)
+        super().__init__(patient,gripe_date)
+    
 
-    assign_vaccine_turn(gripe_date,max_turns,vacunatorio,patient,"Gripe")
-    #assign_to_waitlist() #No esta pensado todavia esto!
+    def assign_covid_turn(self):
+        if self.needs_covid_vaccine():
+            self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
+            self.create_turn(self.covid_date)
+
+
+class TurnAssignerNonRisk(TurnAssigner):
+    
+    def __init__(self, patient) -> None:
+        gripe_date=date.today()+relativedelta(months=+6)
+        super().__init__(patient,gripe_date)
+    
+    def create_wait_list_request(self):
+        listaDeEsperaCovid.objects.create(vacunatorio=self.vacunatorio,vacuna=self.vacuna,paciente=self.patient)
+
+    def assign_covid_turn(self):
+        if self.needs_covid_vaccine:
+            self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
+            self.create_wait_list_request()

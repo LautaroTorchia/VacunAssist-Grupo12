@@ -7,7 +7,7 @@ from Vacunation_app.custom_functions import check_dni, generate_keycode
 from django.contrib import messages
 
 from Vacunation_app.models import CustomUserManager, Paciente
-from Vacunation_app.turn_assignment import assign_turns
+from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk, assign_turns
 
 
 def registration_view(request):
@@ -36,8 +36,11 @@ def registration_view(request):
                 form.cleaned_data["cantidad_dosis_covid"],form.cleaned_data["ultima_gripe"],
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
-        
-            assign_turns(patient)
+            if patient.es_de_riesgo:
+                assigner=TurnAssignerRisk(patient)
+            else:
+                assigner=TurnAssignerNonRisk(patient)
+            assigner.assign_turns()
                 
             messages.success(request, "Cuenta creada Correctamente")
             return redirect(reverse("login"))

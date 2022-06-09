@@ -58,6 +58,7 @@ def creating_vaccinator_view(request):
 
     user_creation_form = CreatingVaccinatorForm(request.POST or None)
 
+    user_creation_form.errors.clear()
     if user_creation_form.is_valid():
         user_instance = user_creation_form.save(commit=False)
         vaccinator = CustomUserManager()

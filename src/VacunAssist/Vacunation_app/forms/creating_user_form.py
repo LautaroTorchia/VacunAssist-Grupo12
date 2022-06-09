@@ -31,7 +31,7 @@ class CreatingPatientForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'placeholder': 'email'}),
             'zona': forms.Select(attrs={'placeholder': 'Zona'}),
             'password':
-            forms.PasswordInput(attrs={'placeholder': 'Contraseña'}),
+            forms.PasswordInput(attrs={'placeholder': 'Contraseña'},render_value=True),
         }
         labels = {
             "dni": "",
@@ -49,4 +49,5 @@ class CreatingPatientForm(forms.ModelForm):
         label="",
         widget=forms.NumberInput(
             attrs={'placeholder': 'Cantidad de dosis COVID'}))
-    tuvo_amarilla = forms.BooleanField(label="Tiene vacuna de fiebre amarilla")
+    tuvo_amarilla = forms.BooleanField(label="Tiene vacuna de la fiebre amarilla",required=False)
+    es_de_riesgo = forms.BooleanField(label="Usted es de riesgo",required=False)

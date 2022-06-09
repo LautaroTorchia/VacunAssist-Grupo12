@@ -7,6 +7,7 @@ from Vacunation_app.custom_functions import check_dni, generate_keycode
 from django.contrib import messages
 
 from Vacunation_app.models import CustomUserManager, Paciente
+from Vacunation_app.turn_assignment import assign_turns
 
 
 def registration_view(request):
@@ -16,7 +17,7 @@ def registration_view(request):
     if 'validar_dni' in request.POST:
         form.errors.clear()
         if form.is_valid():
-            success, data = check_dni(form.cleaned_data.get("dni"))
+            success, data = check_dni(form.data["dni"])
             if success:
                 messages.success(request,"DNI validado")
             else:
@@ -29,12 +30,14 @@ def registration_view(request):
             clave=generate_keycode()
             nombre=request.session["data"].get("nombre")
             fecha_nac=request.session["data"].get("fecha_nacimiento")
-            user.create_patient(
+            patient=user.create_patient(
                 form.cleaned_data["dni"],form.cleaned_data["password"],
                 nombre,fecha_nac,form.cleaned_data["email"],clave,form.cleaned_data["zona"],
                 form.cleaned_data["cantidad_dosis_covid"],form.cleaned_data["ultima_gripe"],
-                form.cleaned_data["tuvo_amarilla"]
+                form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
+        
+            assign_turns(patient)
                 
             messages.success(request, "Cuenta creada Correctamente")
             return redirect(reverse("login"))

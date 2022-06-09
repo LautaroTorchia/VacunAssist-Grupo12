@@ -51,7 +51,7 @@ class CustomUserManager(
         return user
 
     def create_patient(self, dni, password, nombre_completo, fecha_nac,
-                          email, clave,zona,covid,gripe,fiebre_amarilla):
+                          email, clave,zona,covid,gripe,fiebre_amarilla,es_de_riesgo):
         extra_fields = {}
         extra_fields["is_staff"] = False
         extra_fields["is_superuser"] = False
@@ -60,9 +60,9 @@ class CustomUserManager(
 
         user.user_permissions.set([Permission.objects.get(codename="Paciente")])
         patient_instance = Paciente.objects.create(user=user,dosis_covid=covid,
-        fecha_gripe=gripe,tuvo_fiebre_amarilla=fiebre_amarilla)
+        fecha_gripe=gripe,tuvo_fiebre_amarilla=fiebre_amarilla,es_de_riesgo=es_de_riesgo)
         patient_instance.save()
-        return user
+        return patient_instance
 
     def create_vaccinator(self, dni, password, nombre_completo, fecha_nac,
                           email, clave, zona):
@@ -166,6 +166,7 @@ class Paciente(models.Model):
     tuvo_fiebre_amarilla = models.BooleanField()
     dosis_covid = models.IntegerField(choices=Cantidad_dosis.choices)
     fecha_gripe = models.DateField()
+    es_de_riesgo=models.BooleanField()
 
     class Meta:
         permissions = [
@@ -221,6 +222,7 @@ class Vacuna(models.Model):
 
 class Vacunatorio(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
+    zona=models.ForeignKey(Zona,on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nombre}"

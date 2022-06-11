@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'home_page.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="main_container container-fluid d-flex flex-row">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container align-self-start">
+            {% include "presentacion.html" %}
+            <div class="pagina_principal">
+                <h1> Como administrador no puede editar su perfil</h1>
+                <h1> Contactese con los desarrolladores en caso de necesitarlo:</h1>
+                <a href="mailto: codexsoftware@gmail.com">codexsoftware@gmail.com</a>
+        </div>
+    </div>  
+      
+{% bootstrap_javascript jquery='full' %}
+{% endblock content %}

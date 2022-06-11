@@ -20,28 +20,20 @@ from Vacunation_app.views.accounts.login_view import CustomLogin, CustomLoginCla
 from Vacunation_app.views.accounts.registration_view import registration_view
 from Vacunation_app.views.homes.patient_home_view import contact_view, logout_view, notification_view, zona_view
 from Vacunation_app.views.redirect_view import HomeRedirectView
-from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', CustomLogin.as_view(), name="login"),
-    path('accounts/loginClave/', CustomLoginClave.as_view(),
-         name="loginClave"),
+    path('accounts/loginClave/', CustomLoginClave.as_view(),name="loginClave"),
     path("accounts/registration", registration_view, name="registrate"),
     path("logout", logout_view, name="logout"),
     path('', HomeRedirectView.as_view(), name='redirectHome'),
     path("zona", zona_view, name="zona"),
     path("notifications", notification_view, name="notifications"),
     path("contact", contact_view, name="contact_us"),
-    path("administrator/",
-         include("Vacunation_app.urls.administrator_urls"),
-         name="admin_views"),
-    path("vaccinator/",
-         include("Vacunation_app.urls.vaccinator_urls"),
-         name="vaccinator_views"),
-    path("patient/",
-         include("Vacunation_app.urls.patient_urls"),
-         name="patient_views"),
-    path('accounts/',
-         include('django.contrib.auth.urls')),  #!Revisar recuperar contraseña
-]
+    path("administrator/",include("Vacunation_app.urls.administrator_urls"),name="admin_views"),
+    path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator_views"),
+    path("patient/",include("Vacunation_app.urls.patient_urls"),name="patient_views"),
+    path('recover/',include("Vacunation_app.urls.recover_urls"),name="recover_views"),
+    ]

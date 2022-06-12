@@ -10,14 +10,14 @@ class CustomSetPasswordForm(SetPasswordForm):
     }
 
     new_password1 = forms.CharField(
-        label=("Contraseña nueva"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "Contraseña nueva"}),
+        label=(""),
+        widget=forms.PasswordInput(attrs={"autocomplete": "Contraseña nueva","placeholder":"Contraseña nueva"}),
         strip=False,
     )
     new_password2 = forms.CharField(
-        label=("Confirme su contraseña"),
+        label=(""),
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "Confirme su contraseña"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "Confirme su contraseña","placeholder":"Confirme su contraseña"}),
     )
     def clean_new_password2(self):
         password1 = self.cleaned_data.get("new_password1")

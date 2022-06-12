@@ -7,6 +7,12 @@ Usuario = get_user_model()
 
 class ClaveResetForm(PasswordResetForm):
 
+    email = forms.EmailField(
+        label=(""),
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email",'placeholder':"Email"}),
+    )
+
     def save(
         self,
         domain_override=None,

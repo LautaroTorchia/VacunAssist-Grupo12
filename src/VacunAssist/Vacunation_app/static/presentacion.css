@@ -109,3 +109,12 @@ h5 {
     padding: 5px;
     cursor: pointer;
 }
+
+.dropdown-toggle{
+    gap: 10px;
+    background-color: rgba(90, 90, 90, 0.285) !important;
+}
+
+.dropdown-toggle::after{
+    content: none !important;
+}

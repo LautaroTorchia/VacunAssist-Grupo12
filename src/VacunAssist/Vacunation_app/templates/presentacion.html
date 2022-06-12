@@ -7,9 +7,9 @@
     </div>
     <div class="perfil_container">
         <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile" class="perfil profile-pic">
-        <h5>Mi perfil</h5>
         <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="btn btn-secondary dropdown-toggle d-flex flex-row" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <h5>Mi perfil</h5>
                 <img src="{% static 'img/profile_arrow.svg' %}" alt="" class="flecha">
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">

@@ -20,7 +20,7 @@
             <div class="zona_container">
                <h1 class="text">Estas en Zonas</h1>
                <div class="zona"></div>
-               <a href="/editar_perfil/{{ request.user.id }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
+               <a href="{{ request.session.editar_perfil_url }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
                 </div>
             </div>  
         </div>

@@ -4,7 +4,6 @@ from django.contrib.auth.models import (BaseUserManager)
 from django.forms import ValidationError
 from django.core.validators import MinValueValidator, MinLengthValidator
 from django.contrib.auth.models import Permission
-import os
 
 
 def validate_alpha(nombre):

@@ -1,0 +1,12 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Estás recibiendo este mail porque requeriste recuperar tu clave de Vacunassist.{% endblocktranslate %}
+
+
+{% translate 'Tu clave es:' %} {{ user.clave }}
+{% translate 'Tu usuario en caso de que lo hayas olvidado:' %} {{ user.get_username }}
+
+{% translate "Gracias por usar nuestro sitio!" %}
+
+{% blocktranslate %} Administración Vacunassist {% endblocktranslate %}
+
+{% endautoescape %}

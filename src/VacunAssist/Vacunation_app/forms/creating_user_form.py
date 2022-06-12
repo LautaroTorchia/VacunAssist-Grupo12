@@ -1,5 +1,5 @@
 from django import forms
-from ..models import Paciente, Usuario
+from ..models import Usuario
 
 
 class CreatingVaccinatorForm(forms.ModelForm):

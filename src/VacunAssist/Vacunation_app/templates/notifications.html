@@ -20,14 +20,34 @@
             <div class="zona_container">
                <h1>Estas en Notificaciones</h1>
                <h1>{{ is_staff}} </h1>
-               {% for turn in turns %}
+               {% for turn in object_list %}
                 <div class="turn">
                     {{ turn.vacunatorio.nombre }}
                     {{ turn.fecha }}
                     {{ turn.vacuna.nombre }}
+                    <form action="" method="post"> 
+                        {% csrf_token %}
+                        <input type="submit" value="borrar" name="{{ turn.id }}"></form>
                 </div>
                {% endfor %}
                <img src="" alt="">
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; primera</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+                        {% endif %}
+                    </span>
                 </div>
             </div>  
         </div>

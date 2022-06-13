@@ -14,7 +14,7 @@ class TurnAssigner():
 
     def assign_turns(self):
         self.assign_covid_turn()
-        self.assing_gripe_turn()
+        self.assign_gripe_turn()
     
     def assign_covid_turn(self):
         pass #abstract
@@ -52,7 +52,7 @@ class TurnAssigner():
             date=self.check_turn_hour(date)
             Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
     
-    def assing_gripe_turn(self):
+    def assign_gripe_turn(self):
         if self.needs_gripe_vaccine():
             self.vacuna=Vacuna.objects.get(nombre="Gripe")
             self.create_turn(self.gripe_date)

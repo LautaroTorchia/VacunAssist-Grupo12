@@ -15,10 +15,11 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, path, reverse
+from django.urls import include, path
 from Vacunation_app.views.accounts.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.accounts.registration_view import registration_view
-from Vacunation_app.views.homes.patient_home_view import contact_view, logout_view, notification_view, zona_view
+from Vacunation_app.views.homes.patient_home_view import contact_view, logout_view, zona_view
+from Vacunation_app.views.notification_view import NotificationView
 from Vacunation_app.views.redirect_view import HomeRedirectView
 from Vacunation_app.views.pythonanywhere import update
 
@@ -33,7 +34,7 @@ urlpatterns = [
     path("logout", logout_view, name="logout"),
     path('', HomeRedirectView.as_view(), name='redirectHome'),
     path("zona", zona_view, name="zona"),
-    path("notifications", notification_view, name="notifications"),
+    path("notifications", NotificationView.as_view(), name="notifications"),
     path("contact", contact_view, name="contact_us"),
     path("administrator/",include("Vacunation_app.urls.administrator_urls"),name="admin_views"),
     path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator_views"),

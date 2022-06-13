@@ -11,12 +11,12 @@ class HomeRedirectView(RedirectView):
             return super().get(request, *args, **kwargs)
 
         if user.has_perm("Vacunation_app.Vacunador"):
-            request.session["editar_perfil_url"]=reverse("update_vaccinator",args=str(request.user.id))
+            request.session["editar_perfil_url"]=reverse("update_vaccinator",args=[str(user.id)])
             self.pattern_name="vaccinator_home"
             return super().get(request, *args, **kwargs)
 
         if user.has_perm("Vacunation_app.Paciente"):
-            request.session["editar_perfil_url"]=reverse("update_user",args=str(request.user.id))
+            request.session["editar_perfil_url"]=reverse("update_user",args=[str(user.id)])
             self.pattern_name="user_home"
             return super().get(request, *args, **kwargs)
 

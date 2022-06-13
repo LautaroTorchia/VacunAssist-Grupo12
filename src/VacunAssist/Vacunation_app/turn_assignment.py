@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import random
 from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid
@@ -26,12 +26,31 @@ class TurnAssigner():
         return self.patient.dosis_covid < 2
     
     def today_turns_are_full(self,date):
-        return len(list(filter(lambda turno: turno.fecha==date,self.turnos)))==8*4*self.cant_in_vacunatorio
+        return len(list(filter(lambda turno: turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day 
+        ,self.turnos)))==8*4*self.cant_in_vacunatorio
+    
+    def check_turn_hour(self,date):
+        today_last_turns=list(filter(lambda turno: 
+        turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day 
+        ,self.turnos))[-self.cant_in_vacunatorio:]
+        
+        if today_last_turns:
+            last_turn_date=today_last_turns[self.cant_in_vacunatorio-1].fecha
+            last_turn_time=last_turn_date.time()
+            final_turn_date = date.replace(hour=last_turn_time.hour, minute=last_turn_time.minute,second=0)
+            if all([elem for elem in today_last_turns if elem.fecha==last_turn_date]):
+                return final_turn_date + timedelta(minutes=15)
+
+        return date.replace(hour=8, minute=0)
+            
     
     def create_turn(self,date):
-        while self.today_turns_are_full(date):
-            date+timedelta(days=1)
-        Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
+        if self.cant_in_vacunatorio!=0:
+            while self.today_turns_are_full(date):
+                date+timedelta(days=1)
+
+            date=self.check_turn_hour(date)
+            Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
     
     def assing_gripe_turn(self):
         if self.needs_gripe_vaccine():
@@ -42,9 +61,9 @@ class TurnAssigner():
 
 
 class TurnAssignerRisk(TurnAssigner):
-    def __init__(self, patient) -> None:
-        self.covid_date=date.today()+timedelta(days=7)
-        gripe_date=date.today()+relativedelta(months=+3)
+    def __init__(self, patient,reference_date=datetime.today()) -> None:
+        self.covid_date=reference_date+timedelta(days=7)
+        gripe_date=reference_date+relativedelta(months=+3)
         super().__init__(patient,gripe_date)
     
 
@@ -56,8 +75,8 @@ class TurnAssignerRisk(TurnAssigner):
 
 class TurnAssignerNonRisk(TurnAssigner):
     
-    def __init__(self, patient) -> None:
-        gripe_date=date.today()+relativedelta(months=+6)
+    def __init__(self, patient,reference_date=datetime.today()) -> None:
+        gripe_date=reference_date+relativedelta(months=+6)
         super().__init__(patient,gripe_date)
     
     def create_wait_list_request(self):

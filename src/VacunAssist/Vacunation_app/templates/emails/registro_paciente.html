@@ -1,0 +1,12 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Estás recibiendo este mail porque Creaste una cuenta en VacunAssist.{% endblocktranslate %}
+
+<h1> {% translate "Tu cuenta fue creada exitosamente, aqui esta tu clave de acceso:" %}</h1>
+<h3>{% translate 'Tu usuario en caso de que lo hayas olvidado:' %} {{ nombre }}</h3>
+<h3>{% translate 'Clave de acceso:' %} {{ clave }}</h3>
+
+<h5>{% translate "Gracias por usar nuestro sitio!" %}</h5>
+
+<h5>{% blocktranslate %} Administración Vacunassist {% endblocktranslate %}</h5>
+
+{% endautoescape %}

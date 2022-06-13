@@ -19,6 +19,7 @@
             
             <div class="zona_container">
                <h1>Estas en Notificaciones</h1>
+               <h1>{{ is_staff}} </h1>
                {% for turn in turns %}
                 <div class="turn">
                     {{ turn.vacunatorio.nombre }}

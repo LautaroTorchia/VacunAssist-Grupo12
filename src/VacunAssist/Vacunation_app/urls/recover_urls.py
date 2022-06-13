@@ -17,7 +17,7 @@ urlpatterns = [
     path("reset/<uidb64>/<token>/",auth_views.PasswordResetConfirmView.as_view(
     template_name= "registration/password_reset_confirm_view.html",
     form_class = CustomSetPasswordForm
-    ),name="password_reset_confirm",),#Arreglar los errores que están arriba
+    ),name="password_reset_confirm",),
 
     path("reset/done/", auth_views.PasswordResetCompleteView.as_view(template_name= "registration/password_reset_complete_view.html"
     ),name="password_reset_complete",),

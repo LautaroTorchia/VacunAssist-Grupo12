@@ -32,9 +32,15 @@ def zona_view(request):
     return render(request,"zona.html",{})
 
 def notification_view(request):
-    paciente=Paciente.objects.get(user=request.user)
-    turns=Turno.objects.filter(paciente=paciente)
-    return render(request,"notifications.html",{"turns":turns})
+    try:
+        paciente=Paciente.objects.get(user=request.user)
+        turns=Turno.objects.filter(paciente=paciente)
+        return render(request,"notifications.html",{"turns":turns})
+    except:
+
+        return render(request,"notifications.html",{"is_staff":"No tenes turnos asignados, ya que eres parte del personal"})
+    
+    
 
 def contact_view(request):
     return render(request,"contact.html",{})

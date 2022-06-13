@@ -1,3 +1,4 @@
+from datetime import date
 from django import forms
 from ..models import Usuario
 
@@ -41,7 +42,7 @@ class CreatingPatientForm(forms.ModelForm):
         }
 
     ultima_gripe = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
+        widget=forms.DateInput(attrs={'type': 'date',"min":"1990-01-01","max":date.today()}),
         label="Ultima vacuna de gripe")
     cantidad_dosis_covid = forms.IntegerField(
         max_value=2,

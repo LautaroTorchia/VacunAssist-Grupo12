@@ -1,11 +1,14 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode
 from django.contrib import messages
-
+from django.core.mail import send_mail
 from Vacunation_app.models import CustomUserManager
 from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 def registration_view(request):
@@ -26,7 +29,6 @@ def registration_view(request):
         if form.is_valid():
             user=CustomUserManager()
             clave=generate_keycode()
-            print("dosis_covid",form.cleaned_data["cantidad_dosis_covid"])
             nombre=request.session["data"].get("nombre")
             fecha_nac=request.session["data"].get("fecha_nacimiento")
             patient=user.create_patient(
@@ -41,7 +43,12 @@ def registration_view(request):
             else:
                 assigner=TurnAssignerNonRisk(patient)
             assigner.assign_turns()
-                
+
+            html_message = render_to_string('emails/registro_paciente.html', 
+            {"clave":clave, "username":nombre})
+            send_mail("Registro de vacunador a VacunAssist",strip_tags(html_message),from_email=DEFAULT_FROM_EMAIL,recipient_list=[form.cleaned_data["email"]],
+            fail_silently=False,html_message=html_message)
+
             messages.success(request, "Cuenta creada Correctamente")
             return redirect(reverse("login"))
 

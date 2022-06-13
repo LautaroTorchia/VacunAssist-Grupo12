@@ -14,7 +14,6 @@ class HomeView(LoginRequiredMixin,TemplateView):
     permission_required = ("Vacunation_app.Paciente", )
 
     def get(self, request, *args, **kwargs):
-        self.extra_context={"editar_perfil_url":reverse("update_user",args=str(request.user.id))}
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

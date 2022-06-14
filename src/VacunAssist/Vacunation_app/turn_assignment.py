@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import random
-from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid
+from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
 
 class TurnAssigner():
 
@@ -42,7 +42,10 @@ class TurnAssigner():
                 return final_turn_date + timedelta(minutes=15)
 
         return date.replace(hour=8, minute=0)
-            
+
+    def create_amarilla_wait_list_request(self):
+        self.vacuna=Vacuna.objects.get(nombre="Fiebre amarilla")
+        listaDeEsperaFiebreAmarilla.objects.create(vacunatorio=self.vacunatorio,vacuna=self.vacuna,paciente=self.patient)            
     
     def create_turn(self,date):
         if self.cant_in_vacunatorio!=0:

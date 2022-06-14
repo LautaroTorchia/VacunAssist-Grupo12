@@ -53,16 +53,29 @@
                                         <p class="texto_panel_exito">Su turno fue asignado en {{ turno_amarilla.vacunatorio }} <br> el día {{ turno_amarilla.fecha.date }}</p>
                                     </div>
                                 </div>
+                                <form action="/notifications" method="get">
+                                    <input type="submit" value="Cancelar turno" name="cancelar_turno_amarilla" class="panel_boton_asignado">
+                                </form>
                             {% else %}
+                                {% if esta_en_waitlist %}
+                                    <div class="texto_panel">
+                                        <div class="panel_interior_exito">
+                                            <p class="texto_panel_exito title">Fiebre amarilla</p>
+                                            <p class="texto_panel_exito">Usted está en espera de un turno para esta vacuna. En cuanto le sea asignado se le notificará y se agregará a la lista de “Mis Turnos”</p>
+                                        </div>
+                                    </div>
+                                {% else %}
                                 <div class="texto_panel">
                                     <div class="panel_interior_exito">
                                         <p class="texto_panel_exito title">Fiebre amarilla</p>
                                         <p class="texto_panel_exito">Usted puede pedir un turno de fiebre amarilla, presione pedir turno y un administrador revisara su caso</p>
                                     </div>
                                 </div>
-                                <form action="" method="get">
-                                    <input type="submit" value="Pedir turno" name="turno_amarilla" class="panel_boton_en_espera">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Pedir turno" name="pedir_turno_amarilla" class="panel_boton_en_espera">
                                 </form>
+                                {% endif %}
                             {% endif %}
                         {% else %}
                             <div class="texto_panel">
@@ -71,7 +84,7 @@
                                     <p class="texto_panel_inhabilitado">Usted forma parte del grupo que el Ministerio de Salud indica que no debe aplicarse esta vacuna.Para saber más, presione el botón “Ver Más”</p>
                                 </div>
                             </div>
-                            <form action="" method="get">
+                            <form action="/information" method="get">
                                 <input type="submit" value="Ver mas" name="turno_amarilla" class="panel_boton_inhabilitado">
                             </form>
                         {% endif %}

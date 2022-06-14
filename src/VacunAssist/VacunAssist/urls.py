@@ -22,6 +22,7 @@ from Vacunation_app.views.homes.patient_home_view import contact_view, logout_vi
 from Vacunation_app.views.notification_view import NotificationView
 from Vacunation_app.views.redirect_view import HomeRedirectView
 from Vacunation_app.views.pythonanywhere import update
+from django.views.generic import TemplateView
 
 
 
@@ -40,4 +41,5 @@ urlpatterns = [
     path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator_views"),
     path("patient/",include("Vacunation_app.urls.patient_urls"),name="patient_views"),
     path('recover/',include("Vacunation_app.urls.recover_urls"),name="recover_views"),
+    path("information/",TemplateView.as_view(template_name = "information.html"),name="information"),
     ]

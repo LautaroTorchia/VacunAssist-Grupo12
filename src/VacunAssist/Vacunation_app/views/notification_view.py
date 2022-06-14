@@ -34,7 +34,6 @@ class NotificationView(ListView):
             turn = assigner.assign_covid_turn()
             if paciente.es_de_riesgo:
                 messages.success(request,f"Su turno ha sido reasignado para el {turn.fecha.date()}")
-                
             else:
                 messages.success(request,f"Como no es de riesgo, queda a la espera de un nuevo turno")
         elif "Gripe" in str(turn.vacuna):

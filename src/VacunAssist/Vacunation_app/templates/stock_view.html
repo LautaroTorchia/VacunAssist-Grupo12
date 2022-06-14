@@ -31,7 +31,8 @@
                         <div class="form_container">
                             <form action="" method="post"> {% csrf_token %}
                                 {{  stock_form.as_p }}
-                                <input type="submit" class="btn-submit" value="Aumentar stock">
+                                <input type="submit" class="btn-submit" value="Aumentar stock" name="aumentar">
+                                <input type="submit" class="btn-submit" value="Disminuir stock" name="disminuir">
                             </form>
                             {% if stock_form.errors %}
                                 {% for field in stock_form %}

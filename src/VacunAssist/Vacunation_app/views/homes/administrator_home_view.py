@@ -114,10 +114,14 @@ def stock_view(request):
 
         vacunation_to_update = VacunaEnVacunatorio.objects.get(
             vacuna=vacuna, vacunatorio=vacunatorio)
-        vacunation_to_update.stock += stock_form.cleaned_data.get("stock")
+        if "aumentar" in request.POST:
+            vacunation_to_update.stock += stock_form.cleaned_data.get("stock")
+            messages.success(request,"Stock aumentado")
+        elif "disminuir" in request.POST:
+            vacunation_to_update.stock -= stock_form.cleaned_data.get("stock")
+            messages.success(request,"Stock disminuido")
         vacunation_to_update.save()
-        messages.success(request,"Stock actualizado")
-        stock_form = StockForm()
+
 
     context = {
         "vaccine_info": vaccine_info,

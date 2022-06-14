@@ -230,8 +230,7 @@ class Vacunatorio(models.Model):
 class VacunaEnVacunatorio(models.Model):
     vacunatorio = models.ForeignKey(Vacunatorio, on_delete=models.CASCADE)
     vacuna = models.ForeignKey(Vacuna, on_delete=models.CASCADE)
-    stock = models.IntegerField(
-        validators=[MinValueValidator(1, "Debe ingresar un numero mayor a 1")])
+    stock = models.PositiveBigIntegerField()
 
     def __str__(self):
         return f"{self.vacunatorio}-{self.vacuna}"

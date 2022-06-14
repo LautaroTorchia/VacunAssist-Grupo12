@@ -25,12 +25,13 @@
                     {{ turn.vacunatorio.nombre }}
                     {{ turn.fecha }}
                     {{ turn.vacuna.nombre }}
-                    <form action="" method="post"> 
+                    <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
                         {% csrf_token %}
-                        <input type="submit" value="borrar" name="{{ turn.id }}"></form>
-                </div>
-               {% endfor %}
-               <img src="" alt="">
+                        <input type="submit" value="Cancelar" name="{{ turn.id }}"></form>
+                    </div>
+                    {% endfor %}
+                    
+                    {% include "messages.html" %}
                 </div>
                 <div class="pagination">
                     <span class="step-links">

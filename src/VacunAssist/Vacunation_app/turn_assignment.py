@@ -47,15 +47,16 @@ class TurnAssigner():
     def create_turn(self,date):
         if self.cant_in_vacunatorio!=0:
             while self.today_turns_are_full(date):
-                date+timedelta(days=1)
+                date+=timedelta(days=1)
 
             date=self.check_turn_hour(date)
-            Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
+            return Turno.objects.create(fecha=date,vacunatorio=self.vacunatorio,paciente=self.patient,vacuna=self.vacuna)
+            
     
     def assign_gripe_turn(self):
         if self.needs_gripe_vaccine():
             self.vacuna=Vacuna.objects.get(nombre="Gripe")
-            self.create_turn(self.gripe_date)
+            return self.create_turn(self.gripe_date)
             
     
 
@@ -70,7 +71,7 @@ class TurnAssignerRisk(TurnAssigner):
     def assign_covid_turn(self):
         if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
-            self.create_turn(self.covid_date)
+            return  self.create_turn(self.covid_date)
 
 
 class TurnAssignerNonRisk(TurnAssigner):

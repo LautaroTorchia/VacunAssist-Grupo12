@@ -5,6 +5,7 @@ from typing import *
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.contrib import messages
 
 from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 
@@ -23,18 +24,23 @@ class NotificationView(ListView):
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         turno=Turno.objects.get(id=list(request.POST.keys())[1])
         paciente=Paciente.objects.get(user=request.user)
-        self.getnewturn(turno,paciente)
-        #Turno.objects.delete(turno)
+        self.getnewturn(turno,paciente,request)
+        turno.delete()
         return redirect(reverse("notifications"))
 
-    def getnewturn(self,turn,paciente) -> Turno:
-        #cambiar para que los de covid sin riesgo los ponga en espere y que los otros se reasignen a partir de la fecha del turno cancelado
-        assigner=self.getassigner(paciente)
+    def getnewturn(self,turn,paciente,request) -> Turno:
+        assigner=self.getassigner(paciente,turn)
         if "COVID" in str(turn.vacuna):
-            assigner.assign_covid_turn()
+            turn = assigner.assign_covid_turn()
+            if paciente.es_de_riesgo:
+                messages.success(request,f"Su turno ha sido reasignado a una nueva fecha {turn.fecha.date()}")
+                
+            else:
+                messages.success(request,f"Como no es de riesgo, queda a la espera de un nuevo turno")
         elif "Gripe" in str(turn.vacuna):
-            assigner.assign_gripe_turn()
+            turn = assigner.assign_gripe_turn()
+            messages.success(request,f"Su turno ha sido reasignado a una nueva fecha {turn.fecha.date()}")
 
-    def getassigner(self,paciente) -> TurnAssigner:
-        return TurnAssignerRisk(paciente) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente)
+    def getassigner(self,paciente,turn) -> TurnAssigner:
+        return TurnAssignerRisk(paciente,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente,turn.fecha)
             

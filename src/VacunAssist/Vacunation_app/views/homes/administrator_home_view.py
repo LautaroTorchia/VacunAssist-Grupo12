@@ -3,7 +3,7 @@ import string
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
-from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
+from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager, Paciente
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.mail import send_mail
@@ -77,7 +77,6 @@ def creating_vaccinator_view(request):
         messages.success(request, "Cuenta creada Correctamente")
         return redirect(reverse("creating-vaccinator-view"))
 
-
     context = {
         "form": user_creation_form,
         "DNI": request.session["dni_to_create"],
@@ -95,4 +94,9 @@ def vaccinators_list_view(request):
     return render(request, "vaccinators_list.html", context)
 
 
-
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
+@login_required()
+def patients_list_view(request):
+    queryset = Paciente.objects.all()
+    context = {"object_list": queryset}
+    return render(request, "patients_list.html", context)

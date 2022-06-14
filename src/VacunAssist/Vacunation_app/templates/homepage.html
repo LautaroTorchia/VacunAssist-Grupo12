@@ -16,9 +16,59 @@
         </div>
         <div class="main_fields_container align-self-start">
             {% include "presentacion.html" %}
-            <div class="pagina_principal">
-                <h1> Pagina principal</h1>
-                <h3>Coming soon!</h3>
+            <div class="principal_campos">
+                <div class="paneles">
+                    <div class="panel">
+                        <div class="texto_panel">
+                            <div class="panel_interior_exito">
+                                <p class="texto_panel_exito title">COVID-19</p>
+                                <p class="texto_panel_exito">Usted está en espera
+                                    de un turno para esta vacuna. En cuanto le sea asignado se le notificará y se agregará a la lista de “Mis Turnos”</p>
+                            </div>
+                        </div>
+                        <form action="" method="get">
+                            <input type="submit" value="Turno solicitado" name="turno_covid" class="panel_boton_en_espera" disabled="true">
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <div class="texto_panel">
+                            <div class="panel_interior_exito">
+                                <p class="texto_panel_exito title">Gripe</p>
+                                <p class="texto_panel_exito">Su turno para esta vacuna ya está asignado para la fecha 10/10/2022
+                                    y el horario 08:15
+                                
+                                    <br>No te olvides de cancelar el turno anticipadamente si no vas a poder asistir</p>
+                            </div>
+                        </div>
+                        <form action="/notifications" method="get">
+                        <input type="submit" value="Cancelar turno" name="turno_gripe" class="panel_boton_asignado">
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <div class="texto_panel">
+                            <div class="panel_interior_inhabilitado">
+                                <p class="texto_panel_inhabilitado title">Fiebre amarilla</p>
+                                <p class="texto_panel_inhabilitado">Usted forma parte del grupo que el Ministerio de Salud indica que no debe aplicarse esta vacuna.Para saber más, presione el botón “Ver Más”</p>
+                            </div>
+                        </div>
+                        <form action="" method="get">
+                            <input type="submit" value="Ver mas" name="turno_amarilla" class="panel_boton_inhabilitado">
+                        </form>
+                    </div>
+                </div>
+                <div class="proximos_turnos">
+                    <div class="titulo">
+                        <p class="texto_del_titulo">Proximos Turnos</p>
+                    </div>
+                    <div class="info_principal">
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 10/10/2022 Horario: 08:00</p>
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 11/10/2022 Horario: 09:00</p>
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 12/10/2022 Horario: 10:00</p>
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 13/10/2022 Horario: 11:00</p>
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 14/10/2022 Horario: 12:00</p>
+                        <p class="info_vaccine">Vacuna: Gripe Fecha: 15/10/2022 Horario: 13:00</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>  

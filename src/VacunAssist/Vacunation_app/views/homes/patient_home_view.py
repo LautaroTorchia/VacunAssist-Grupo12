@@ -15,11 +15,7 @@ class HomeView(LoginRequiredMixin,TemplateView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if "logout" in request.POST:
-            logout(request)
-            return redirect(reverse("login"))
-        return redirect("/")
-
+        pass
 
 def logout_view(request):
     logout(request)
@@ -27,9 +23,6 @@ def logout_view(request):
     
 def zona_view(request):
     return render(request,"zona.html",{})
-
-
-    
 
 def contact_view(request):
     return render(request,"contact.html",{})

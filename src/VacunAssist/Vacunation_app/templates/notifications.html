@@ -4,7 +4,7 @@
 {% block css %}
     {% load bootstrap4 %}
     {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'administrator_landing.css' %}">
+    <link rel="stylesheet" href="{% static 'notifications.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
@@ -17,17 +17,24 @@
         <div class="main_fields_container align-self-start ">
             {% include "presentacion.html" %}
             
-            <div class="zona_container">
-               <h1>Estas en Notificaciones</h1>
+            <div class="notifications_container">
+               <h1 >Mis Turnos</h1>
                <h1>{{ is_staff}} </h1>
+               {% if not object_list %}
+                <h3> No Tienes ningun turno asignado</h3>
+               {% endif %}
                {% for turn in object_list %}
-                <div class="turn">
-                    {{ turn.vacunatorio.nombre }}
-                    {{ turn.fecha }}
-                    {{ turn.vacuna.nombre }}
-                    <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
-                        {% csrf_token %}
-                        <input type="submit" value="Cancelar" name="{{ turn.id }}"></form>
+                <div class="turn align-self-center p-2">
+                    <p>
+                        <br>Vacunatorio: {{ turn.vacunatorio.nombre }}
+                        <br>Fecha: {{ turn.fecha }}
+                        <br>Vacuna: {{ turn.vacuna.nombre }}
+                    </p>
+                        <div class="formul ml-auto p-2 align-self-center">
+                        <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
+                            {% csrf_token %}
+                            <input type="submit" value="Reasignar" name="{{ turn.id }}" class="btn button btn-block"></form>
+                        </div>
                     </div>
                     {% endfor %}
                     

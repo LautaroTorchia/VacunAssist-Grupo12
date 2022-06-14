@@ -17,7 +17,11 @@
                         {{ form.as_p }}
                         <div class="buttons d-flex flex-column">
                             <input type="submit" name="validar_dni" value="Validar DNI" id="">
-                            <input type="submit" name="crear_cuenta" value="Crear cuenta">
+                            {% if dni_validated %}
+                                <input type="submit" name="crear_cuenta" value="Crear cuenta">
+                            {% else %}
+                                <input type="submit" name="crear_cuenta" value="Crear cuenta" disabled="true">
+                            {% endif %}
                         </div>
                         <a href="/accounts/login" class="olvidaste_clave align-self-start">¿Ya tenes cuenta? Inicia sesion </a>
                         {% if form.errors %}

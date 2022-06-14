@@ -14,3 +14,239 @@
     flex-grow: 0;
 
 }
+
+.principal_campos{
+    width: 67vw;
+    height: 20vh;
+    gap: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.paneles{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8vw;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px 0px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.texto_panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 0px;
+    gap: 10px;
+    background: #FFFFFF;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+}
+
+.panel_interior_exito{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 10px;
+    gap: 20px;
+    width: 296px;
+    height: 350px;
+
+    background: #E9F9DD;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.panel_interior_inhabilitado{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 10px;
+    gap: 20px;
+    width: 296px;
+    height: 350px;
+
+    background: #DDDDDD;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.texto_panel_exito{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 35px;
+    text-align: center;
+    color: #739F52;
+    background: #E9F9DD;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.texto_panel_inhabilitado{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 35px;
+    text-align: center;
+    color: #616161;
+    background: #DDDDDD;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.panel_boton_asignado{
+
+    width: 295px;
+    height: 50px;
+
+    background: #FF5454;
+    border-radius: 10px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 17px;
+    color: #FFFFFF;
+
+}
+
+.panel_boton_en_espera{
+
+    width: 295px;
+    height: 50px;
+
+    background: #739F52;
+    border-radius: 10px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 17px;
+    color: #FFFFFF;
+
+}
+.panel_boton_inhabilitado{
+
+    width: 295px;
+    height: 50px;
+
+    background: #4E4E4E;
+    border-radius: 10px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 17px;
+    color: #FFFFFF;
+
+}
+
+.title{
+    font-weight: 700 !important;
+    font-size: 30px !important;
+    line-height: 20px !important;
+    font-family: 'Montserrat' !important;
+}
+
+.proximos_turnos{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    gap: 10px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.titulo{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 10px;
+    gap: 10px;
+    background: #54CBFF;
+    border-radius: 10px;   
+    
+}
+
+.texto_del_titulo{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 17px;
+    color: #FFFFFF;
+
+}
+
+.info_principal{
+    padding: 10px;
+    background: rgba(233, 249, 221, 0.75);
+
+}
+
+.info_vaccine{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 17px;
+    /* or 71% */
+
+
+    color: #739F52;
+}

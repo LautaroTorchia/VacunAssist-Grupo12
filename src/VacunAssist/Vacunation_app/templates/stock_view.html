@@ -16,38 +16,44 @@
         </div>
         <div class="main_fields_container">
             {% include "presentacion.html" %}
-            <div class="stock_container container-fluid">
-                {% for place in vaccination_center_info %}
-                    <div class="vaccination_center_container">
-                        <h2 class='title'>{{ place.nombre | capfirst }}</h2>
-                        <div class="vaccines_container">
-                        {% for vaccine in vaccine_info %}
-                            {% if place.nombre == vaccine.vacunatorio.nombre %}
-                                <p class="item">Vacunas de {{ vaccine.vacuna.nombre }} en Stock: {{ vaccine.stock }}</p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                        <div class="form_container">
-                            <form action="" method="post"> {% csrf_token %}
-                                {{  stock_form.as_p }}
-                                <input type="submit" class="btn-submit" value="Aumentar stock" name="aumentar">
-                                <input type="submit" class="btn-submit" value="Disminuir stock" name="disminuir">
-                            </form>
-                            {% if stock_form.errors %}
-                                {% for field in stock_form %}
-                                    {% for error in field.errors %} 
-                                        <div class="alert alert-danger">
-                                            {{ error|escape }}
-                                        </div>
-                                    {% endfor %}
+            <div class="vaccines_form_container">
+                <div class="vaccination_center_container align-self-center">
+                    {% for place in vaccination_center_info %}
+                            <h2 class='title'> {{ place.nombre | capfirst }}</h2>
+                            <div class="vaccines_container">
+                                <table summary="Vacunas en vacunatorios">
+                                    <tr><th></th><th></th>
+                                        {% for vaccine in vaccine_info %}
+                                        {% if place.nombre == vaccine.vacunatorio.nombre %}
+                                        <tr><td class="item">Vacunas de {{ vaccine.vacuna.nombre }} </td><td class="item">{{ vaccine.stock }}</td></tr>
+                                        
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
                                 {% endfor %}
-                            {% endif %}
-                            {% include "messages.html" %}
-                        </div>
-            </div> 
+                        
+                </div>
+                <div class="form_container">
+                    <form action="" method="post"> {% csrf_token %}
+                        {{  form.as_p }}
+                        <input type="submit" class="btn-submit" value="Aumentar stock" name="aumentar">
+                        <input type="submit" class="btn-submit" value="Disminuir stock" name="disminuir">
+                    </form>
+                    {% if stock_form.errors %}
+                        {% for field in stock_form %}
+                            {% for error in field.errors %} 
+                                <div class="alert alert-danger">
+                                    {{ error|escape }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                    {% include "messages.html" %}
+                </div> 
             </div>
         </div>
+    </div>
     </div>
 {% bootstrap_javascript jquery='full' %}
 {% endblock content %}

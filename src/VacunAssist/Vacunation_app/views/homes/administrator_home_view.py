@@ -1,9 +1,6 @@
 import random
 import string
-from django.views.generic.edit import FormView
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from Vacunation_app.forms.stock_form import StockForm
-from Vacunation_app.forms.update_name_form import NameUpdateForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
 from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager
@@ -12,7 +9,6 @@ from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse
 
 
@@ -99,58 +95,4 @@ def vaccinators_list_view(request):
     return render(request, "vaccinators_list.html", context)
 
 
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def stock_view(request):
 
-    vaccine_info = VacunaEnVacunatorio.objects.all()
-    vaccination_center_info = Vacunatorio.objects.all()
-    stock_form = StockForm(request.POST or None)
-
-    if stock_form.is_valid():
-
-        vacuna = stock_form.cleaned_data.get("vacuna")
-        vacunatorio = stock_form.cleaned_data.get("vacunatorio")
-
-        vacunation_to_update = VacunaEnVacunatorio.objects.get(
-            vacuna=vacuna, vacunatorio=vacunatorio)
-        if "aumentar" in request.POST:
-            vacunation_to_update.stock += stock_form.cleaned_data.get("stock")
-            messages.success(request,"Stock aumentado")
-        elif "disminuir" in request.POST:
-            vacunation_to_update.stock -= stock_form.cleaned_data.get("stock")
-            messages.success(request,"Stock disminuido")
-        vacunation_to_update.save()
-
-
-    context = {
-        "vaccine_info": vaccine_info,
-        "vaccination_center_info": vaccination_center_info,
-        "stock_form": stock_form,
-    }
-    return render(request, "stock_view.html", context)
-
-
-class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    form = NameUpdateForm
-    template_name = "vacunatorio_name_update.html"
-    permission_required = ("Vacunation_app.Administrador", )
-    raise_exception = True
-
-    def post(self, request, *args, **kwargs):
-        instance_form = self.get_form(form_class=self.form)
-        instance_form.is_valid()
-        vacunatorio = instance_form.cleaned_data["nombre_actual"]
-        nombre_nuevo = instance_form.cleaned_data["nombre_nuevo"]
-        try:
-            Vacunatorio.objects.get(nombre=nombre_nuevo)
-            messages.error(self.request, "Nombre de vacunatorio en uso")
-        except Vacunatorio.DoesNotExist:
-            vacunatorio.nombre = nombre_nuevo
-            vacunatorio.save()
-            messages.success(self.request,
-                             f"Vacunatorio cambiado a: {vacunatorio.nombre}")
-        return redirect("/administrator/change_name/")
-
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {"form": self.form})

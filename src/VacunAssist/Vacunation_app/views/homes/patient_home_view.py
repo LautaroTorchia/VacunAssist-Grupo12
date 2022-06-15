@@ -7,8 +7,7 @@ from django.urls import reverse
 from Vacunation_app.models import Paciente,Turno, listaDeEsperaCovid,listaDeEsperaFiebreAmarilla
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
-import locale
-locale.setlocale(locale.LC_TIME, "")
+
 
 from Vacunation_app.turn_assignment import TurnAssignerRisk
 Usuario=get_user_model()
@@ -45,7 +44,7 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def turno_vacuna(self,turnos,name):
         try:
-            return list(filter(lambda turno : name in turno.vacuna.nombre and turno.fecha.date() > date.today(),turnos))[0]
+            return list(filter(lambda turno : name in turno.vacuna.nombre and turno.fecha.date() >= date.today(),turnos))[0]
         except:
             return None
         

@@ -19,30 +19,64 @@
             <div class="principal_campos">
                 <div class="paneles">
                     <div class="panel" name="panel_covid">
-                        <div class="texto_panel">
-                            <div class="panel_interior_exito">
-                                <p class="texto_panel_exito title">COVID-19</p>
-                                <p class="texto_panel_exito">Usted está en espera
-                                    de un turno para esta vacuna. En cuanto le sea asignado se le notificará y se agregará a la lista de “Mis Turnos”</p>
+                        {% if turno_covid %}
+                            <div class="texto_panel">
+                                <div class="panel_interior_exito">
+                                    <p class="texto_panel_exito title">COVID-19</p>
+                                    <p class="texto_panel_exito">Su turno para COVID ya está asignado para la fecha {{ turno_covid.fecha.date }}
+                                        <br>No te olvides de cancelar el turno anticipadamente si no vas a poder asistir</p>
+                                </div>
                             </div>
-                        </div>
-                        <form action="" method="get">
-                            <input type="submit" value="Turno solicitado" name="turno_covid" class="panel_boton_en_espera" disabled="true">
-                        </form>
+                            <form action="/notifications" method="get">
+                                <input type="submit" value="Cancelar Turno" name="cancelar_turno_covid" class="panel_boton_asignado">
+                            </form>
+                        {% else %}
+                            {% if waitlist_covid %}
+                                <div class="texto_panel">
+                                    <div class="panel_interior_exito">
+                                        <p class="texto_panel_exito title">COVID-19</p>
+                                        <p class="texto_panel_exito"> Usted está en espera
+                                            de un turno para esta vacuna. En cuanto le sea asignado se le notificará y se agregará a la lista de “Mis Turnos”</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="texto_panel">
+                                    <div class="panel_interior_inhabilitado">
+                                        <p class="texto_panel_inhabilitado title">COVID-19</p>
+                                        <p class="texto_panel_inhabilitado"> Usted no puede darse la vacuna del COVID en este momento, 
+                                            Para saber el porque, presione el botón “Ver Más”.</p>
+                                    </div>
+                                </div>
+                                <form action="/information" method="get">
+                                    <input type="submit" value="Ver mas" name="turno_covid" class="panel_boton_inhabilitado">
+                                </form>
+                            {% endif %}
+                        {% endif %}
                     </div>
                     <div class="panel" name="panel_gripe">
-                        <div class="texto_panel">
-                            <div class="panel_interior_exito">
-                                <p class="texto_panel_exito title">Gripe</p>
-                                <p class="texto_panel_exito">Su turno para esta vacuna ya está asignado para la fecha 10/10/2022
-                                    y el horario 08:15
-                                
-                                    <br>No te olvides de cancelar el turno anticipadamente si no vas a poder asistir</p>
+                        {% if turno_gripe %}
+                            <div class="texto_panel">
+                                <div class="panel_interior_exito">
+                                    <p class="texto_panel_exito title">Gripe</p>
+                                    <p class="texto_panel_exito">Su turno para esta vacuna ya está asignado para la fecha {{ turno_gripe.fecha.date }}
+                                        <br>No te olvides de cancelar el turno anticipadamente si no vas a poder asistir</p>
+                                </div>
                             </div>
-                        </div>
-                        <form action="/notifications" method="get">
-                        <input type="submit" value="Cancelar turno" name="turno_gripe" class="panel_boton_asignado">
-                        </form>
+                            <form action="/notifications" method="get">
+                                <input type="submit" value="Cancelar turno" name="turno_gripe" class="panel_boton_asignado">
+                            </form>
+                        {% else %}
+                            <div class="texto_panel">
+                                <div class="panel_interior_inhabilitado">
+                                    <p class="texto_panel_inhabilitado title">Gripe</p>
+                                    <p class="texto_panel_inhabilitado">Usted no puede darse la vacuna de la Gripe en este momento, 
+                                        Para saber el porque, presione el botón “Ver Más”.
+                                </div>
+                            </div>
+                            <form action="/information" method="get">
+                                <input type="submit" value="Ver mas" name="gripe_ver_mas" class="panel_boton_inhabilitado">
+                            </form>
+                        {% endif %}
                     </div>
                     <div class="panel" name="panel_fiebre_amarilla">
                         {% if puede_fiebre_amarilla %}
@@ -50,7 +84,8 @@
                                 <div class="texto_panel">
                                     <div class="panel_interior_exito">
                                         <p class="texto_panel_exito title">Fiebre amarilla</p>
-                                        <p class="texto_panel_exito">Su turno fue asignado en {{ turno_amarilla.vacunatorio }} <br> el día {{ turno_amarilla.fecha.date }}</p>
+                                        <p class="texto_panel_exito">Su turno fue asignado en {{ turno_amarilla.vacunatorio }} <br> el día {{ turno_amarilla.fecha.date }}
+                                        <br> No te olvides de cancelar el turno anticipadamente si no vas a poder asistir</p>
                                     </div>
                                 </div>
                                 <form action="/notifications" method="get">
@@ -95,12 +130,9 @@
                         <p class="texto_del_titulo">Proximos Turnos</p>
                     </div>
                     <div class="info_principal">
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 10/10/2022 Horario: 08:00</p>
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 11/10/2022 Horario: 09:00</p>
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 12/10/2022 Horario: 10:00</p>
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 13/10/2022 Horario: 11:00</p>
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 14/10/2022 Horario: 12:00</p>
-                        <p class="info_vaccine">Vacuna: Gripe Fecha: 15/10/2022 Horario: 13:00</p>
+                        {% for vac in turns %}
+                            <p class="info_vaccine">Vacuna: {{ vac.vacuna.nombre }} Fecha: {{ vac.fecha.date }} Horario: {{ vac.fecha.time }}</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -99,3 +99,10 @@ def patients_list_view(request):
     queryset = Paciente.objects.all()
     context = {"object_list": queryset}
     return render(request, "patients_list.html", context)
+
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
+@login_required()
+def yellow_fever_list_view(request):
+    queryset = Paciente.objects.all()
+    context = {"object_list": queryset}
+    return render(request, "yellow_fever_list.html", context)

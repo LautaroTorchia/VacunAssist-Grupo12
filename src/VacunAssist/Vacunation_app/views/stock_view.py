@@ -34,6 +34,8 @@ class StockView(FormView,LoginRequiredMixin,PermissionRequiredMixin):
                 messages.success(request,"Stock aumentado")
             elif "disminuir" in request.POST:
                 vacunation_to_update.stock -= stock_form.cleaned_data.get("stock")
+                if vacunation_to_update.stock < 0:
+                    vacunation_to_update.stock=0
                 messages.success(request,"Stock disminuido")
             vacunation_to_update.save()
         return redirect(self.success_url)

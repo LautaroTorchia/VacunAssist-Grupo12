@@ -49,6 +49,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: center;
     padding: 20px 75px;
     gap: 10px;
     background: #739F52;
@@ -62,6 +63,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: 30px;
+    width: 26vw;
 
     color: #FFFFFF;
     flex: none;

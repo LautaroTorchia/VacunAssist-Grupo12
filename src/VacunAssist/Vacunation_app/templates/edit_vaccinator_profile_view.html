@@ -23,8 +23,9 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type="submit" class="btn-submit" value="Aceptar"/>
+                        <br>
+                        {% include "messages.html" %}
                     </form>
-                    {% include "messages.html" %}
                 </div>
             </div>
         </div>

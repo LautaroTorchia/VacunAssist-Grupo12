@@ -19,6 +19,7 @@ class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
         instance_form = self.get_form()
         instance_form.is_valid()
         vacunatorio = instance_form.cleaned_data["nombre_actual"]
+        print(vacunatorio)
         nombre_nuevo = instance_form.cleaned_data["nombre_nuevo"]
         try:
             Vacunatorio.objects.get(nombre=nombre_nuevo)

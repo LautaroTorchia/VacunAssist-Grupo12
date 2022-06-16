@@ -9,7 +9,7 @@ Usuario=get_user_model()
 
 
 class HomeView(LoginRequiredMixin,TemplateView):
-    template_name="homepage.html"
+    template_name="vaccinator_homepage.html"
     permission_required = ("Vacunation_app.Vacunador", )
 
     def get(self, request, *args, **kwargs):

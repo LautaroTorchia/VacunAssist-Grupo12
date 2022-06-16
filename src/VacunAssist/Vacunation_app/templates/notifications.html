@@ -17,49 +17,53 @@
             
             <div class="notifications_container">
                <h1 >Mis Turnos</h1>
-               <h1>{{ is_staff}} </h1>
-               {% for turn in object_list %}
-                <div class="turn align-self-center p-2">
-                    <p>
-                        <br>Vacunatorio: {{ turn.vacunatorio.nombre }}
-                        <br>Fecha: {{ turn.fecha }}
-                        <br>Vacuna: {{ turn.vacuna.nombre }}
-                    </p>
-                        <div class="formul ml-auto p-2 align-self-center">
-                            {% if turn.vacuna.nombre == "Fiebre amarilla" %}
-                            <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
-                                {% csrf_token %}
-                                <input type="submit" value="Cancelar" name="{{ turn.id }}" class="btn button btn-block"></form>
-                            {% else %}
-                            <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
-                                {% csrf_token %}
-                                <input type="submit" value="Reasignar" name="{{ turn.id }}" class="btn button btn-block"></form>
-                            {% endif %}
+               {% if is_staff %}
+                <h1> No tenes turnos asignados, ya que eres parte del personal </h1>
+               
+               {% else %}
+                {% for turn in object_list %}
+                    <div class="turn align-self-center p-2">
+                        <p>
+                            <br>Vacunatorio: {{ turn.vacunatorio.nombre }}
+                            <br>Fecha: {{ turn.fecha }}
+                            <br>Vacuna: {{ turn.vacuna.nombre }}
+                        </p>
+                            <div class="formul ml-auto p-2 align-self-center">
+                                {% if turn.vacuna.nombre == "Fiebre amarilla" %}
+                                <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
+                                    {% csrf_token %}
+                                    <input type="submit" value="Cancelar" name="{{ turn.id }}" class="btn button btn-block"></form>
+                                {% else %}
+                                <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
+                                    {% csrf_token %}
+                                    <input type="submit" value="Reasignar" name="{{ turn.id }}" class="btn button btn-block"></form>
+                                {% endif %}
+                            </div>
                         </div>
+                        {% empty %}
+                            <h3> No Tienes ningun turno asignado</h3>
+                        {% endfor %}
+                        
+                        {% include "messages.html" %}
                     </div>
-                    {% empty %}
-                        <h3> No Tienes ningun turno asignado</h3>
-                    {% endfor %}
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; primera</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                            {% endif %}
                     
-                    {% include "messages.html" %}
-                </div>
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if page_obj.has_previous %}
-                            <a href="?page=1">&laquo; primera</a>
-                            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
-                        {% endif %}
-                
-                        <span class="current">
-                            Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                            <span class="current">
+                                Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+                            {% endif %}
                         </span>
-                
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
+                    </div>
+                {% endif %}
             </div>  
         </div>
     </div>

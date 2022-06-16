@@ -1,7 +1,8 @@
 from django import forms
+from Vacunation_app.forms.p import PForm
 from Vacunation_app.models import Usuario
 
-class UpdatingUserForm(forms.ModelForm):
+class UpdatingUserForm(PForm,forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(),
         min_length=6,

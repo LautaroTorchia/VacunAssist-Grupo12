@@ -21,6 +21,7 @@ class CustomSetPasswordForm(PForm,SetPasswordForm):
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "Confirme su contraseña","placeholder":"Confirme su contraseña"}),
     )
+    
     def clean_new_password2(self):
         password1 = self.cleaned_data.get("new_password1")
         password2 = self.cleaned_data.get("new_password2")

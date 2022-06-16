@@ -3,7 +3,7 @@ from django.views.generic.edit import UpdateView
 from Vacunation_app.models import Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 from django.contrib import messages
-
+from django.contrib.auth import login, authenticate
 
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm
@@ -25,11 +25,14 @@ class ProfileUpdate(UpdateView):
         form= self.get_form()
         user= self.get_object()
         if form.is_valid():
+            password_success=password_check(request,user,form.cleaned_data)
             success=any([zona_check(user,form.cleaned_data),
-            password_check(request,user,form.cleaned_data),profile_pic_check(user,form.cleaned_data)])
+            profile_pic_check(user,form.cleaned_data),password_success])
             if success:
                 user.save()
                 messages.success(request,"Cuenta editada con exito")
+            if password_success:
+                login(request, user)
         return super().post(request, *args, **kwargs)
 
 def zona_check(user,cleaned_data):
@@ -48,7 +51,7 @@ def password_check(request,user,cleaned_data):
     return True
 
 def profile_pic_check(user,cleaned_data):
-    if not cleaned_data["profile_pic"]:
+    if str(cleaned_data["profile_pic"])=="profile_pic.png":
         return False
     user.profile_pic=cleaned_data["profile_pic"]
     return True

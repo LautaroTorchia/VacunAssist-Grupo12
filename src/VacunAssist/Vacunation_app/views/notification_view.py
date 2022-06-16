@@ -17,9 +17,9 @@ class NotificationView(ListView):
         if request.user.has_perm("Vacunation_app.Paciente"):
             paciente=Paciente.objects.get(user=request.user)
             self.queryset=Turno.objects.filter(paciente=paciente)
-        else:
-            self.extra_context={"is_staff":"No tenes turnos asignados, ya que eres parte del personal"}
-        return super().get(request, *args, **kwargs)
+            self.extra_context={"is_staff":False}
+            return super().get(request, *args, **kwargs)
+        return render(request,self.template_name,{"is_staff":True})
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         print(request.POST)

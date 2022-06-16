@@ -254,6 +254,9 @@ class listaDeEsperaFiebreAmarilla(models.Model):
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
+    
+    def get_absolute_url(self):
+        return f"{self.id}"
 
     def __str__(self) -> str:
-        return f"{self.paciente} - {self.vacuna}"
+        return f"{self.paciente} - {self.vacunatorio}"

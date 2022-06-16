@@ -22,9 +22,9 @@
                 {% endif %}
                 {% for instance in object_list %}
                 <div class="vaccinator_list_container align-self-center">
-                    <p class="vaccinator_text"> Nombre: {{ instance.user.nombre_completo }}
+                    <p class="vaccinator_text"> {{ instance }}
                         <div class="button_container ml-auto p-2 align-self-end">
-                            <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.user.get_absolute_url }}'>
+                            <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.get_absolute_url }}'>
                                 <button class="btn button btn-block">Confirmar</button>
                             </form>
                         </div> 

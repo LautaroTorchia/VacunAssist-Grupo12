@@ -3,7 +3,7 @@ import string
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
-from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager, Paciente
+from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager, Paciente, listaDeEsperaFiebreAmarilla
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.mail import send_mail
@@ -103,6 +103,8 @@ def patients_list_view(request):
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def yellow_fever_list_view(request):
-    queryset = Paciente.objects.all()
+    print("-"*50)
+    queryset = listaDeEsperaFiebreAmarilla.objects.all()
+    print(queryset,"-"*50)
     context = {"object_list": queryset}
     return render(request, "yellow_fever_list.html", context)

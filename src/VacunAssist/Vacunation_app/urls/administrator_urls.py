@@ -18,6 +18,6 @@ urlpatterns = [
     path('vaccinator/<int:id>/delete',vaccinator_delete_view,name="vaccinator_delete"),
     path("patients_list/profile/<int:id>",patient_profile_view,name="patient_profile"),
     path("yellow_fever_list/",yellow_fever_list_view,name="yellow_fever_list"),
-    path("yellow_fever_list/confirmation/<int:id>",yellow_fever_confirmation_view,name="yellow_fever_list"),
+    path("yellow_fever_list/confirmation/<int:id>",yellow_fever_confirmation_view,name="yellow_fever_confirmation"),
     path('update_administrator',TemplateView.as_view(template_name="administrator_edit_contact.html"),name="admin_contact"),
 ]

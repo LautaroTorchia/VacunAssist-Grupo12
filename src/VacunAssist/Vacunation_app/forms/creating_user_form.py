@@ -1,9 +1,11 @@
 from datetime import date
 from django import forms
+
+from Vacunation_app.forms.p import PForm
 from ..models import Usuario
 
 
-class CreatingVaccinatorForm(forms.ModelForm):
+class CreatingVaccinatorForm(PForm,forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ["email", "zona"]
@@ -14,11 +16,13 @@ class CreatingVaccinatorForm(forms.ModelForm):
         }
 
 
-class EnteringDniForm(forms.Form):
+class EnteringDniForm(PForm,forms.Form):
     dni = forms.CharField()
 
 
-class CreatingPatientForm(forms.ModelForm):
+
+class CreatingPatientForm(PForm,forms.ModelForm):
+
     class Meta:
         model = Usuario
         fields = ["dni", "email", "zona", "password"]

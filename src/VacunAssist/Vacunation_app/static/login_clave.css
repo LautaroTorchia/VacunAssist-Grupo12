@@ -84,6 +84,51 @@ input[type="date"] {
     flex-grow: 0;
 }
 
+input[type="submit"] {
+
+    /* Clave_field */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 4px 2px 10px;
+    gap: 10px;
+
+    width: 300px;
+    height: 40px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    border: none;
+
+    border: 1px solid #2D2C2C;
+    border-radius: 4px;
+
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    /* or 125% */
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #6B954C;
+}
+
+
 ::placeholder {
     /* Clave_placeholder */
 
@@ -108,50 +153,11 @@ input[type="date"] {
 
 }
 
-
-.login {
-    /* Login btn */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-
-    width: 300px;
-    height: 40px;
-
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    border: none;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-
-
-    /* INICIAR SESIÓN */
-
-    width: 298px;
-    height: 26px;
-
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    /* or 125% */
-    text-align: center;
-    text-transform: uppercase;
-
-    color: #6B954C;
-
-
+input[type="submit"]:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
-
 
 
 .olvidaste_clave {

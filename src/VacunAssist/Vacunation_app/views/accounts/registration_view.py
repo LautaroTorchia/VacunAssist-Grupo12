@@ -23,8 +23,9 @@ def registration_view(request):
                 request.session["dni_validated"]=True
                 messages.success(request,"DNI validado")
             else:
+                request.session["dni_validated"]=False
                 messages.error(request, data["mensaje de error"])
-                form = CreatingPatientForm()
+
         request.session["data"]=data
     else:
         if form.is_valid():

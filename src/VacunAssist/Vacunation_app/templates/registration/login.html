@@ -14,7 +14,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class=login >Iniciar Sesión</button>
+                    <input type="submit" class=login value="Iniciar Sesión" ></input>
                 </form>
                 {% if "loginClave" in request.path %}
                     <a href="/recover/clave_reset/" class="olvidaste_clave align-self-start" >¿Olvidaste tu clave?</a>

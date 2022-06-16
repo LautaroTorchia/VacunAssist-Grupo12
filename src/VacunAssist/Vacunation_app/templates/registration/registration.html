@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-    
     <link rel="stylesheet" href="{% static 'login_clave.css' %}">
 {% endblock css %}
 {% block content %}
@@ -15,26 +14,19 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div class="buttons d-flex flex-column">
-                            <input type="submit" name="validar_dni" value="Validar DNI" id="">
                             {% if dni_validated %}
-                                <input type="submit" name="crear_cuenta" value="Crear cuenta">
+                            <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" disabled="true">
+                            <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" onclick="document.getElementById('id_dni').disabled = false;">
+                            <script>document.getElementById("id_dni").disabled = true;</script>
                             {% else %}
-                                <input type="submit" name="crear_cuenta" value="Crear cuenta" disabled="true">
+                            <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" >
+                            <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" disabled="true">
                             {% endif %}
                         </div>
-                        <a href="/accounts/login" class="olvidaste_clave align-self-start">¿Ya tenes cuenta? Inicia sesion </a>
-                        {% if form.errors %}
-                        {% for field in form %}
-                            {% for error in field.errors %} 
-                                <div class="alert alert-danger">
-                                {{ error|escape }}
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
                         {% include "messages.html" %}
+                        {% include "errors.html" %}
+                        <a href={% url 'login' %} class="olvidaste_clave align-self-start">¿Ya tenes cuenta? Inicia sesion </a>
                     </form>
-                    
             </div>
         </div>
     </div>

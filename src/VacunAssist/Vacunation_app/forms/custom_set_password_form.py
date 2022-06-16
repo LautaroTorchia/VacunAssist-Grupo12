@@ -3,7 +3,9 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.forms import ValidationError
 
-class CustomSetPasswordForm(SetPasswordForm):
+from Vacunation_app.forms.p import PForm
+
+class CustomSetPasswordForm(PForm,SetPasswordForm):
 
     error_messages = {
         "password_mismatch": ("Las contraseñas no coinciden"),

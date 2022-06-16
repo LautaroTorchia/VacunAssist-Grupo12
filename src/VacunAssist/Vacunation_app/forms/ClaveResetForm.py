@@ -2,10 +2,12 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordResetForm
 
+from Vacunation_app.forms.p import PForm
+
 
 Usuario = get_user_model()
 
-class ClaveResetForm(PasswordResetForm):
+class ClaveResetForm(PForm,PasswordResetForm):
 
     email = forms.EmailField(
         label=(""),

@@ -17,6 +17,10 @@ class CustomLogin(LoginView):
     authentication_form = LoginForm
     next_page = "accounts/loginClave/"
 
+    def get(self, request, *args, **kwargs):
+        request.session["dni_validated"]=False
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         instance_form = self.get_form(form_class=self.authentication_form)
         instance_form.is_valid()

@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
+    
     <link rel="stylesheet" href="{% static 'patient_profile.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
@@ -41,5 +40,5 @@
     <a id="volver" class="btn-submit" href='../'>Volver</a>
 </div>
 </div>
-{% bootstrap_javascript jquery='full' %}
+
 {% endblock content %}

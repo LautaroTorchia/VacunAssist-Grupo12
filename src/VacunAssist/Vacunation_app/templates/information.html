@@ -3,8 +3,7 @@
 {% load static %}
 
 {% block css %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
+    
     <link rel="stylesheet" href="{% static 'zona.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
@@ -53,6 +52,6 @@ the right, we value the items on the left more. <br>
             </div>  
         </div>
     </div>
-{% bootstrap_javascript jquery='full' %}
+
 {% endblock content %}
 

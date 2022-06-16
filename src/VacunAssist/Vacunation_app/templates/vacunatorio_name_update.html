@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
+    
     <link rel="stylesheet" href="{% static 'stock_view.css' %}">
     <link rel="stylesheet" href="{% static 'vaccinator_creation.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
@@ -30,5 +29,5 @@
         </div>
     </div>
    
-{% bootstrap_javascript jquery='full' %}
+
 {% endblock content %}

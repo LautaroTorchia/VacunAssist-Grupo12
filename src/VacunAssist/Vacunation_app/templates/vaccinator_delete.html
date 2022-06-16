@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
+    
     <link rel="stylesheet" href="{% static 'vaccinator_delete_view.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
@@ -20,5 +19,5 @@
             <h1 class="title">¿Está seguro que quiere borrar al vacunador "{{ vacunador.nombre_completo }}"?</h1>
             <p><input class="btn-submit" type="submit" value="Aceptar" /> <a id="cancelar" class="btn-submit" href='../../vaccinators_list/?'>Cancelar</a></p>
         </form>
-{% bootstrap_javascript jquery='full' %}
+
 {% endblock content %}

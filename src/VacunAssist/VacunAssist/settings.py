@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
 from django.contrib import messages
 from dotenv import load_dotenv
 load_dotenv()
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.getenv('SECRET_DJANGO_KEY')
+SECRET_KEY = os.environ.get('SECRET_DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'bootstrap4', 
+    'django.contrib.staticfiles', 
 ]
 
 MIDDLEWARE = [

@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
+    
     <link rel="stylesheet" href="{% static 'administrator_landing.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
@@ -42,5 +41,5 @@
             </div>  
         </div>
     </div>
-{% bootstrap_javascript jquery='full' %}
+
 {% endblock content %}

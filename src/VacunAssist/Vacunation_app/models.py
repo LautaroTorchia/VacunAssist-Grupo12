@@ -177,20 +177,6 @@ class Paciente(models.Model):
     def __str__(self):
         return f"{self.user}"
 
-
-class Vacunador(models.Model):
-    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-
-    class Meta:
-        permissions = [
-            ("Vacunador",
-             "Correspondiente al rol de Vacunador en la documentación"),
-        ]
-
-    def __str__(self):
-        return f"{self.user}"
-
-
 class Administrador(models.Model):
     user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
 
@@ -226,6 +212,17 @@ class Vacunatorio(models.Model):
     def __str__(self):
         return f"{self.nombre}"
 
+class Vacunador(models.Model):
+    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = [
+            ("Vacunador",
+             "Correspondiente al rol de Vacunador en la documentación"),
+        ]
+
+    def __str__(self):
+        return f"{self.user}"
 
 class VacunaEnVacunatorio(models.Model):
     vacunatorio = models.ForeignKey(Vacunatorio, on_delete=models.CASCADE)

@@ -2,7 +2,6 @@
 from Vacunation_app.models import VacunaEnVacunatorio, Vacunatorio
 from Vacunation_app.forms.stock_form import StockForm
 from django.contrib import messages
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import FormView
 from typing import Any

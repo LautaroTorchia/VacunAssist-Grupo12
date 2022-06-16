@@ -28,11 +28,13 @@
                         <br>Vacuna: {{ turn.vacuna.nombre }}
                     </p>
                         <div class="formul ml-auto p-2 align-self-center">
-                        <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
-                            {% csrf_token %}
                             {% if turn.vacuna.nombre == "Fiebre amarilla" %}
+                            <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
+                                {% csrf_token %}
                                 <input type="submit" value="Cancelar" name="{{ turn.id }}" class="btn button btn-block"></form>
                             {% else %}
+                            <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
+                                {% csrf_token %}
                                 <input type="submit" value="Reasignar" name="{{ turn.id }}" class="btn button btn-block"></form>
                             {% endif %}
                         </div>

@@ -11,8 +11,8 @@ from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, Tu
 
 class NotificationView(ListView):
     paginate_by= 10
-    
     template_name: str="notifications.html"
+
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if request.user.has_perm("Vacunation_app.Paciente"):
             paciente=Paciente.objects.get(user=request.user)
@@ -22,11 +22,12 @@ class NotificationView(ListView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        turno=Turno.objects.get(id=list(request.POST.keys())[1])
-        paciente=Paciente.objects.get(user=request.user)
-        self.getnewturn(turno,paciente,request)
-        turno.delete()
-        return redirect(reverse("notifications"))
+        print(request.POST)
+        #turno=Turno.objects.get(id=list(request.POST.keys())[1])
+        #paciente=Paciente.objects.get(user=request.user)
+        #self.getnewturn(turno,paciente,request)
+        #turno.delete()
+        return redirect(".")
 
     def getnewturn(self,turn,paciente,request) -> Turno:
         assigner=self.getassigner(paciente,turn)

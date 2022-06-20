@@ -24,5 +24,5 @@ manager= CustomUserManager()
 manager.create_administrator(dni=dni,password=password,nombre_completo=nombre_completo,
     fecha_nac=fecha_nac,email=email,clave=clave)
 
-#37845402
+#39484790
 #32147464 

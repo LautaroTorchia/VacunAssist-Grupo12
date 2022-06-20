@@ -51,6 +51,7 @@ def registration_view(request):
             send_mail("Registro de vacunador a VacunAssist",strip_tags(html_message),from_email=DEFAULT_FROM_EMAIL,recipient_list=[form.cleaned_data["email"]],
             fail_silently=False,html_message=html_message)
             request.session["dni_validated"]=False
+            messages.success(request, f"Su clave de autenticación es {clave}")
             messages.success(request, "Cuenta creada Correctamente")
             return redirect(reverse("login"))
     try:

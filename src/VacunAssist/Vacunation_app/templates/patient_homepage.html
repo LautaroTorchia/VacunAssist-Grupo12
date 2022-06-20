@@ -131,6 +131,8 @@
                     <div class="info_principal">
                         {% for vac in turns %}
                             <p class="info_vaccine">Vacuna: {{ vac.vacuna.nombre }} Fecha: {{ vac.fecha.date }} Horario: {{ vac.fecha.time }}</p>
+                        {% empty %}
+                            <h5> No Tienes ningun turno asignado</h5>
                         {% endfor %}
                     </div>
                 </div>

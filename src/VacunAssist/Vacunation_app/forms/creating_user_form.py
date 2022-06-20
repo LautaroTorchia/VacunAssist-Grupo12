@@ -29,7 +29,8 @@ class CreatingPatientForm(PForm,forms.ModelForm):
         error_messages = {
             'email': {
                 'unique': ("Registro fallido por email ya registrado")
-            }
+            },
+            "password": {"min_lenght":("La contraseña debe componerse de 6 carácteres o más")}
         }
         widgets = {
             'dni': forms.TextInput(attrs={'placeholder': 'DNI'}),

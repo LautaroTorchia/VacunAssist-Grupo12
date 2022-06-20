@@ -48,3 +48,7 @@
     display: block;
     width: 100%;
 }
+
+.alert{
+    width: 60vh;
+}

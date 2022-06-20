@@ -19,4 +19,3 @@ class UpdatingUserForm(PForm,forms.ModelForm):
         error_messages = {
                  'Upload a valid image':"El formato de imagen no es el correcto"
                  }
-    

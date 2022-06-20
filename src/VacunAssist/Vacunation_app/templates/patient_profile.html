@@ -20,7 +20,7 @@
             <h1 class="title">Este es el perfil de {{ patient.user.nombre_completo }}</h1>
             <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile">
             <p>DNI: {{ patient.user.dni }}
-            <br>Fecha de nacimiento: {{patient.user.fecha_nac }}
+            <br>Fecha de nacimiento: {{patient.user.fecha_nac.date }}
             <br>Zona: {{ patient.user.zona }}
             {% if patient.es_de_riesgo %}
             <br>Es de riesgo: Si

@@ -4,7 +4,7 @@ from django.views.generic.list import ListView
 from typing import *
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.contrib import messages
 
 from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
@@ -16,18 +16,18 @@ class NotificationView(ListView):
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if request.user.has_perm("Vacunation_app.Paciente"):
             paciente=Paciente.objects.get(user=request.user)
-            self.queryset=Turno.objects.filter(paciente=paciente)
+            self.queryset=Turno.objects.filter(paciente=paciente).order_by("fecha")
             self.extra_context={"is_staff":False}
             return super().get(request, *args, **kwargs)
         return render(request,self.template_name,{"is_staff":True})
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        print(request.POST)
-        #turno=Turno.objects.get(id=list(request.POST.keys())[1])
-        #paciente=Paciente.objects.get(user=request.user)
-        #self.getnewturn(turno,paciente,request)
-        #turno.delete()
-        return redirect(".")
+        turno=Turno.objects.get(id=list(request.POST.keys())[1])
+        paciente=Paciente.objects.get(user=request.user)
+        self.getnewturn(turno,paciente,request)
+        turno.delete()
+
+        return redirect(reverse_lazy("notifications"))
 
     def getnewturn(self,turn,paciente,request) -> Turno:
         assigner=self.getassigner(paciente,turn)
@@ -40,7 +40,8 @@ class NotificationView(ListView):
         elif "Gripe" in str(turn.vacuna):
             turn = assigner.assign_gripe_turn()
             messages.success(request,f"Su turno ha sido reasignado para el {turn.fecha.date()}")
-
+        elif "Fiebre" in str(turn.vacuna):
+            messages.success(request,"Turno cancelado")
     def getassigner(self,paciente,turn) -> TurnAssigner:
         return TurnAssignerRisk(paciente,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente,turn.fecha)
             

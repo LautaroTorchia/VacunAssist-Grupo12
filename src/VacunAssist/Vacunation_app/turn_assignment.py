@@ -35,11 +35,15 @@ class TurnAssigner():
         ,self.turnos))[-self.cant_in_vacunatorio:]
         
         if today_last_turns:
-            last_turn_date=today_last_turns[self.cant_in_vacunatorio-1].fecha
+            print(list(filter(lambda turno:  turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day ,self.turnos)))
+            print(today_last_turns)
+            print(self.cant_in_vacunatorio)
+            last_turn_date=today_last_turns.pop().fecha
             last_turn_time=last_turn_date.time()
             final_turn_date = date.replace(hour=last_turn_time.hour, minute=last_turn_time.minute,second=0)
             if all([elem for elem in today_last_turns if elem.fecha==last_turn_date]):
                 return final_turn_date + timedelta(minutes=15)
+            return final_turn_date
 
         return date.replace(hour=8, minute=0)
 

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    
+    <link rel="stylesheet" href="{% static 'vaccinator_delete_view.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="main_container container-fluid d-flex flex-row">
+    <div class="navbar_container">
+        {% include "navbar.html" %}
+    </div>
+    <div class="main_fields_container align-self-start ">
+        {% include "presentacion.html" %}
+        <form action="" method="POST">{% csrf_token %}
+            <h1 class="title">Panel de solicitud de turno para el paciente {{ turn.paciente.user.nombre_completo }}</h1>
+            <h2>En el vacunatorio: {{ turn.vacunatorio.nombre }}</h2>
+            {{ form.as_p }}
+            <p><input class="btn-submit" type="submit" value="Crear" /> <a id="cancelar" class="btn-submit" href='../'>Rechazar</a></p>
+        </form>
+
+{% endblock content %}

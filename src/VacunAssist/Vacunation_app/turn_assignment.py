@@ -1,15 +1,17 @@
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import random
-from Vacunation_app.models import Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
+from Vacunation_app.models import Paciente, Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
+from django.utils import timezone
+
 
 class TurnAssigner():
 
-    def __init__(self,patient,gripe_date) -> None:
-        self.vacunatorio=Vacunatorio.objects.get(zona=patient.user.zona)
-        self.patient=patient
+    def __init__(self,user,gripe_date) -> None:
+        self.patient=Paciente.objects.get(user=user)
+        self.vacunatorio=Vacunatorio.objects.get(zona=self.patient.user.zona)
         self.gripe_date=gripe_date
-        self.cant_in_vacunatorio=len(list(filter(lambda vacunador: (vacunador.user.zona==patient.user.zona), Vacunador.objects.all())))
+        self.cant_in_vacunatorio=len(list(filter(lambda vacunador: (vacunador.user.zona==self.patient.user.zona), Vacunador.objects.all())))
         self.turnos=Turno.objects.all()
 
     def assign_turns(self):
@@ -23,29 +25,30 @@ class TurnAssigner():
         return self.patient.fecha_gripe+relativedelta(years=1) < date.today()
     
     def needs_covid_vaccine(self):
-        return self.patient.dosis_covid < 2
+        return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) <= date.today())
     
     def today_turns_are_full(self,date):
-        return len(list(filter(lambda turno: turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day 
-        ,self.turnos)))==8*4*self.cant_in_vacunatorio
+        return len(list(filter(lambda turno: turno.fecha.date()==date.date(),self.turnos)))==8*4*self.cant_in_vacunatorio
     
     def check_turn_hour(self,date):
-        today_last_turns=list(filter(lambda turno: 
-        turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day 
-        ,self.turnos))[-self.cant_in_vacunatorio:]
-        
+        today_last_turns=list(filter(lambda turno: turno.fecha.date()==date.date(),self.turnos))[-self.cant_in_vacunatorio:]
         if today_last_turns:
-            print(list(filter(lambda turno:  turno.fecha.year==date.year and turno.fecha.month==date.month and turno.fecha.day==date.day ,self.turnos)))
-            print(today_last_turns)
-            print(self.cant_in_vacunatorio)
-            last_turn_date=today_last_turns.pop().fecha
+            last_turn_date=today_last_turns[-1].fecha
             last_turn_time=last_turn_date.time()
             final_turn_date = date.replace(hour=last_turn_time.hour, minute=last_turn_time.minute,second=0)
-            if all([elem for elem in today_last_turns if elem.fecha==last_turn_date]):
+            if len(today_last_turns)<self.cant_in_vacunatorio: 
+                return final_turn_date
+                
+            cumplen=True
+            for elem in today_last_turns:
+                if elem.fecha.minute!=last_turn_time.minute:
+                    cumplen=False
+            if cumplen:
                 return final_turn_date + timedelta(minutes=15)
+            
             return final_turn_date
 
-        return date.replace(hour=8, minute=0)
+        return date.replace(hour=8, minute=0,second=0)
 
     def create_amarilla_wait_list_request(self):
         self.vacuna=Vacuna.objects.get(nombre="Fiebre amarilla")
@@ -69,7 +72,7 @@ class TurnAssigner():
 
 
 class TurnAssignerRisk(TurnAssigner):
-    def __init__(self, patient,reference_date=datetime.today()) -> None:
+    def __init__(self, patient,reference_date=timezone.now()) -> None:
         self.covid_date=reference_date+timedelta(days=7)
         gripe_date=reference_date+relativedelta(months=+3)
         super().__init__(patient,gripe_date)
@@ -83,7 +86,7 @@ class TurnAssignerRisk(TurnAssigner):
 
 class TurnAssignerNonRisk(TurnAssigner):
     
-    def __init__(self, patient,reference_date=datetime.today()) -> None:
+    def __init__(self, patient,reference_date=timezone.now()) -> None:
         gripe_date=reference_date+relativedelta(months=+6)
         super().__init__(patient,gripe_date)
     

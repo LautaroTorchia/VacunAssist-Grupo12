@@ -41,9 +41,9 @@ def registration_view(request):
                 )
 
             if patient.es_de_riesgo:
-                assigner=TurnAssignerRisk(patient)
+                assigner=TurnAssignerRisk(patient.user)
             else:
-                assigner=TurnAssignerNonRisk(patient)
+                assigner=TurnAssignerNonRisk(patient.user)
             assigner.assign_turns()
 
             html_message = render_to_string('emails/registro_paciente.html', 

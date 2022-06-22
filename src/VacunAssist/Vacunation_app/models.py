@@ -240,7 +240,7 @@ class Turno(models.Model):
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.paciente.user.nombre_completo}- {self.fecha}"
+        return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "
 
 class listaDeEsperaCovid(models.Model):
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)

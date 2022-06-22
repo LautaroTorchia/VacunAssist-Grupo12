@@ -34,9 +34,8 @@ class HomeView(LoginRequiredMixin,TemplateView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        paciente= Paciente.objects.get(user=request.user)
         if "pedir_turno_amarilla" in request.POST:
-            TurnAssignerRisk(patient=paciente).create_amarilla_wait_list_request()
+            TurnAssignerRisk(request.user).create_amarilla_wait_list_request()
         return redirect(".")
         
     def puede_fiebre_amarilla(self,paciente):

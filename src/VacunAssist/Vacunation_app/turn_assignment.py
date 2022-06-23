@@ -55,7 +55,6 @@ class TurnAssigner():
         listaDeEsperaFiebreAmarilla.objects.create(vacunatorio=self.vacunatorio,vacuna=self.vacuna,paciente=self.patient)            
     
     def create_turn(self,date):
-        print("-"*500)
         if self.cant_in_vacunatorio!=0:
             while self.today_turns_are_full(date):
                 date+=timedelta(days=1)

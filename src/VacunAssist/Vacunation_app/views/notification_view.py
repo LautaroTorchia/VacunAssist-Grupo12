@@ -38,10 +38,10 @@ class NotificationView(ListView):
             else:
                 messages.success(request,f"Como no es de riesgo, queda a la espera de un nuevo turno")
         elif "Gripe" in str(turn.vacuna):
-            turn = assigner.assign_gripe_turn()
+            turn = assigner.re_assign_gripe_turn()
             messages.success(request,f"Su turno ha sido reasignado para el {turn.fecha.date()}")
         elif "Fiebre" in str(turn.vacuna):
             messages.success(request,"Turno cancelado")
     def getassigner(self,paciente,turn) -> TurnAssigner:
-        return TurnAssignerRisk(paciente,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente,turn.fecha)
+        return TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente.user,turn.fecha)
             

@@ -67,12 +67,17 @@ class TurnAssigner():
         if self.needs_gripe_vaccine():
             self.vacuna=Vacuna.objects.get(nombre="Gripe")
             return self.create_turn(self.gripe_date)
-            
+    
+    def re_assign_gripe_turn(self):
+        self.vacuna=Vacuna.objects.get(nombre="Gripe")
+        self.gripe_date=self.old_turn_date+timedelta(days=7)
+        return self.create_turn(self.gripe_date)
     
 
 
 class TurnAssignerRisk(TurnAssigner):
     def __init__(self, patient,reference_date=timezone.now()) -> None:
+        self.old_turn_date=reference_date
         self.covid_date=reference_date+timedelta(days=7)
         gripe_date=reference_date+relativedelta(months=+3)
         super().__init__(patient,gripe_date)

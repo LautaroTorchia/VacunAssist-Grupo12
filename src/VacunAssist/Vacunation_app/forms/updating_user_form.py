@@ -10,7 +10,7 @@ class UpdatingUserForm(PForm,forms.ModelForm):
         label="Contraseña",
     )
 
-    riesgo = forms.BooleanField(
+    riesgo = forms.ChoiceField(
         required=False
     )
 
@@ -23,3 +23,4 @@ class UpdatingUserForm(PForm,forms.ModelForm):
         error_messages = {
                  'Upload a valid image':"El formato de imagen no es el correcto"
                  }
+

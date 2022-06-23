@@ -10,7 +10,7 @@ class UpdatingUserForm(PForm,forms.ModelForm):
         label="Contraseña",
     )
 
-    riesgo = forms.ChoiceField(
+    riesgo = forms.BooleanField(
         required=False
     )
 

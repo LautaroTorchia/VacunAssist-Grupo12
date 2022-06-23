@@ -45,10 +45,10 @@ class CreatingPatientForm(PForm,forms.ModelForm):
             "password": "",
             "dni": "",
         }
-
+    tiene_gripe=forms.BooleanField(label="Se dio alguna vez la vacuna de la gripe",required=False)
     ultima_gripe = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date',"min":"1990-01-01","max":date.today()}),
-        label="Ultima vacuna de gripe")
+        label="Ultima vacuna de gripe",required=False)
     cantidad_dosis_covid = forms.IntegerField(
         max_value=2,
         min_value=0,

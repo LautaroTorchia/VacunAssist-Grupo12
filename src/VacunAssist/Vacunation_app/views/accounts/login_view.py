@@ -54,7 +54,7 @@ class CustomLoginClave(LoginView):
         user = authenticate(request, username=dni, password=clave)
         if user is not None:
             login(request, user)
-            if user.has_perm("Vacunation_app.Paciente"):
+            if user.has_perm("Vacunation_app.Paciente") and not user.has_perm("Vacunation_app.Administrador"):
                 print("tiene permiso para asignar turnos")
             return redirect("/")
         else:

@@ -15,12 +15,12 @@
                         {{ form.as_p }}
                         <div class="buttons d-flex flex-column">
                             {% if dni_validated %}
-                            <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" disabled="true">
-                            <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" onclick="document.getElementById('id_dni').disabled = false;">
-                            <script>document.getElementById("id_dni").disabled = true;</script>
+                                <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" disabled="true">
+                                <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" onclick="document.getElementById('id_dni').disabled = false;">
+                                <script>document.getElementById("id_dni").disabled = true;</script>
                             {% else %}
-                            <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" >
-                            <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" disabled="true">
+                                <input type="submit" class="login" name="validar_dni" value="Validar DNI" id="" >
+                                <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" disabled="true">
                             {% endif %}
                         </div>
                         {% include "messages.html" %}
@@ -31,5 +31,20 @@
         </div>
     </div>
     
+<script>
 
+    function toggleGripe(e){
+        activo=document.getElementById('id_tiene_gripe').checked
+        ultima_gripe=document.getElementById('id_ultima_gripe')
+        ultima_gripe.disabled=!activo
+    }
+
+    checkbox_gripe=document.getElementById('id_tiene_gripe')
+    ultima_gripe=document.getElementById('id_ultima_gripe')
+    ultima_gripe.disabled=!checkbox_gripe.checked
+    checkbox_gripe.addEventListener("click", toggleGripe)
+
+
+
+</script>
 {% endblock content %}

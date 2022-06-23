@@ -3,7 +3,7 @@ from django.views.generic.edit import UpdateView
 from Vacunation_app.models import Paciente, Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm

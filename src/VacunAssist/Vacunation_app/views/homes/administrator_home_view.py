@@ -1,5 +1,3 @@
-import random
-import string
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
@@ -95,7 +93,7 @@ def vaccinators_list_view(request):
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()
 def fiebre_amarilla_list_view(request):
-    queryset = 
+    queryset = listaDeEsperaFiebreAmarilla.objects.all()
     context = {"object_list": queryset}
     return render(request, "user_list.html", context)
 

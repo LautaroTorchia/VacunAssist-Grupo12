@@ -10,7 +10,7 @@ from Vacunation_app.models import CustomUserManager
 from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
+from dateutil.relativedelta import relativedelta
 
 def registration_view(request):
     form=CreatingPatientForm(request.POST or None)
@@ -37,7 +37,6 @@ def registration_view(request):
 
             nombre=request.session["data"].get("nombre")
             fecha_nac=request.session["data"].get("fecha_nacimiento")
-            print(form.cleaned_data.get("ultima_gripe"))
             patient=user.create_patient(
                 form.cleaned_data["dni"],form.cleaned_data["password"],
                 nombre,fecha_nac,form.cleaned_data["email"],clave,form.cleaned_data["zona"],
@@ -45,7 +44,7 @@ def registration_view(request):
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
 
-            if patient.es_de_riesgo:
+            if patient.es_de_riesgo or patient.user.fecha_nac.date()+relativedelta(years=60) >= date.today():
                 assigner=TurnAssignerRisk(patient.user)
             else:
                 assigner=TurnAssignerNonRisk(patient.user)

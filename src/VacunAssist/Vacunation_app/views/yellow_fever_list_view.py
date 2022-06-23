@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from ..models import listaDeEsperaFiebreAmarilla, Turno
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
-#from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
+from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
 from Vacunation_app.turn_assignment import TurnAssignerYellowFever
 import datetime
 from django.contrib import messages
@@ -12,8 +12,7 @@ from django.contrib import messages
 @login_required()
 def yellow_fever_confirmation_view(request, id):
     petition = listaDeEsperaFiebreAmarilla.objects.get(id=id)
-    #form=assigningYellowFeverTurn(request.POST or None)
-    form=None
+    form=assigningYellowFeverTurn(request.POST or None)
     if form.is_valid():
         fecha=datetime.datetime.combine(form.cleaned_data["fecha_del_turno"],form.cleaned_data["hora_del_turno"])
         try:

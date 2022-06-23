@@ -92,6 +92,12 @@ def vaccinators_list_view(request):
     context = {"object_list": queryset}
     return render(request, "vaccinators_list.html", context)
 
+@permission_required("Vacunation_app.Administrador", raise_exception=True)
+@login_required()
+def fiebre_amarilla_list_view(request):
+    queryset = 
+    context = {"object_list": queryset}
+    return render(request, "user_list.html", context)
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
 @login_required()

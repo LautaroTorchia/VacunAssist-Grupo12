@@ -103,3 +103,12 @@ class TurnAssignerNonRisk(TurnAssigner):
         if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
             self.create_wait_list_request()
+
+class TurnAssignerYellowFever():
+    patient=None
+    vacuna=Vacuna.objects.get(nombre="Fiebre amarilla")
+    def __init__(self, patient) -> None:
+        self.patient = patient
+    
+    def assign_yellow_fever_turn(self,date,vacunatorio):
+        return Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=self.patient,vacuna=self.vacuna)

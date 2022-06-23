@@ -8,7 +8,6 @@ from django.urls import reverse
 @login_required()
 def vaccinator_delete_view(request, id):
     vacunador = Usuario.objects.get(id=id)
-    print(request.method)
     if request.method == "POST":
         vacunador.delete()
         return redirect(reverse("vaccinators_list"))

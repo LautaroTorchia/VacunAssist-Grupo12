@@ -25,13 +25,18 @@
                     <p class="vaccinator_text"> {{ instance }}
                         <div class="button_container ml-auto p-2 align-self-end">
                             <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.get_absolute_url }}'>
-                                <button class="btn button btn-block">Confirmar</button>
+                                <button class="btn button btn-block">Administrar</button>
                             </form>
                         </div> 
                     </div>  
                     {% endfor %}
             </div>
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% include "errors.html" %}
         </div>
     </div>
-
 {% endblock content %}

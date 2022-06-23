@@ -1,9 +1,9 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, tzinfo
 from dateutil.relativedelta import relativedelta
 import random
 from Vacunation_app.models import Paciente, Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
 from django.utils import timezone
-
+from VacunAssist.settings import TIME_ZONE
 
 class TurnAssigner():
 
@@ -55,6 +55,7 @@ class TurnAssigner():
         listaDeEsperaFiebreAmarilla.objects.create(vacunatorio=self.vacunatorio,vacuna=self.vacuna,paciente=self.patient)            
     
     def create_turn(self,date):
+        print("-"*500)
         if self.cant_in_vacunatorio!=0:
             while self.today_turns_are_full(date):
                 date+=timedelta(days=1)

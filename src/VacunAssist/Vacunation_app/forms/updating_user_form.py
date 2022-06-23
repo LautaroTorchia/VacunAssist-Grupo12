@@ -10,6 +10,10 @@ class UpdatingUserForm(PForm,forms.ModelForm):
         label="Contraseña",
     )
 
+    riesgo = forms.BooleanField(
+        required=False
+    )
+
     class Meta:
         model = Usuario
         fields = ["zona","profile_pic"]

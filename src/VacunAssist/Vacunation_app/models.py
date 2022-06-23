@@ -121,8 +121,7 @@ class Usuario(AbstractUser):
     username = None
     REQUIRED_FIELDS = ["nombre_completo", "fecha_nac", "email", "clave"]
     objects = CustomUserManager()
-    nombre_completo = models.CharField(
-        max_length=50)  # ,validators=[validate_alpha])
+    nombre_completo = models.CharField(max_length=50)  
     password = models.CharField(
         ('Contraseña'),
         max_length=128,

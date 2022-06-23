@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView
-from Vacunation_app.models import Usuario
+from Vacunation_app.models import Paciente, Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
@@ -13,7 +13,7 @@ class ProfileUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
-        self.initial={"zona": self.get_object().zona}
+        self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
         context  = {
             "usuario": self.get_object(),
             "form": self.get_form(),
@@ -26,9 +26,7 @@ class ProfileUpdate(UpdateView):
         user= self.get_object()
         if form.is_valid():
             password_success=password_check(request,user,form.cleaned_data)
-            success=any([zona_check(user,form.cleaned_data),
-            profile_pic_check(user,form.cleaned_data),password_success])
-            if success:
+            if any([zona_check(user,form.cleaned_data),profile_pic_check(user,form.cleaned_data),password_success,riesgo_check(user,form.cleaned_data)]):
                 user.save()
                 messages.success(request,"Cuenta editada con exito")
             if password_success:
@@ -55,3 +53,14 @@ def profile_pic_check(user,cleaned_data):
         return False
     user.profile_pic=cleaned_data["profile_pic"]
     return True
+
+def riesgo_check(user,cleaned_data):
+    paciente=Paciente.objects.get(user=user)
+    print("cleaned_data[riesgo]",cleaned_data["riesgo"])
+    print("paciente.es_de_riesgo",paciente.es_de_riesgo)
+    if cleaned_data["riesgo"]==paciente.es_de_riesgo:
+        return False
+    else:
+        paciente.es_de_riesgo=cleaned_data["riesgo"]
+        paciente.save()
+        return True

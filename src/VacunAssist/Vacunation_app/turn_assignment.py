@@ -92,6 +92,7 @@ class TurnAssignerRisk(TurnAssigner):
 class TurnAssignerNonRisk(TurnAssigner):
     
     def __init__(self, patient,reference_date=timezone.now()) -> None:
+        self.old_turn_date=reference_date
         gripe_date=reference_date+relativedelta(months=+6)
         super().__init__(patient,gripe_date)
     
@@ -102,6 +103,11 @@ class TurnAssignerNonRisk(TurnAssigner):
         if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
             self.create_wait_list_request()
+
+    def re_assign_gripe_turn(self):
+        self.vacuna=Vacuna.objects.get(nombre="Gripe")
+        self.gripe_date=self.old_turn_date+relativedelta(months=+1)
+        return self.create_turn(self.gripe_date)
 
 class TurnAssignerYellowFever():
     patient=None

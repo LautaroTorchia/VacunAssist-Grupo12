@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
@@ -36,7 +36,7 @@ def registration_view(request):
                 form.cleaned_data["ultima_gripe"]=date(1990,1,1)
 
             nombre=request.session["data"].get("nombre")
-            fecha_nac=request.session["data"].get("fecha_nacimiento")
+            fecha_nac=datetime.strptime(request.session["data"].get("fecha_nacimiento"),'%Y-%m-%dT%H:%M:%S%z')
             patient=user.create_patient(
                 form.cleaned_data["dni"],form.cleaned_data["password"],
                 nombre,fecha_nac,form.cleaned_data["email"],clave,form.cleaned_data["zona"],

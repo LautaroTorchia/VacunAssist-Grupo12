@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView
 from Vacunation_app.models import Paciente, Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
 from django.contrib import messages
-from django.contrib.auth import login
+from django.urls import reverse
 
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm
@@ -24,28 +24,19 @@ class ProfileUpdate(UpdateView):
         self.success_url= self.request.path_info
         form= self.get_form()
         user= self.get_object()
-        if form.is_valid():
-            password_success=password_check(request,user,form.cleaned_data)
-            if any([zona_check(user,form.cleaned_data),profile_pic_check(user,form.cleaned_data),password_success,riesgo_check(user,form.cleaned_data)]):
-                user.save()
-                messages.success(request,"Cuenta editada con exito")
-            if password_success:
-                login(request, user)
-        return super().post(request, *args, **kwargs)
+        if "Aceptar" in request.POST:
+            if form.is_valid():
+                if any([zona_check(user,form.cleaned_data),profile_pic_check(user,form.cleaned_data),riesgo_check(user,form.cleaned_data)]):
+                    user.save()
+                    messages.success(request,"Cuenta editada con exito")
+            return super().post(request, *args, **kwargs)
+        elif "update_password" in request.POST:
+            return redirect(reverse("update_user_password",args=[user.id]))
 
 def zona_check(user,cleaned_data):
     if user.zona==cleaned_data["zona"]:
         return False
     user.zona=cleaned_data["zona"]
-    return True
-
-def password_check(request,user,cleaned_data):
-    if cleaned_data["password"]=="":
-        return False
-    if user.check_password(cleaned_data["password"]):
-        messages.error(request,"La contraseña no puede ser la misma")
-        return False
-    user.set_password(cleaned_data["password"])
     return True
 
 def profile_pic_check(user,cleaned_data):

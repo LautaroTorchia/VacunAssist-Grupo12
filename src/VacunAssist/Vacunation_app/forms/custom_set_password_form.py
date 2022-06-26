@@ -1,9 +1,8 @@
 from django.contrib.auth.forms import SetPasswordForm
+from Vacunation_app.forms.p import PForm
 from django import forms
 from django.contrib.auth import password_validation
 from django.forms import ValidationError
-
-from Vacunation_app.forms.p import PForm
 
 class CustomSetPasswordForm(PForm,SetPasswordForm):
 

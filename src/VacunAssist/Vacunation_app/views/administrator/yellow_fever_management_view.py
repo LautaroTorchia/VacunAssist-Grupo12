@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from ..models import listaDeEsperaFiebreAmarilla, Turno
+from Vacunation_app.models import listaDeEsperaFiebreAmarilla, Turno
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
 from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
@@ -31,7 +31,7 @@ def yellow_fever_confirmation_view(request, id):
             petition.delete()
             return redirect(reverse("yellow_fever_list"))
     context = {"petition": petition, "form":form}
-    return render(request, "yellow_fever_confirmation.html", context)
+    return render(request, "administrator/yellow_fever_confirmation.html", context)
 
 @permission_required("Vacunation_app.Administrador")
 @login_required()

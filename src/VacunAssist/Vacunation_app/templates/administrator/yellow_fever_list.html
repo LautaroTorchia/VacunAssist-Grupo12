@@ -31,11 +31,8 @@
                     </div>  
                     {% endfor %}
             </div>
-            {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-                    {{ message }}
-                </div>
-            {% endfor %}
+            {% include "paginator.html" %}
+            {% include "messages.html" %}
             {% include "errors.html" %}
         </div>
     </div>

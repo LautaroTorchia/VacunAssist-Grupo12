@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..models import Usuario
+from Vacunation_app.models import Usuario
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
 
@@ -12,4 +12,4 @@ def vaccinator_delete_view(request, id):
         vacunador.delete()
         return redirect(reverse("vaccinators_list"))
     context = {"vacunador": vacunador}
-    return render(request, "vaccinator_delete.html", context)
+    return render(request, "administrator/vaccinator_delete.html", context)

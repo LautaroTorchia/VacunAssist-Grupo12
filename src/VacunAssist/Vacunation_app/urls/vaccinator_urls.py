@@ -1,6 +1,6 @@
-from Vacunation_app.forms.custom_change_password_form import CustomChangePasswordForm
+from Vacunation_app.forms.recover.custom_change_password_form import CustomChangePasswordForm
 from Vacunation_app.views.custom_password_change import CustomPasswordChangeView
-from Vacunation_app.views.homes.vaccinator_home_view import HomeView
+from Vacunation_app.views.vaccinator.vaccinator_home_view import HomeView
 from Vacunation_app.views.vaccinator_patient_update_view import ProfileUpdate
 from django.urls import path
 

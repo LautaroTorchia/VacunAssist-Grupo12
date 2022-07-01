@@ -11,7 +11,7 @@ from django.contrib import messages
 
 class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     form_class = NameUpdateForm
-    template_name = "vacunatorio_name_update.html"
+    template_name = "administrator/vacunatorio_name_update.html"
     permission_required = ("Vacunation_app.Administrador", )
     raise_exception = True
 

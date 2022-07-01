@@ -1,22 +1,12 @@
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from Vacunation_app.custom_functions import check_dni, generate_keycode, generate_random_password, get_referer
-from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm, EnteringDniForm
-from Vacunation_app.models import VacunaEnVacunatorio, Vacunador, Vacunatorio, CustomUserManager, Paciente, listaDeEsperaFiebreAmarilla
+from Vacunation_app.custom_functions import generate_keycode, generate_random_password, get_referer,check_dni
+from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm,EnteringDniForm
+from Vacunation_app.models import CustomUserManager
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
-
-
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def administrator_home_view(request):
-    if "logout" in request.POST:
-        logout(request)
-        return redirect(reverse("login"))
-    return render(request, "administrator/administrator_view.html", {})
 
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
@@ -39,9 +29,10 @@ def validating_dni_for_vaccinator_view(request):
             messages.error(request, data["mensaje de error"])
             dni_form = EnteringDniForm()
 
-    return render(request, "dni_validation_view.html", {
+    return render(request, "administrator/dni_validation_view.html", {
         "form": dni_form,
     })
+
 
 
 @permission_required("Vacunation_app.Administrador", raise_exception=True)
@@ -80,35 +71,4 @@ def creating_vaccinator_view(request):
         "nombre": request.session["nombre_to_create"],
     }
 
-    return render(request, "vaccinator_creation.html", context)
-
-
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def vaccinators_list_view(request):
-    queryset = Vacunador.objects.all()
-    context = {"object_list": queryset}
-    return render(request, "vaccinators_list.html", context)
-
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def fiebre_amarilla_list_view(request):
-    queryset = listaDeEsperaFiebreAmarilla.objects.all()
-    context = {"object_list": queryset}
-    return render(request, "user_list.html", context)
-
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def patients_list_view(request):
-    queryset = Paciente.objects.all()
-    context = {"object_list": queryset}
-    return render(request, "patients_list.html", context)
-
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def yellow_fever_list_view(request):
-    print("-"*50)
-    queryset = listaDeEsperaFiebreAmarilla.objects.all()
-    print(queryset,"-"*50)
-    context = {"object_list": queryset}
-    return render(request, "yellow_fever_list.html", context)
+    return render(request, "administrator/vaccinator_creation.html", context)

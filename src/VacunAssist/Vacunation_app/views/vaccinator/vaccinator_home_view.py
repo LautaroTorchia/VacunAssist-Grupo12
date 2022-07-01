@@ -9,7 +9,7 @@ Usuario=get_user_model()
 
 
 class HomeView(LoginRequiredMixin,TemplateView):
-    template_name="vaccinator_homepage.html"
+    template_name="vaccinator/vaccinator_homepage.html"
     permission_required = ("Vacunation_app.Vacunador", )
 
     def get(self, request, *args, **kwargs):
@@ -18,6 +18,6 @@ class HomeView(LoginRequiredMixin,TemplateView):
     def post(self, request, *args, **kwargs):
         if "logout" in request.POST:
             logout(request)
-            return redirect("accounts/login/")
+            return redirect(reverse("login"))
         return redirect("/")
 

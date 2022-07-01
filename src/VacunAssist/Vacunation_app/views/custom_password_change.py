@@ -1,8 +1,3 @@
-
-
-
-
-from audioop import reverse
 from Vacunation_app.forms.p import PForm
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpRequest,HttpResponse

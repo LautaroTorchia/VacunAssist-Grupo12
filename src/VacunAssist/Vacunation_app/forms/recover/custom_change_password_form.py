@@ -1,4 +1,4 @@
-from Vacunation_app.forms.custom_set_password_form import CustomSetPasswordForm
+from Vacunation_app.forms.recover.custom_set_password_form import CustomSetPasswordForm
 from django.forms import ValidationError
 from django import forms
 

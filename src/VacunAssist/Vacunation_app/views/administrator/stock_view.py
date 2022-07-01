@@ -11,7 +11,7 @@ from django.shortcuts import redirect
 
 
 class StockView(FormView,LoginRequiredMixin,PermissionRequiredMixin):
-    template_name: str="stock_view.html"
+    template_name: str="administrator/stock_view.html"
     form_class= StockForm
     permission_required="Vacunation_app.Administrador"
     success_url= reverse_lazy("stock_view")

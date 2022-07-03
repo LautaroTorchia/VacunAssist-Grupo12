@@ -8,8 +8,8 @@
     <br> Zona: {{ instance.user.zona }} 
     <br> Fecha de Nacimiento: {{ instance.user.fecha_nac.date }} </p>
     <div class="button_container ml-auto p-2 align-self-end">
-        <form method="GET" action='/administrator/vaccinator/{{ instance.user.get_absolute_url }}/delete'>
-            <button class="btn button btn-block">Borrar</button>
+        <form method="GET" action='/administrator/patients_list/profile/{{ instance.user.get_absolute_url }}'>
+            <button class="btn button btn-block">Ver Perfil</button>
         </form>
     </div>
 {% endblock card %}

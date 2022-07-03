@@ -1,56 +1,39 @@
-
-{% extends 'base.html' %}
+{% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
-    
+{% block child_css %}
     <link rel="stylesheet" href="{% static 'zona.css' %}">
-    
-    
-{% endblock css %}
+{% endblock child_css %}
 
-{% block content %}
-    <div class="main_container container-fluid d-flex flex-row">
-        {% include "navbar.html" %}
-        <div class="main_fields_container align-self-start ">
-            {% include "presentacion.html" %}
-            <div class="d-flex flex-column align-items-start" >
-                <h1 class="text">Información de vacunación</h1>
-                <br>
-                <h2> Estos son los requerimientos para vacunarse según el Ministerio de Salud</h2>
-                <ul><h3>Covid</h3>
-                    <li>Solo se pueden tener 2 dosis</li>
-                    <li>Debes ser mayor a 18 años</li>
-                </ul>
-                <ul><h3>Gripe</h3>
+{% block title %}<h1> Estos son los requerimientos para vacunarse según el Ministerio de Salud</h1>{% endblock title %}
+{% block child_content %}
+    <div class="d-flex flex-column align-items-start" >
+            <ul><h3>Covid</h3>
+                <li>Solo se pueden tener 2 dosis</li>
+                <li>Debes ser mayor a 18 años</li>
+            </ul>
+            <ul><h3>Gripe</h3>
                 <li>Una dosis anual</li>
-                </ul>
-                <ul><h3>Fiebre amarilla</h3>
-                        <li>Solo se pueden vacunar menores de 60 años</li>
-                        <li>Solo se puede dar una vez en la vida</li>
-                </ul>
-                <h3>Para mas informacion, contactese con nosotros en cualquiera de nuestras redes sociales <a href="/contact">Aqui</a></h3>
-            </div>
-
-<h2 style="color:white;"> Manifesto for Agile Software Development</h3>
-    
-<h5 style="color:white;">
-We are uncovering better ways of developing <br>
-software by doing it and helping others do it. <br>
-Through this work we have come to value: <br>
-
-Individuals and interactions over processes and tools <br>
-Working software over comprehensive documentation <br>
-Customer collaboration over contract negotiation <br>
-Responding to change over following a plan <br> <br>
-
-That is, while there is value in the items on <br>
-the right, we value the items on the left more. <br>
-</h5>
-
-            </div>  
-        </div>
+            </ul>
+            <ul><h3>Fiebre amarilla</h3>
+                    <li>Solo se pueden vacunar menores de 60 años</li>
+                    <li>Solo se puede dar una vez en la vida</li>
+            </ul>
+        <h3>Para mas informacion, contactese con nosotros en cualquiera de nuestras redes sociales <a href="/contact">Aqui</a></h3>
     </div>
+        <h2 style="color:white;"> Manifesto for Agile Software Development</h3>
+        <h5 style="color:white;">
+        We are uncovering better ways of developing <br>
+        software by doing it and helping others do it. <br>
+        Through this work we have come to value: <br>
 
-{% endblock content %}
+        Individuals and interactions over processes and tools <br>
+        Working software over comprehensive documentation <br>
+        Customer collaboration over contract negotiation <br>
+        Responding to change over following a plan <br> <br>
 
+        That is, while there is value in the items on <br>
+        the right, we value the items on the left more. <br>
+        </h5>
+    </div>  
+{% endblock child_content %}

@@ -1,31 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
-    
+{% block child_css %}
     <link rel="stylesheet" href="{% static 'vaccinator_creation.css' %}">
-    
-    
-{% endblock css %}
+{% endblock child_css %}
 
-{% block content %}
-    <div class="total_container container-fluid d-flex flex-row">
-        {% include "navbar.html" %}
-        <div class="main_container">
-            {% include "presentacion.html" %}
-            <div class="creacion_container">
-                <div class="texto_container d-flex flex-column">
-                    <h1> Creacion de un vacunador</h1>
-                    <h5>Paso 1/2</h5>
-                </div>
-                <form action="" method="post"> {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" class="btn-submit" value="Validar DNI">
-                    {% include "messages.html" %}
-                </form>
-            </div>
+{% block child_content %}
+    <div class="creacion_container">
+        <div class="texto_container d-flex flex-column">
+            <h1> Creacion de un vacunador</h1>
+            <h5>Paso 1/2</h5>
         </div>
+        <form action="" method="post"> 
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn-submit" value="Validar DNI">
+            {% include "messages.html" %}
+        </form>
     </div>
-   
-
-{% endblock content %}
+{% endblock child_content %}

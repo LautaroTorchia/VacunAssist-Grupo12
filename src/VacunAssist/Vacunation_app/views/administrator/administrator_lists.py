@@ -1,6 +1,4 @@
 from Vacunation_app.models import Vacunador, Paciente, listaDeEsperaFiebreAmarilla
-from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from typing import Any

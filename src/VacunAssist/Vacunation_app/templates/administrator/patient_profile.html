@@ -1,42 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
-    
+{% block child_css %}
     <link rel="stylesheet" href="{% static 'patient_profile.css' %}">
-    
-    
-{% endblock css %}
+{% endblock child_css %}
 
-{% block content %}
-<div class="main_container container-fluid d-flex flex-row">
-    {% include "navbar.html" %}
-    <div class="main_fields_container align-self-start ">
-        {% include "presentacion.html" %}
-        <div class="main_container_content align-self-start">
-        <form action="" method="POST">{% csrf_token %}
-            <h1 class="title">Este es el perfil de {{ patient.user.nombre_completo }}</h1>
+{% block title %}<h1 class="title">Este es el perfil de {{ patient.user.nombre_completo }}</h1>{% endblock title %}
+{% block child_content %}
+        <form action="" method="POST">
+            {% csrf_token %}
             <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile">
-            <p>DNI: {{ patient.user.dni }}
-            <br>Fecha de nacimiento: {{patient.user.fecha_nac.date }}
-            <br>Zona: {{ patient.user.zona }}
-            {% if patient.es_de_riesgo %}
-            <br>Es de riesgo: Si
-            {% else %}
-            <br>Es de riesgo: No
-            {% endif %}
-            <br>Dosis de Covid: {{ patient.dosis_covid}}
-            <br>Fecha de la última vacuna de gripe: {{ patient.fecha_gripe }}
-            {% if patient.tuvo_fiebre_amarilla %}
-            <br>Se vacunó contra la fiebre amarilla: Si
-            {% else %}
-            <br>Se vacunó contra la fiebre amarilla: No
-            {% endif %}
-        </p>
+            <p>
+                DNI: {{ patient.user.dni }}
+                <br>Fecha de nacimiento: {{patient.user.fecha_nac.date }}
+                <br>Zona: {{ patient.user.zona }}
+                <br>
+                {% if patient.es_de_riesgo %}
+                    Es de riesgo: Si
+                {% else %}
+                    Es de riesgo: No
+                {% endif %}
+                    Dosis de Covid: {{ patient.dosis_covid}}
+                <br>
+                {% if patient.fecha_gripe.year == 1980 %}
+                    Se vacunó contra la gripe: No
+                {% else %}
+                    Fecha de la última vacuna de gripe: {{ patient.fecha_gripe }}
+                {% endif %}
+                {% if patient.tuvo_fiebre_amarilla %}
+                    <br>Se vacunó contra la fiebre amarilla: Si
+                {% else %}
+                    <br>Se vacunó contra la fiebre amarilla: No
+                {% endif %}
+            </p>
         </form>
-    </div>
     <a id="volver" class="btn-submit" href='../'>Volver</a>
-</div>
-</div>
-
-{% endblock content %}
+{% endblock child_content %}

@@ -1,6 +1,6 @@
 {% extends 'generic_card_list.html' %}
 
-
+{% block filter %} {% comment "TODO: Aca va el filtro por dni" %}{% endcomment %} {% endblock filter %}
 {% block card %}
 <p class="vaccinator_text"> 
     Nombre: {{ instance.user.nombre_completo }}

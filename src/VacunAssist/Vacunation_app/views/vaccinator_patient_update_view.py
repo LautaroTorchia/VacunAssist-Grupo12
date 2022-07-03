@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.views.generic.edit import UpdateView
-from Vacunation_app.models import Paciente, Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
+from Vacunation_app.models import Paciente, Usuario
+from django.views.generic.edit import UpdateView
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 

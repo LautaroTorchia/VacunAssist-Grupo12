@@ -1,9 +1,8 @@
-from datetime import date, datetime, timedelta, tzinfo
-from dateutil.relativedelta import relativedelta
-import random
 from Vacunation_app.models import Paciente, Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
+from dateutil.relativedelta import relativedelta
+from datetime import date, timedelta
 from django.utils import timezone
-from VacunAssist.settings import TIME_ZONE
+import random
 
 class TurnAssigner():
 
@@ -117,3 +116,12 @@ class TurnAssignerYellowFever():
     
     def assign_yellow_fever_turn(self,date,vacunatorio):
         return Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=self.patient,vacuna=self.vacuna)
+
+def getnewturn(turn) -> Turno:
+    paciente=turn.paciente
+    assigner=TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente.user,turn.fecha)
+    if "COVID" in str(turn.vacuna):
+        assigner.assign_covid_turn()
+    elif "Gripe" in str(turn.vacuna):
+        assigner.re_assign_gripe_turn()
+    turn.delete()

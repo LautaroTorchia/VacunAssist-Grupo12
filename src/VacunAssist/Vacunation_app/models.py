@@ -1,9 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import (BaseUserManager)
-from django.forms import ValidationError
-from django.core.validators import MinValueValidator, MinLengthValidator
+from django.contrib.auth.models import AbstractUser,BaseUserManager
+from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import Permission
+from django.forms import ValidationError
+from django.db import models
 
 
 def validate_alpha(nombre):

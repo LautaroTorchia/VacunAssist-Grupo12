@@ -1,13 +1,12 @@
+from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.models import Paciente, Turno
-from django.shortcuts import render
-from django.views.generic.list import ListView
-from typing import *
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
+from django.views.generic.list import ListView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib import messages
+from typing import *
 
-from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 
 class NotificationView(ListView):
     paginate_by= 10
@@ -44,4 +43,3 @@ class NotificationView(ListView):
             messages.success(request,"Turno cancelado")
     def getassigner(self,paciente,turn) -> TurnAssigner:
         return TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente.user,turn.fecha)
-            

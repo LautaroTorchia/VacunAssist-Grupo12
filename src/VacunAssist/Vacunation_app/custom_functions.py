@@ -1,9 +1,9 @@
-import os
+from dotenv import load_dotenv
+from Vacunation_app.models import Usuario
+import requests
 import random
 import string
-from .models import Usuario
-import requests
-from dotenv import load_dotenv
+import os
 
 load_dotenv()
 

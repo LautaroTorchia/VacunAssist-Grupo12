@@ -1,12 +1,10 @@
-from django.shortcuts import redirect
-from django.contrib.auth import logout
-from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
+from django.views.generic.base import TemplateView
+from django.shortcuts import redirect
 from django.urls import reverse
 
 Usuario=get_user_model()
-
 
 class HomeView(LoginRequiredMixin,TemplateView):
     template_name="vaccinator/vaccinator_homepage.html"

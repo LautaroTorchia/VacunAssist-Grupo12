@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
-from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from Vacunation_app.models import listaDeEsperaFiebreAmarilla, Turno
-from django.contrib.auth.decorators import login_required, permission_required
-from django.urls import reverse
 from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
+from Vacunation_app.models import listaDeEsperaFiebreAmarilla, Turno
 from Vacunation_app.turn_assignment import TurnAssignerYellowFever
-import datetime
-from django.core.mail import send_mail
+from VacunAssist.settings import DEFAULT_FROM_EMAIL
+from django.contrib.auth.decorators import login_required, permission_required
 from django.template.loader import render_to_string
+from django.shortcuts import render, redirect
 from django.utils.html import strip_tags
+from django.core.mail import send_mail
 from django.contrib import messages
+from django.urls import reverse
+import datetime
 
 
 @permission_required("Vacunation_app.Administrador")

@@ -1,10 +1,9 @@
-from Vacunation_app.forms.p import PForm
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpRequest,HttpResponse
-from typing import Any
 from django.contrib import messages
+from typing import Any
 
-class CustomPasswordChangeView(PasswordChangeView,PForm):
+class CustomPasswordChangeView(PasswordChangeView):
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         self.success_url=self.request.META.get('HTTP_REFERER')

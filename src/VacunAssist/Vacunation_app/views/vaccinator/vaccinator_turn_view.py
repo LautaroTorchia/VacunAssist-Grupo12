@@ -1,11 +1,13 @@
-from django.views.generic.list import ListView
-from typing import Any
-from django.http import HttpRequest,HttpResponse
 from Vacunation_app.models import Turno, Vacunatorio
-from django.utils import timezone
-from django.shortcuts import redirect
-from django.urls import reverse
+from Vacunation_app.turn_assignment import getnewturn
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib import messages
+from django.http import HttpRequest,HttpResponse
+from django.views.generic.list import ListView
+from django.shortcuts import redirect
+from django.utils import timezone
+from django.urls import reverse_lazy
+from typing import Any
 
 class AbstractVaccinatorListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
     paginate_by: int= 10
@@ -19,12 +21,13 @@ class TurnsView(AbstractVaccinatorListView):
         self.queryset= Turno.objects.filter(vacunatorio=vacunatorio_del_vacunador).filter(fecha__day= timezone.now().day)
         return super().get(request, *args, **kwargs)
 
-
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        turno=Turno.objects.get(id=request.POST["Informar falta"])
-        if "Informar falta" in request.POST:
-            print("Aca se informa que no asistió")
-        elif "Confirmar asistencia" in request.POST:
+        print(request.POST)
+        if "falta" in request.POST:
+            turno=Turno.objects.get(id=request.POST["falta"])
+            getnewturn(turno)
+            messages.success(request,f"Se informo la falta de {turno.paciente}")
+        elif "asistencia" in request.POST:
+            turno=Turno.objects.get(id=request.POST["asistencia"])
             print("Aca se genera el pdf con el certificado de asistencia")
-
-        return redirect(reverse("notifications"))
+        return redirect(reverse_lazy("vaccinator_turns"))

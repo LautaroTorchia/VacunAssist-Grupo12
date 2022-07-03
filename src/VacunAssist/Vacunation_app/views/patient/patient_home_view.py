@@ -1,12 +1,11 @@
-from django.shortcuts import redirect, render
-from django.contrib.auth import logout
-from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
-from django.urls import reverse
 from Vacunation_app.models import Paciente,Turno, listaDeEsperaCovid,listaDeEsperaFiebreAmarilla
-from datetime import date, datetime
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.base import TemplateView
+from django.contrib.auth import get_user_model, logout
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from dateutil.relativedelta import relativedelta
+from datetime import date, datetime
 
 
 from Vacunation_app.turn_assignment import TurnAssignerRisk

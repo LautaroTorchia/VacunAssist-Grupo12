@@ -12,8 +12,8 @@
     <div class="button_container ml-auto p-2 align-self-end">
         <form method="POST" action="">
             {% csrf_token %}
-            <button class="btn button btn-block" type="submit" value="{{ instance.id }}">Informar falta</button>
-            <button class="btn button btn-block" type="submit" value="{{ instance.id }}">Confirmar asistencia</button>
+            <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="falta">Informar falta</button>
+            <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="asistencia">Confirmar asistencia</button>
         </form>
     </div>
 {% endblock card %}

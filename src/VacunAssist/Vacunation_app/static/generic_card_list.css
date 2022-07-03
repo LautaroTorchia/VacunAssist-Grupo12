@@ -81,3 +81,15 @@
     width: 100%;
 }
 
+.paginator_content_container{
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.pagination{
+    align-self: center;
+    order: 2;
+}

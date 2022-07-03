@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
+    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="main_container container-fluid d-flex flex-row">
+        <div class="navbar_container">
+            {% include "navbar.html" %}
+        </div>
+        <div class="main_fields_container align-self-start ">
+            {% include "presentacion.html" %}
+            {% block titulo %}{% endblock titulo %}
+            {% block info %}{% endblock info %}
+        </div>
+    </div>
+
+{% endblock content %}

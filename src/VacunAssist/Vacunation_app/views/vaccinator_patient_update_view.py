@@ -8,7 +8,7 @@ from django.urls import reverse
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm
     model = Usuario
-    template_name= "vaccinator/edit_vaccinator_profile_view.html"
+    template_name= "edit_profile_view.html"
     permission_required = ("Vacunation_app.Vacunador","Vacunation_app.Paciente", )
 
     def get(self, request, *args, **kwargs):

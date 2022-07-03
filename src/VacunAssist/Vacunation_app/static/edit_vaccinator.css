@@ -1,22 +1,3 @@
-.main_container {
-    padding: 0px;
-    position: relative;
-    background: #FFFFFF;
-}
-
-
-/* Principal */
-.main_fields_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-
-}
-
 .btn-submit {
     display: flex;
     flex-direction: row;
@@ -65,16 +46,10 @@ select {
 }
 
 .form-group {
+    margin-top: 3vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
 }
 
-.list-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 30px;
-}

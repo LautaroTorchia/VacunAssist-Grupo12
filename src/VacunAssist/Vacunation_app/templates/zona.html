@@ -6,11 +6,10 @@
 <link rel="stylesheet" href="{% static 'zona.css' %}">
 {% endblock child_css %}
 
-{% block titulo %}<h1 class="self-align-center">Estas en Zonas</h1>{% endblock titulo %}
+{% block title %}<h1 class="self-align-center">Estas en Zonas</h1>{% endblock title %}
 {% block child_content %}
-    <div class="zona_container">
-        <div class="zona"></div>
-            <a href="{{ request.session.editar_perfil_url }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
-        </div>
-    </div>  
+    <div class="zona"></div>
+        <br>
+        <a href="{{ request.session.editar_perfil_url }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
+    </div>
 {% endblock child_content %}

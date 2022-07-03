@@ -1,4 +1,6 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'presentacion.css' %}">
+
 <div class="text_container container-fluid">    
     <div class="presentacion_container container-fluid">
         <h1 id="titulo">Bienvenido, {{ request.user.nombre_completo }}</h1>

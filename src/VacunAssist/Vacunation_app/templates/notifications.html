@@ -1,28 +1,30 @@
 {% extends 'generic_card_list.html' %}
 {% load static %}
 
-{% block titulo %}<h1 >Mis Turnos</h1>{% endblock titulo %}
+{% block title %}<h1 >Mis Turnos</h1>{% endblock title %}
 
 {% if is_staff %}
     <h1> No tenes turnos asignados, ya que eres parte del personal </h1>
 {% else %}
     {% block card %}
-            <p>
-                Vacunatorio: {{ instance.vacunatorio.nombre }}
-                <br>Fecha: {{ instance.fecha }}
-                <br>Vacuna: {{ instance.vacuna.nombre }}
-            </p>
-                <div class="button_container ml-auto p-2 align-self-right">
-                    {% if instance.vacuna.nombre == "Fiebre amarilla" %}
-                    <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
-                        {% csrf_token %}
-                        <input type="submit" value="Cancelar" name="{{ instance.id }}" class="btn button btn-block"></form>
-                    {% else %}
-                    <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
-                        {% csrf_token %}
-                        <input type="submit" value="Reasignar" name="{{ instance.id }}" class="btn button btn-block"></form>
-                    {% endif %}
-                </div>
+        <p>
+            Vacunatorio: {{ instance.vacunatorio.nombre }}
+            <br>Fecha: {{ instance.fecha }}
+            <br>Vacuna: {{ instance.vacuna.nombre }}
+        </p>
+            <div class="button_container ml-auto p-2 align-self-right">
+                {% if instance.vacuna.nombre == "Fiebre amarilla" %}
+                <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
+                    {% csrf_token %}
+                    <input type="submit" value="Cancelar" name="{{ instance.id }}" class="btn button btn-block">
+                </form>
+                {% else %}
+                <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
+                    {% csrf_token %}
+                    <input type="submit" value="Reasignar" name="{{ instance.id }}" class="btn button btn-block">
+                </form>
+                {% endif %}
+            </div>
     {% endblock card %}
     {% block empty_list %}<h3> No Tienes ningun turno asignado</h3>{% endblock empty_list %}
 {% endif %}

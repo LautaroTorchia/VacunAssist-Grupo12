@@ -1,28 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
-    
-    <link rel="stylesheet" href="{% static 'zona.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
-{% endblock css %}
 
-{% block content %}
-    <div class="main_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
-            {% include "navbar.html" %}
-        </div>
-        <div class="main_fields_container align-self-start ">
-            {% include "presentacion.html" %}
-            
-            <div class="zona_container">
-               <h1 class="text">Estas en Zonas</h1>
-               <div class="zona"></div>
-               <a href="{{ request.session.editar_perfil_url }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
-                </div>
-            </div>  
-        </div>
-    </div>
+{% block child_css %}
+<link rel="stylesheet" href="{% static 'zona.css' %}">
+{% endblock child_css %}
 
-{% endblock content %}
+{% block titulo %}<h1 class="self-align-center">Estas en Zonas</h1>{% endblock titulo %}
+{% block child_content %}
+    <div class="zona_container">
+        <div class="zona"></div>
+            <a href="{{ request.session.editar_perfil_url }}">Para editar tu zona accedé a la configuración de tu perfil presionando AQUI</a>
+        </div>
+    </div>  
+{% endblock child_content %}

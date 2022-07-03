@@ -1,22 +1,26 @@
 {% load static %}
-<nav>
-    <div class="icon_container container-fluid">
-        <img src="{% static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon">
-        <a href="/" id="menu_text">VacunAssist</a>
-    </div>
-    <div class="options_container container-fluid">
-        <div class="element_container container-fluid">
-            <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
-            <a class="text_form" href="/zona">Zona</a>
+<link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+
+<div class="navbar_container">
+    <nav>
+        <div class="icon_container container-fluid">
+            <img src="{% static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon">
+            <a href="/" id="menu_text">VacunAssist</a>
         </div>
-        <div class="element_container">
-            <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
-            <a class="text_form" href="/notifications">Mis turnos</a>
+        <div class="options_container container-fluid">
+            <div class="element_container container-fluid">
+                <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
+                <a class="text_form" href="/zona">Zona</a>
+            </div>
+            <div class="element_container">
+                <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
+                <a class="text_form" href="/notifications">Mis turnos</a>
+            </div>
+            <div class="element_container">
+                <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon">
+                <a class="text_form" href="/contact">Contactenos</a>
+            </div>
+            
         </div>
-        <div class="element_container">
-            <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon">
-            <a class="text_form" href="/contact">Contactenos</a>
-        </div>
-        
-    </div>
-</nav>
+    </nav>
+</div>

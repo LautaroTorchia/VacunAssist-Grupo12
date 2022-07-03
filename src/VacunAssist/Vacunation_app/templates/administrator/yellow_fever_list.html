@@ -1,39 +1,11 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'generic_card_list.html' %}
 
-{% block css %}
-    
-    <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
-{% endblock css %}
-
-{% block content %}
-    <div class="main_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
-            {% include "navbar.html" %}
-        </div>
-        <div class="main_fields_container align-self-start ">
-            {% include "presentacion.html" %}
-            <h1>Ver Listado</h1>
-            <div class="card_container">
-                {% if not object_list %}
-                    <h2>No hay solicitudes pendientes</h2>
-                {% endif %}
-                {% for instance in object_list %}
-                <div class="vaccinator_list_container align-self-center">
-                    <p class="vaccinator_text"> {{ instance }}
-                        <div class="button_container ml-auto p-2 align-self-end">
-                            <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.get_absolute_url }}'>
-                                <button class="btn button btn-block">Administrar</button>
-                            </form>
-                        </div> 
-                    </div>  
-                    {% endfor %}
-            </div>
-            {% include "paginator.html" %}
-            {% include "messages.html" %}
-            {% include "errors.html" %}
-        </div>
-    </div>
-{% endblock content %}
+{% block filter %} {% comment "TODO: Aca va el filtro por dni" %}{% endcomment %} {% endblock filter %}
+{% block card %}
+    <p class="vaccinator_text"> {{ instance }} </p>
+    <div class="button_container ml-auto align-self-end">
+        <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.get_absolute_url }}'>
+            <button class="btn button btn-block">Administrar</button>
+        </form>
+    </div> 
+{% endblock card %}

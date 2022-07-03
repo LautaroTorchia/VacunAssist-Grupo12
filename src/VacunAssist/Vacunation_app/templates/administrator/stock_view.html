@@ -4,15 +4,13 @@
 {% block css %}
     
     <link rel="stylesheet" href="{% static 'stock_view.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
 
 {% block content %}
     <div class="main_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
-            {% include "navbar.html" %}
-        </div>
+        {% include "navbar.html" %}
         <div class="main_fields_container">
             {% include "presentacion.html" %}
             <div class="vaccines_form_container">

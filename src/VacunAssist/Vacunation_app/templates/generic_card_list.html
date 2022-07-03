@@ -7,7 +7,7 @@
 
 {% block titulo %}<h1>Ver Listado</h1>{% endblock titulo %}
 {% block filter %}{% endblock filter %}
-{% block info %}
+{% block child_content %}
     <div class="card_container">
         {% for instance in object_list %}
             <div class="vaccinator_list_container ml-auto p-2 align-self-center">
@@ -21,4 +21,4 @@
         {% include "messages.html" %}
         {% include "errors.html" %}
     </div>
-{% endblock info %}
+{% endblock child_content %}

@@ -4,15 +4,13 @@
 {% block css %}
     
     <link rel="stylesheet" href="{% static 'vaccinator_creation.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+    
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
 
 {% block content %}
     <div class="total_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
-            {% include "navbar.html" %}
-        </div>
+        {% include "navbar.html" %}
         <div class="main_container">
             {% include "presentacion.html" %}
             <div class="creacion_container">

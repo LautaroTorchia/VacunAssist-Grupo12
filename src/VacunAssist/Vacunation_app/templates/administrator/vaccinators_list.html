@@ -3,7 +3,7 @@
 
 {% block css %}
     
-    <link rel="stylesheet" href="{% static 'vaccinator_list.css' %}">
+    <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
     <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
     <link rel="stylesheet" href="{% static 'presentacion.css' %}">
 {% endblock css %}
@@ -16,10 +16,11 @@
         <div class="main_fields_container align-self-start ">
             {% include "presentacion.html" %}
             <h1>Ver Listado</h1>
-            <div class="card_container">
-                {% for instance in object_list %}
-                <div class="vaccinator_list_container align-self-center">
-                    <p class="vaccinator_text"> Nombre: {{ instance.user.nombre_completo }}
+            <div class="paginator_content_container">
+                <div class="card_container">
+                    {% for instance in object_list %}
+                    <div class="vaccinator_list_container align-self-center">
+                        <p class="vaccinator_text"> Nombre: {{ instance.user.nombre_completo }}
                         <br> DNI: {{ instance.user.dni }} 
                         <br> Zona: {{ instance.user.zona }} 
                         <br> Fecha de Nacimiento: {{ instance.user.fecha_nac.date }} </p>
@@ -28,13 +29,14 @@
                                 <button class="btn button btn-block">Borrar</button>
                             </form>
                         </div>
-                </div>  
-                {% empty %}
+                    </div>  
+                    {% empty %}
                     <h2>Listado vacio</h2>
-                {% endfor %}
+                    {% endfor %}
                     
+                </div>
+                {% include "paginator.html" %}
             </div>
-            {% include "paginator.html" %}
         </div>
     </div>
 

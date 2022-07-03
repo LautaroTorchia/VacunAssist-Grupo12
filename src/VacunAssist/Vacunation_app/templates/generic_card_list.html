@@ -1,11 +1,10 @@
 {% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
+{% block child_css %}
     <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
-{% endblock css %}
+{% endblock child_css %}
+
 {% block titulo %}<h1>Ver Listado</h1>{% endblock titulo %}
 {% block info %}
     <div class="card_container">
@@ -15,7 +14,7 @@
                 {% endblock card %}
             </div>  
             {% empty %}
-                {% block vacio %}<h2>Listado vacio</h2>{% endblock vacio %}
+                {% block empty_list %}<h2>Listado vacio</h2>{% endblock empty_list %}
             {% endfor %}
         {% include "paginator.html" %}
     </div>

@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import FormView
-from Vacunation_app.forms.update_name_form import NameUpdateForm
-from Vacunation_app.models import Vacunatorio
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
+from Vacunation_app.forms.update_name_form import NameUpdateForm
+from Vacunation_app.models import Vacunatorio
 from typing import Any
 from django.http import HttpRequest,HttpResponse
-from django.contrib import messages
 
 
 class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):

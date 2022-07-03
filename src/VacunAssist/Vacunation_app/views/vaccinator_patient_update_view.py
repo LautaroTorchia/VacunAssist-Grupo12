@@ -13,7 +13,10 @@ class ProfileUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
-        self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
+        if self.get_object().has_perm("Vacunation_app.Paciente"):
+            self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
+        elif self.get_object().has_perm("Vacunation_app.Vacunador"):
+            self.initial={"zona": self.get_object().zona}
         context  = {
             "usuario": self.get_object(),
             "form": self.get_form(),

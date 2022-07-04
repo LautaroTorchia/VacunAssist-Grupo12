@@ -125,3 +125,4 @@ def getnewturn(turn) -> Turno:
     elif "Gripe" in str(turn.vacuna):
         assigner.re_assign_gripe_turn()
     turn.delete()
+

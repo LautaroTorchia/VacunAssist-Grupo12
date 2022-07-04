@@ -1,12 +1,12 @@
 from Vacunation_app.models import Turno, Vacunatorio
 from Vacunation_app.turn_assignment import getnewturn
+from Vacunation_app.custom_functions import render_to_pdf, make_qr
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
-from django.views.generic.list import ListView
-from django.shortcuts import redirect
+from django.contrib.staticfiles.finders import find as find_static_file
 from django.utils import timezone
-from django.urls import reverse_lazy
+from django.views.generic.list import ListView
 from typing import Any
 
 class AbstractVaccinatorListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
@@ -22,12 +22,12 @@ class TurnsView(AbstractVaccinatorListView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        print(request.POST)
         if "falta" in request.POST:
             turno=Turno.objects.get(id=request.POST["falta"])
             getnewturn(turno)
             messages.success(request,f"Se informo la falta de {turno.paciente}")
         elif "asistencia" in request.POST:
+            make_qr()
             turno=Turno.objects.get(id=request.POST["asistencia"])
-            print("Aca se genera el pdf con el certificado de asistencia")
-        return redirect(reverse_lazy("vaccinator_turns"))
+            pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno,"background":find_static_file("qr/qr.png")})
+        return HttpResponse(pdf, content_type='application/pdf')

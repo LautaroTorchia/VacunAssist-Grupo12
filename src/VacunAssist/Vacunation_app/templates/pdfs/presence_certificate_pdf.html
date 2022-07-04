@@ -1,0 +1,21 @@
+{% load encode_static %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            @page {
+                size: letter landscape;
+                margin: 160px;
+                background: url("background");
+            }
+        </style>
+    </head>
+    <body>
+            <h1>Este es tu certificado</h1>
+            <h2> {{ turno }} </h2>
+            <h3>Con este qr podés acceder a tu historial:</h3>
+            
+            <img alt="IMAGE" src="{% encode_static "qr/qr.png" %}">
+    </body>
+</html>

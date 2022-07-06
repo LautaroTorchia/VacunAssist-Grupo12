@@ -22,7 +22,12 @@
 {% endblock filter %}
 
 {% block card %}
-    {{ instance }}
+<p class="vaccinator_text"> 
+    Nombre: {{ instance.paciente.user.nombre_completo }} 
+    <br> DNI: {{ instance.paciente.user.dni }} 
+    <br> Zona: {{ instance.paciente.user.zona }} 
+    <br> Fecha de Nacimiento: {{ instance.paciente.user.fecha_nac.date }} 
+    <br> Vacuna: {{ instance.vacuna }} </p>
 {% endblock card %}
 {% block extra_content %}
     <form action="" method="post">

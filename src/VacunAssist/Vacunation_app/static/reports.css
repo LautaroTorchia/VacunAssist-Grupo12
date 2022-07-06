@@ -48,3 +48,8 @@
     flex-direction: column !important;
 
 }
+
+.invisible{
+    display: none;
+    
+}

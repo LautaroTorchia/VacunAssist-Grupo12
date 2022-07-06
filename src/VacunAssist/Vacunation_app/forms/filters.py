@@ -1,15 +1,13 @@
 from datetime import date
 from django import forms
-from ..models import Vacunatorio
+from ..models import Vacuna, Zona
 from Vacunation_app.forms.p import PForm
 
 
 Choices =(
     ("DNI", "DNI"),
-    ("Edad", "Edad"),
     ("Vacuna", "Vacuna"),
-    ("Zona", "Zona"),
-    ("Marca-COVID", "Marca-COVID"),
+    ("Zona", "Zona")
 )
 
 ChoicesOrder =(
@@ -29,6 +27,9 @@ class FiltersSelectorForm(PForm,forms.Form):
     fecha_fin=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":date.today()}))
     filter=forms.ChoiceField(choices=Choices)
     order=forms.ChoiceField(choices=ChoicesOrder)
+    dni_to_filter=forms.CharField(widget=forms.TextInput(),required=False)
+    vaccine_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Vacuna.objects.all(),required=False)
+    zona_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Zona.objects.all(),required=False)
 
 
     def clean_fecha_fin(self):

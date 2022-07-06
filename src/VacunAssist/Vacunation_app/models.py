@@ -190,10 +190,10 @@ class Administrador(models.Model):
 
 class Vacuna(models.Model):
     class Vacunas(models.TextChoices):
-        GRIPE_COMUN = "Gripe"
-        COVID_F = "COVID-PFIZER"
-        COVID_Z = "COVID-Astrazeneca"
-        FIEBRE_A = "Fiebre amarilla"
+        Gripe = "Gripe"
+        COVID_PFIZER = "COVID_PFIZER"
+        COVID_Astrazeneca = "COVID-Astrazeneca"
+        Fiebre_amarilla = "Fiebre amarilla"
 
     nombre = models.CharField(max_length=100,
                               choices=Vacunas.choices,

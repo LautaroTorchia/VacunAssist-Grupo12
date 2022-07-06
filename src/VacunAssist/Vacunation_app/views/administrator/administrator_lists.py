@@ -1,12 +1,10 @@
+from Vacunation_app.custom_functions import AbstractAdminListView
 from Vacunation_app.models import Vacunador, Paciente, listaDeEsperaFiebreAmarilla
 from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from typing import Any
 from django.http import HttpResponse,HttpRequest
 
-class AbstractAdminListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
-    paginate_by= 10
-    permission_required: Any= "Vacunation_app.Administrador"
+
 
 class VaccinatorsList(AbstractAdminListView):
     template_name: str="administrator/vaccinators_list.html"

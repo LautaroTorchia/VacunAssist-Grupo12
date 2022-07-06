@@ -29,5 +29,16 @@
                 <input type="submit" class="text_button_form" value="Ver solicitudes de fiebre amarilla"/>
             </form>
         </div>
+        <div class="row_container">
+            <form method="GET" action="generate_report">
+                <input type="submit" class="text_button_form" value="Generar reportes" id="cambiar_nombre_vacunatorio"/>
+            </form>
+            <form method="GET" action="generate_statistic/">
+                <input type="submit" class="text_button_form" value="Ver estadisticas" id="ver_listado_de_pacientes"/>
+            </form>
+            <form method="GET" action="covid_wait_list/">
+                <input type="submit" class="text_button_form" value="asignar turnos de COVID"/>
+            </form>
+        </div>
     </div>  
 {% endblock child_content %}

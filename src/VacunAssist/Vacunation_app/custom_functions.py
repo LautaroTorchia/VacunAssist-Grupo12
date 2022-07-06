@@ -15,6 +15,14 @@ from django.contrib.staticfiles.finders import find as find_static_file
 from PIL import Image
 import qrcode
 import os
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic.list import ListView
+from typing import Any
+from django.http import HttpResponse,HttpRequest
+
+class AbstractAdminListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
+    paginate_by= 10
+    permission_required: Any= "Vacunation_app.Administrador"
 
 def make_qr(data:str=reverse_lazy("login")):
     qr = qrcode.QRCode(

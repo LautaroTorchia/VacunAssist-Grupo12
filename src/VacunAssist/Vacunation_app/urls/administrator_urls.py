@@ -1,4 +1,5 @@
 from django.urls import path
+from Vacunation_app.views.administrator.creating_report import ReportListView
 from Vacunation_app.views.administrator.vacunatorio_name_update import NameUpdate
 from Vacunation_app.views.administrator.stock_view import StockView
 from Vacunation_app.views.administrator.vaccinator_list_view import vaccinator_delete_view
@@ -23,4 +24,5 @@ urlpatterns = [
     path("yellow_fever_list/confirmation/<int:id>",yellow_fever_confirmation_view,name="yellow_fever_confirmation"),
     path("yellow_fever_list/reject/<int:id>",reject_petition_view,name="reject_petition"),
     path('update_administrator',TemplateView.as_view(template_name="administrator/administrator_edit_contact.html"),name="admin_contact"),
+    path('generate_report',ReportListView.as_view(),name="generate_report")
 ]

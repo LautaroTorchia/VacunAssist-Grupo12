@@ -1,0 +1,32 @@
+{% extends 'generic_card_list.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+{% endblock extra_css %}
+
+{% block title %}
+    <h1>Reportes</h1>
+{% endblock title %}
+
+{% block filter %}
+    <form action="" method="post">
+        <div class="selectores">
+            {% csrf_token %}
+            <div class="filtros d-flex ">
+                {{ form.as_p }}
+            </div>
+            <input type="submit" value="Generar Reporte" name="generate_report" class="btn-submit">
+        </div>
+    </form>
+{% endblock filter %}
+
+{% block card %}
+    {{ instance }}
+{% endblock card %}
+{% block extra_content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Generar PDF" name="generate_PDF" class="btn-submit">
+    </form>
+{% endblock extra_content %}

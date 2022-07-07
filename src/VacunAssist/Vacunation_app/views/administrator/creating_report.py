@@ -12,9 +12,14 @@ from django.contrib import messages
 class ReportListView(AbstractAdminListView):
     template_name: str="administrator/reports.html"
     
-    
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        form=FiltersSelectorForm()
+        try:
+            form=FiltersSelectorForm(initial=
+            {"fecha_ini":request.session["queryset_data"].get("fecha_ini"),
+            "fecha_fin":request.session["queryset_data"].get("fecha_fin")
+            })
+        except:
+            form=FiltersSelectorForm()
         self.extra_context={"form":form}
         try:
             fecha_ini=datetime.strptime(request.session["queryset_data"].get("fecha_ini"),'%Y-%m-%d')
@@ -23,7 +28,6 @@ class ReportListView(AbstractAdminListView):
             order_filter=request.session["queryset_data"].get("order_filter")
             data_to_filter=request.session["queryset_data"].get("data_to_filter")
             self.queryset=Turno.objects.filter(fecha__gt=fecha_ini,fecha__lt=fecha_fin)
-            print(order_filter)
             if order_filter=="DNI":
                 self.queryset=list(filter(lambda x:str(x.paciente.user.dni).startswith(data_to_filter),self.queryset))
                 self.queryset=sorted(self.queryset,key=lambda x:x.paciente.user.dni,reverse=orden)
@@ -45,8 +49,9 @@ class ReportListView(AbstractAdminListView):
 
     
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        form=FiltersSelectorForm(request.POST)
+
         if "generate_report" in request.POST:
-            form=FiltersSelectorForm(request.POST)
             if form.is_valid():
                 fecha_ini=form.cleaned_data.get("fecha_ini")
                 fecha_fin=form.cleaned_data.get("fecha_fin")
@@ -65,6 +70,7 @@ class ReportListView(AbstractAdminListView):
             else:
                 messages.error(request,"Las fechas estan cruzadas, introduzca fechas validas")
         else:
+            print("Query:",self.queryset)
             if self.queryset:
                 pdf=render_to_pdf("pdfs/report_pdf.html",context_dict={"object_list":self.queryset})
                 print("hice el pdf")

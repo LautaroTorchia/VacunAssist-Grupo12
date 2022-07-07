@@ -36,7 +36,7 @@ class TurnsView(AbstractVaccinatorListView):
         elif "asistencia" in request.POST:
             make_qr()
             turno=Turno.objects.get(id=request.POST["asistencia"])
-            pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno,"background":find_static_file("qr/qr.png")})
+            pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
             paciente=Paciente.objects.get(user=turno.paciente.user)
             self.update_user(paciente,turno)
             self.update_stock(turno)

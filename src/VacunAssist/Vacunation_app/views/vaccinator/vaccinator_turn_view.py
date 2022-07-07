@@ -25,7 +25,7 @@ class TurnsView(AbstractVaccinatorListView):
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         print(request.POST)
         if "sin_turno" in request.POST:
-            print("no tenes turno >:|")
+            return redirect(reverse_lazy("vaccinator_turns"))
         if "falta" in request.POST:
             turno=Turno.objects.get(id=request.POST["falta"])
             getnewturn(turno)

@@ -1,0 +1,28 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+{% block title %}<h1>Pase sanitario</h1>{% endblock title %}
+
+
+{% block child_content %}
+    {% if object_list %}
+        <h2>Usted cuenta con las siguientes vacunas de COVID en vacunatorios de VacunAssist:</h2>
+        {% for vacuna in object_list %}
+            <br> Zona: {{ vacuna.vacunatorio.zona }} 
+            <br> Vacuna: {{ vacuna.vacuna }} 
+            <br> Fecha de la vacunacion: {{ vacuna.fecha }} </p>
+    
+        {% endfor %}
+        <p>Usted tiene todas las dosis necesarias para descargar el pase sanitario otorgado por el ministerio de salud</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Descargar Pase sanitario">
+        </form>
+    {% else %}
+        <h2> Usted todavia no tiene todas las vacunas necesarias para descargar el pase sanitario </h2>
+        <a href="/patient/">Volver</a>
+    {% endif %}
+
+    
+{% endblock child_content %}
+
+

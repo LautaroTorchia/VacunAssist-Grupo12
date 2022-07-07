@@ -23,7 +23,11 @@
             {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
                 <div class="element_container ">
                     <img src="{% static 'img/historial.svg' %}" alt="loc_icon" class=" icon_form">
-                    <a class="text_form" href="/contact">Historial de vacunacion</a>
+                    <a class="text_form" href="/patient/vaccination_history/{{request.user.id }}">Historial de vacunacion</a>
+                </div>
+                <div class="element_container ">
+                    <img src="{% static 'img/pase.svg' %}" alt="loc_icon" class=" icon_form">
+                    <a class="text_form" href="/patient/print_pase_sanitario">Pase sanitario</a>
                 </div>
             {% endif %}
         </div>

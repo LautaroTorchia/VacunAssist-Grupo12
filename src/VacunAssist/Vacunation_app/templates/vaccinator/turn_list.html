@@ -1,7 +1,15 @@
 {% extends 'generic_card_list.html' %}
 {% load static %}
-
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'turn_list.css' %}">
+{% endblock extra_css %}
 {% block title %} <h1>Turnos de hoy</h1> {% endblock title %}
+{% block filter %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <button class="btn button btn-submit" type="submit" name="sin_turno">Cargar sin turno</button>
+</form>
+{% endblock filter %}
 {% block card %}
     
     <p class="vaccinator_text align-self-center"> 

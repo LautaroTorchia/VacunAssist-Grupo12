@@ -5,10 +5,11 @@ from Vacunation_app.custom_functions import render_to_pdf, make_qr
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
-from django.contrib.staticfiles.finders import find as find_static_file
 from django.utils import timezone
 from django.views.generic.list import ListView
 from typing import Any
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 class AbstractVaccinatorListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
     paginate_by: int= 10
@@ -25,6 +26,9 @@ class TurnsView(AbstractVaccinatorListView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        print(request.POST)
+        if "sin_turno" in request.POST:
+            print("no tenes turno >:|")
         if "falta" in request.POST:
             turno=Turno.objects.get(id=request.POST["falta"])
             getnewturn(turno)

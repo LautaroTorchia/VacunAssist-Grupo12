@@ -1,14 +1,10 @@
-{% extends 'generic_page_template.html' %}
+{% extends 'base.html' %}
+{% load encode_static %}
 {% load static %}
 
-{% block child_css %}
-    <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
-{% endblock child_css %}
-
-{% block child_content %}
-
+{% block content %}
+    <img src="{% encode_static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon align-self-center">
     <h1>Historial de vacunas</h1>
-
     <div class="card_container">
         <div class="carde">
             <h2>Vacunas COVID:</h2>
@@ -46,15 +42,8 @@
                 <h3>No te diste vacunas de la fiebre amarilla en VacunAssist</h3>
             {% endfor %}
         </div>
-        {% include "paginator.html" %}
-        {% include "messages.html" %}
-        {% include "errors.html" %}
-    </div>
-    <div class="extra_content">
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Descargar historial de vacunas">
-        </form>
-    </div>
-{% endblock child_content %}
 
+        <h5>Administracion vacunAssist</h5>
+        <img src="{% encode_static 'img/firma_ministerio.png' %}" alt="menu_icon" class="menu-icon">
+    </div>
+{% endblock content %}

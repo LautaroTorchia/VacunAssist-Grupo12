@@ -7,7 +7,7 @@
     background: linear-gradient(90deg, rgba(176, 174, 174, 0.22) -43.55%, #FBFAF8 118.41%);
 
     width: 13vw;
-    height: 100vh;
+    min-height: 100vh;
     /* Inside auto layout */
     flex: none;
     order: 0;

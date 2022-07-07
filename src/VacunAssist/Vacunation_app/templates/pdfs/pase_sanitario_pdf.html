@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load encode_static %}
 {% load static %}
 
 {% block content %}
@@ -8,5 +9,5 @@
 </h2>
 
 <h4>Ministerio de salud</h4>
-<img src="{% static 'img/firmaMinisterio.png' %}" alt="">
+<img src="{% encode_static 'img/firma_ministerio.png' %}" alt="menu_icon" class="menu-icon">
 {% endblock content %}

@@ -7,7 +7,7 @@
     {% if object_list %}
         <h2>Usted cuenta con las siguientes vacunas de COVID en vacunatorios de VacunAssist:</h2>
         {% for vacuna in object_list %}
-            <br> Zona: {{ vacuna.vacunatorio.zona }} 
+           <p><br> Zona: {{ vacuna.vacunatorio.zona }} 
             <br> Vacuna: {{ vacuna.vacuna }} 
             <br> Fecha de la vacunacion: {{ vacuna.fecha }} </p>
     

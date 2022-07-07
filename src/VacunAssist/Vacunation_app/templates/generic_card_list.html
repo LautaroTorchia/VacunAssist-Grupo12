@@ -3,14 +3,15 @@
 
 {% block child_css %}
     <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
-    {% block extra_css %}
-    {% endblock extra_css %}
+    {% block extra_css %}{% endblock extra_css %}
 {% endblock child_css %}
 
 {% block title %}<h1>Ver Listado</h1>{% endblock title %}
 
 {% block child_content %}
-    {% block filter %}{% endblock filter %}
+    <div class="filter">
+        {% block filter %}{% endblock filter %}
+    </div>
     <div class="card_container">
         {% for instance in object_list %}
             <div class="vaccinator_list_container ml-auto p-2 align-self-center">
@@ -26,7 +27,6 @@
         {% include "errors.html" %}
     </div>
     <div class="extra_content">
-        {% block extra_content %}
-        {% endblock extra_content %}
+        {% block extra_content %}{% endblock extra_content %}
     </div>
 {% endblock child_content %}

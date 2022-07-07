@@ -258,3 +258,13 @@ class listaDeEsperaFiebreAmarilla(models.Model):
 
     def __str__(self) -> str:
         return f"{self.paciente} - {self.vacunatorio}"
+
+
+class Vacunacion(models.Model):
+    fecha=models.DateTimeField()
+    vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
+    paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
+    vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

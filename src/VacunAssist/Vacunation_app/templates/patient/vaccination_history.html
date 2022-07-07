@@ -1,0 +1,16 @@
+{% extends 'generic_card_list.html' %}
+{% block title %}<h1>Historial de vacunas</h1>{% endblock title %}
+
+{% block card %}
+<p> Vacuna 1 anashe </p>
+{% endblock card %}  
+
+{% block empty_list %}<h2>Todavia no te diste ninguna vacuna</h2>{% endblock empty_list %}
+{% block extra_content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Descargar historial de vacunas">
+</form>
+{% endblock extra_content %}
+
+

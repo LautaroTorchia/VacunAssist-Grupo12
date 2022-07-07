@@ -29,7 +29,10 @@
     <br> Fecha de Nacimiento: {{ instance.paciente.user.fecha_nac.date }} 
     <br> Vacuna: {{ instance.vacuna }} 
     <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
+
 {% endblock card %}
+{% block empty_list %}<h2>No se genero ningun reporte</h2>{% endblock empty_list %}
+
 {% block extra_content %}
     <form action="" method="post" content_type='application/pdf'>
         {% csrf_token %}
@@ -67,8 +70,7 @@
     const dni_to_filter=document.getElementById("id_dni_to_filter").parentNode
     const vaccine_to_filter=document.getElementById("id_vaccine_to_filter").parentNode
     const zona_to_filter=document.getElementById("id_zona_to_filter").parentNode
-    vaccine_to_filter.classList.add("invisible");
-    zona_to_filter.classList.add("invisible");
+    changeSelector()
 
     
 </script>

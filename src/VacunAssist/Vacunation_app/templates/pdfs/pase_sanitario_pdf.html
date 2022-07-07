@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h2>Usted, {{ paciente.user.nombre_completo }} Cuenta con las vacunas necesarias contra el COVID <br>
+    Con este documento sera capaz de circular con libertad por donde desee
+</h2>
+
+<h4>Ministerio de salud</h4>
+<img src="{% static 'img/firmaMinisterio.png' %}" alt="">
+{% endblock content %}

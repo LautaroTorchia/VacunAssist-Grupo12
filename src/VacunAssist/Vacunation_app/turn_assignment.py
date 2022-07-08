@@ -131,7 +131,10 @@ def vaccinate(paciente: Paciente,vacuna: Vacuna)-> Turno:
 
 def get_new_turn(turn) -> Turno:
     paciente=turn.paciente
-    assigner=TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user,turn.fecha)
+    try:
+        assigner=TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user,turn.fecha)
+    except:
+        assigner=TurnAssignerRisk(paciente.user) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user)
     if "COVID" in str(turn.vacuna):
         assigner.assign_covid_turn()
     elif "Gripe" in str(turn.vacuna):

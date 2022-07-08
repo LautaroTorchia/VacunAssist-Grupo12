@@ -118,7 +118,7 @@ class TurnAssignerYellowFever():
     def assign_yellow_fever_turn(self,date,vacunatorio):
         return Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=self.patient,vacuna=self.vacuna)
 
-def get_turn(paciente: Paciente,vacuna: Vacuna)-> Turno:
+def vaccinate(paciente: Paciente,vacuna: Vacuna)-> Turno:
     turnos=list(map(lambda x : x.vacuna,Turno.objects.all().filter(paciente=paciente)))
     if vacuna in turnos:
         turno=Turno.objects.all().filter(paciente=paciente).get(vacuna=vacuna)

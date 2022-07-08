@@ -7,7 +7,7 @@ from Vacunation_app.forms.no_turn_form import NoTurnForm
 from django.utils import timezone
 from django.contrib import messages
 from Vacunation_app.custom_functions import check_dni
-from Vacunation_app.turn_assignment import get_turn
+from Vacunation_app.turn_assignment import vaccinate
 
 class NoTurnView(FormView):
     form_class=NoTurnForm
@@ -27,7 +27,7 @@ class NoTurnView(FormView):
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")
                 except:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")
-                get_turn(patient,form.cleaned_data.get("vacuna"))
+                vaccinate(patient,form.cleaned_data.get("vacuna"))
             else:
                 if success:
                     vacunacion=NonRegisteredVacunacion.objects.create(

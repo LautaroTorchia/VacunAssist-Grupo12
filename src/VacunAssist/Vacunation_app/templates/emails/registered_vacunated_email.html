@@ -1,0 +1,18 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Estás recibiendo este mail porque te vacunaste en un vacunatorio de Vacunassist.{% endblocktranslate %}
+
+<br>
+{% translate 'Hola ' %} {{ patient.user.nombre_completo }}
+<br>
+{% translate 'Te vacunaste en: ' %} {{ vacunacion.vacunatorio }} 
+{% translate ' de ' %} {{ vacunacion.vacuna }} {% translate ' el ' %} {{ vacunacion.fecha }} 
+<br>
+{% translate "Para ver tus vacunaciones iniciá sesión: " %} {{ login_url }}
+<br>
+{% translate "Adjunto está el certificado de tu vacunación: " %}
+<br>
+{% translate "Gracias por usar nuestro sitio!" %}
+<br>
+{% blocktranslate %} Administración Vacunassist {% endblocktranslate %}
+
+{% endautoescape %}

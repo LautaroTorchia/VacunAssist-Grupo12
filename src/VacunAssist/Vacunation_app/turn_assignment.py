@@ -1,4 +1,4 @@
-from Vacunation_app.models import Paciente, Turno, Vacuna, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
+from Vacunation_app.models import Paciente, Turno, Vacuna, VacunaEnVacunatorio, Vacunador, Vacunatorio, listaDeEsperaCovid, listaDeEsperaFiebreAmarilla
 from dateutil.relativedelta import relativedelta
 from datetime import date, timedelta
 from django.utils import timezone
@@ -24,6 +24,8 @@ class TurnAssigner():
         return self.patient.fecha_gripe+relativedelta(years=1) < date.today()
     
     def needs_covid_vaccine(self):
+        print(self.patient.dosis_covid < 2)
+        print(self.patient.dosis_covid)
         return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) <= date.today())
     
     def today_turns_are_full(self,date):
@@ -122,8 +124,10 @@ def vaccinate(paciente: Paciente,vacuna: Vacuna)-> Turno:
     turnos=list(map(lambda x : x.vacuna,Turno.objects.all().filter(paciente=paciente)))
     if vacuna in turnos:
         turno=Turno.objects.all().filter(paciente=paciente).get(vacuna=vacuna)
-        assigner=TurnAssignerRisk(paciente.user,turno.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user,turn.fecha)
-        update_user(paciente,turno)
+        update_stock(turno.vacunatorio,vacuna)
+        update_user(paciente,turno) 
+        assigner=TurnAssignerRisk(paciente.user,turno.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) <= date.today() else TurnAssignerNonRisk(paciente.user,turno.fecha)
+        print(type(assigner))
         if "COVID" in str(turno.vacuna):
             assigner.assign_covid_turn()
         turno.delete()
@@ -149,3 +153,10 @@ def update_user(paciente,turno):
     else:
         paciente.tuvo_fiebre_amarilla=True
     paciente.save()
+
+def update_stock(vacunatorio,vacuna):
+    disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=vacunatorio,vacuna=vacuna)
+    disminucion_de_stock.stock-=1
+    disminucion_de_stock.save()
+
+

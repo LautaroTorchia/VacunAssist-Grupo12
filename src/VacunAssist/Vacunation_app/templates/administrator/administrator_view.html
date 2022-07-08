@@ -1,45 +1,44 @@
-{% extends 'base.html' %}
+{% extends 'generic_page_template.html' %}
 {% load static %}
 
-{% block css %}
-    
-    <link rel="stylesheet" href="{% static 'administrator_landing.css' %}">
-    <link rel="stylesheet" href="{% static 'nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'presentacion.css' %}">
-{% endblock css %}
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'administrator_landing.css' %}">    
+{% endblock child_css %}
 
-{% block content %}
-    <div class="main_container container-fluid d-flex flex-row">
-        <div class="navbar_container">
-            {% include "navbar.html" %}
+{% block child_content %}
+    <div class="button_container">
+        <div class="row_container">
+            <form method="GET" action="create_vaccinator/">
+                <input type="submit" class="text_button_form" value="Crear cuenta de vacunador"/>
+            </form>
+            <form method="GET" action="vaccinators_list/">
+                <input type="submit" class="text_button_form" value="Ver listado de vacunadores"/>
+            </form>
+            <form method="GET" action="stock/">
+                <input type="submit" class="text_button_form" value="Ver stock en los vacunatorios"/>
+            </form>
         </div>
-        <div class="main_fields_container align-self-start ">
-            {% include "presentacion.html" %}
-            <div class="button_container">
-                <div class="row_container">
-                    <form method="GET" action="create_vaccinator/">
-                        <input type="submit" class="text_button_form" value="Crear cuenta de vacunador"/>
-                    </form>
-                    <form method="GET" action="vaccinators_list/">
-                        <input type="submit" class="text_button_form" value="Ver listado de vacunadores"/>
-                    </form>
-                    <form method="GET" action="stock/">
-                        <input type="submit" class="text_button_form" value="Ver stock en los vacunatorios"/>
-                    </form>
-                </div>
-                <div class="row_container">
-                    <form method="GET" action="change_name/">
-                        <input type="submit" class="text_button_form" value="Cambiar nombre de centro" id="cambiar_nombre_vacunatorio"/>
-                    </form>
-                    <form method="GET" action="patients_list/">
-                        <input type="submit" class="text_button_form" value="Ver listado de pacientes" id="ver_listado_de_pacientes"/>
-                    </form>
-                    <form method="GET" action="yellow_fever_list/">
-                        <input type="submit" class="text_button_form" value="Ver solicitudes de fiebre amarilla"/>
-                    </form>
-                </div>
-            </div>  
+        <div class="row_container">
+            <form method="GET" action="change_name/">
+                <input type="submit" class="text_button_form" value="Cambiar nombre de centro" id="cambiar_nombre_vacunatorio"/>
+            </form>
+            <form method="GET" action="patients_list/">
+                <input type="submit" class="text_button_form" value="Ver listado de pacientes" id="ver_listado_de_pacientes"/>
+            </form>
+            <form method="GET" action="yellow_fever_list/">
+                <input type="submit" class="text_button_form" value="Ver solicitudes de fiebre amarilla"/>
+            </form>
         </div>
-    </div>
-
-{% endblock content %}
+        <div class="row_container">
+            <form method="GET" action="generate_report">
+                <input type="submit" class="text_button_form" value="Generar reportes" id="cambiar_nombre_vacunatorio"/>
+            </form>
+            <form method="GET" action="generate_statistic/">
+                <input type="submit" class="text_button_form" value="Ver estadisticas" id="ver_listado_de_pacientes"/>
+            </form>
+            <form method="GET" action="covid_wait_list/">
+                <input type="submit" class="text_button_form" value="Asignar turnos de COVID"/>
+            </form>
+        </div>
+    </div>  
+{% endblock child_content %}

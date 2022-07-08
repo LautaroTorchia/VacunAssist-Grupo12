@@ -1,0 +1,14 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'home_page.css' %}">
+{% endblock child_css %}
+
+{% block child_content %}
+            <div class="pagina_principal">
+                <h1> Como administrador no puede editar su perfil</h1>
+                <h1> Contactese con los desarrolladores en caso de necesitarlo:</h1>
+                <a href="mailto: codexsoftware@gmail.com">codexsoftware@gmail.com</a>
+        </div>
+{% endblock child_content %}

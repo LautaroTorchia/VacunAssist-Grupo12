@@ -1,0 +1,69 @@
+.vaccinator_list_container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex: none;
+    flex-grow: 0;
+    width: 60vw;
+    margin-bottom: 1rem;
+    border: thin;
+    border-color: darkgray;
+    box-shadow: 0px 0px 4px 4px rgba(83, 83, 83, 0.3);
+    border-radius: 7px;
+
+}
+
+.button_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: none;
+    flex-grow: 0;
+    gap: 5px
+}
+
+.vaccinator_text{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex: none;
+    flex-grow: 0;
+    margin-bottom: 0rem;
+    padding-left: 1vw;
+}
+
+.card_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: none;
+    flex-grow: 0;
+    gap: 10px;
+}
+
+.button{
+    gap: 10px;
+    background-color: #54ffdd;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    flex: none;
+    flex-grow: 0;
+    font-family: 'Montserrat';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    border: transparent;
+    display: block;
+    width: 100%;
+}
+
+.paginator_content_container{
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    flex-grow: 0;
+}
+
+.pagination{
+    align-self: center;
+}

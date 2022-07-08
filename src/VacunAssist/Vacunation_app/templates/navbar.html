@@ -1,22 +1,37 @@
 {% load static %}
-<nav>
-    <div class="icon_container container-fluid">
-        <img src="{% static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon">
-        <a href="/" id="menu_text">VacunAssist</a>
-    </div>
-    <div class="options_container container-fluid">
-        <div class="element_container container-fluid">
-            <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
-            <a class="text_form" href="/zona">Zona</a>
+<link rel="stylesheet" href="{% static 'nav_bar.css' %}">
+
+<div class="navbar_container">
+    <nav>
+        <div class="icon_container container-fluid">
+            <img src="{% static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon">
+            <a href="/" id="menu_text">VacunAssist</a>
         </div>
-        <div class="element_container">
-            <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
-            <a class="text_form" href="/notifications">Mis turnos</a>
+        <div class="options_container container-fluid">
+            <div class="element_container container-fluid">
+                <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
+                <a class="text_form" href="/zona">Zona</a>
+            </div>
+            {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
+            <div class="element_container">
+                <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
+                <a class="text_form" href="/notifications">Mis turnos</a>
+            </div>
+            {% endif %}
+            <div class="element_container">
+                <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon" class="icon_form">
+                <a class="text_form" href="/contact">Contactenos</a>
+            </div>
+            {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
+                <div class="element_container ">
+                    <img src="{% static 'img/historial.svg' %}" alt="loc_icon" class=" icon_form">
+                    <a class="text_form" href="/patient/vaccination_history/{{request.user.id }}">Historial de vacunacion</a>
+                </div>
+                <div class="element_container ">
+                    <img src="{% static 'img/pase.svg' %}" alt="loc_icon" class=" icon_form">
+                    <a class="text_form" href="/patient/print_pase_sanitario">Pase sanitario</a>
+                </div>
+            {% endif %}
         </div>
-        <div class="element_container">
-            <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon">
-            <a class="text_form" href="/contact">Contactenos</a>
-        </div>
-        
-    </div>
-</nav>
+    </nav>
+</div>

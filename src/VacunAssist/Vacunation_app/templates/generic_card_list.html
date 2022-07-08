@@ -1,0 +1,32 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
+    {% block extra_css %}{% endblock extra_css %}
+{% endblock child_css %}
+
+{% block title %}<h1>Ver Listado</h1>{% endblock title %}
+
+{% block child_content %}
+    <div class="filter">
+        {% block filter %}{% endblock filter %}
+    </div>
+    <div class="card_container">
+        {% for instance in object_list %}
+            <div class="vaccinator_list_container ml-auto p-2 align-self-center">
+                {% block card %}
+                {% endblock card %}
+            </div>  
+            {% empty %}
+                {% block empty_list %}<h2>Listado vacio</h2>{% endblock empty_list %}
+        {% endfor %}
+        {% include "paginator.html" %}
+        
+        {% include "messages.html" %}
+        {% include "errors.html" %}
+    </div>
+    <div class="extra_content">
+        {% block extra_content %}{% endblock extra_content %}
+    </div>
+{% endblock child_content %}

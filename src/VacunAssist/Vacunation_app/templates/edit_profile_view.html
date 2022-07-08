@@ -1,0 +1,21 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'edit_profile.css' %}">
+{% endblock child_css %}
+
+{% block title %}<h1>Editando el Perfil de {{ usuario.nombre_completo }} </h1>{% endblock title %}
+{% block child_content %}
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn-submit" value="Cambiar contraseña" name = "update_password"/>
+            <br>
+            <input type="submit" class="btn-submit" value="Aceptar" name="Aceptar"/>
+            <br>
+            {% include "messages.html" %}
+        </form>
+    </div>
+{% endblock child_content %}

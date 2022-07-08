@@ -1,0 +1,77 @@
+{% extends 'generic_card_list.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+{% endblock extra_css %}
+
+{% block title %}
+    <h1>Reportes</h1>
+{% endblock title %}
+
+{% block filter %}
+    <form action="" method="post">
+        <div class="selectores">
+            {% csrf_token %}
+            <div class="filtros d-flex ">
+                {{ form.as_p }}
+            </div>
+            <input type="submit" value="Generar Reporte" name="generate_report" class="btn-submit">
+        </div>
+    </form>
+{% endblock filter %}
+
+{% block card %}
+<p class="vaccinator_text"> 
+    Nombre: {{ instance.paciente.user.nombre_completo }} 
+    <br> DNI: {{ instance.paciente.user.dni }} 
+    <br> Zona: {{ instance.paciente.user.zona }} 
+    <br> Fecha de Nacimiento: {{ instance.paciente.user.fecha_nac.date }} 
+    <br> Vacuna: {{ instance.vacuna }} 
+    <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
+
+{% endblock card %}
+{% block empty_list %}<h2>No se genero ningun reporte</h2>{% endblock empty_list %}
+
+{% block extra_content %}
+    <form action="" method="post" content_type='application/pdf'>
+        {% csrf_token %}
+        <input type="submit" value="Generar PDF" name="generate_PDF" class="btn-submit">
+    </form>
+
+
+
+<script>
+
+    function changeSelector(e){
+        let selected=filter_selection.options[filter_selection.selectedIndex].value
+        if (selected==="Zona"){
+          console.log("zona")
+          zona_to_filter.classList.remove("invisible");
+          vaccine_to_filter.classList.add("invisible");
+          dni_to_filter.classList.add("invisible");
+
+        }else if (selected==="Vacuna"){
+          console.log("vacuna")
+          zona_to_filter.classList.add("invisible");
+          vaccine_to_filter.classList.remove("invisible");
+          dni_to_filter.classList.add("invisible");
+
+        }else if (selected==="DNI"){
+          console.log("dni")
+          zona_to_filter.classList.add("invisible");
+          vaccine_to_filter.classList.add("invisible");
+          dni_to_filter.classList.remove("invisible");
+        }
+    }
+    const filter_selection=document.getElementById("id_filter")
+    console.log(filter_selection)
+    filter_selection.onchange=changeSelector
+    const dni_to_filter=document.getElementById("id_dni_to_filter").parentNode
+    const vaccine_to_filter=document.getElementById("id_vaccine_to_filter").parentNode
+    const zona_to_filter=document.getElementById("id_zona_to_filter").parentNode
+    changeSelector()
+
+    
+</script>
+{% endblock extra_content %}

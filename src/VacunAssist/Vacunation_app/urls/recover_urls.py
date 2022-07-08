@@ -1,7 +1,7 @@
 from django.urls import path,reverse_lazy
 from django.contrib.auth import views as auth_views
-from Vacunation_app.forms.custom_set_password_form import CustomSetPasswordForm
-from Vacunation_app.forms.ClaveResetForm import ClaveResetForm
+from Vacunation_app.forms.recover.custom_set_password_form import CustomSetPasswordForm
+from Vacunation_app.forms.recover.clave_reset_form import ClaveResetForm
 
 urlpatterns = [
     path("password_reset/", auth_views.PasswordResetView.as_view(

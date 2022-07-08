@@ -1,0 +1,26 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'vaccinator_creation_step2.css' %}">
+{% endblock child_css %}
+
+{% block child_content %}
+    <div class="creacion_container">
+        <div class="texto_container d-flex flex-column">
+            <h1> Creacion de un vacunador</h1>
+            <h5>Paso 2/2</h5>
+        </div>
+        <div class="texto_validado">
+            <h3>DNI validado: {{ DNI }}</h3>
+            <h3>{{ nombre }}</h3>
+        </div>
+        <form action="" method="post"> {% csrf_token %}
+            {{ form.as_p }}
+            <p></p>
+            <input type="submit" name="create-account" class="btn-submit" value="Crear cuenta">
+            {% include "errors.html" %}
+            {% include "messages.html" %}
+        </form>
+    </div>
+{% endblock child_content %}

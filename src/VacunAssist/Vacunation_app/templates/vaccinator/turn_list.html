@@ -1,0 +1,28 @@
+{% extends 'generic_card_list.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'turn_list.css' %}">
+{% endblock extra_css %}
+{% block title %} <h1>Turnos de hoy</h1> {% endblock title %}
+{% block filter %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <button class="btn button btn-submit" type="submit" name="sin_turno">Cargar sin turno</button>
+</form>
+{% endblock filter %}
+{% block card %}
+    
+    <p class="vaccinator_text align-self-center"> 
+        Paciente: {{ instance.paciente }}
+        <br> Vacuna: {{ instance.vacuna }} 
+        <br> Hora: {{ instance.fecha.time }}
+    </p>
+    <div class="button_container ml-auto p-2 align-self-end">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="falta">Informar falta</button>
+            <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="asistencia">Confirmar asistencia</button>
+        </form>
+    </div>
+{% endblock card %}
+{% block empty_list %}<h2>No hay turnos para hoy</h2>{% endblock empty_list %}

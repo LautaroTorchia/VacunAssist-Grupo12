@@ -1,9 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import (BaseUserManager)
-from django.forms import ValidationError
-from django.core.validators import MinValueValidator, MinLengthValidator
+from django.contrib.auth.models import AbstractUser,BaseUserManager
+from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import Permission
+from django.forms import ValidationError
+from django.db import models
 
 
 def validate_alpha(nombre):
@@ -191,10 +190,10 @@ class Administrador(models.Model):
 
 class Vacuna(models.Model):
     class Vacunas(models.TextChoices):
-        GRIPE_COMUN = "Gripe"
-        COVID_F = "COVID-PFIZER"
-        COVID_Z = "COVID-Astrazeneca"
-        FIEBRE_A = "Fiebre amarilla"
+        Gripe = "Gripe"
+        COVID_PFIZER = "COVID-PFIZER"
+        COVID_Astrazeneca = "COVID-Astrazeneca"
+        Fiebre_amarilla = "Fiebre amarilla"
 
     nombre = models.CharField(max_length=100,
                               choices=Vacunas.choices,
@@ -259,3 +258,24 @@ class listaDeEsperaFiebreAmarilla(models.Model):
 
     def __str__(self) -> str:
         return f"{self.paciente} - {self.vacunatorio}"
+
+
+class AbstractVacunation(models.Model):
+    fecha=models.DateTimeField()
+    vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
+    vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
+
+class Vacunacion(AbstractVacunation):
+    paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "
+
+class NonRegisteredVacunacion(AbstractVacunation):
+    dni = models.CharField(max_length=15,
+                           validators=[validate_decimal],
+                           unique=True)
+    nombre_completo = models.CharField(max_length=50)  
+
+    def __str__(self) -> str:
+        return f"{self.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

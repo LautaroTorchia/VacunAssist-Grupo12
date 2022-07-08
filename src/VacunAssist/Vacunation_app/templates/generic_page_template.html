@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'generic_page.css' %}">
+    {% block child_css %}{% endblock child_css %}
+{% endblock css %}
+
+
+{% block content %}
+    <div class="main_container container-fluid d-flex flex-row">
+        {% include "navbar.html" %}
+        <div class="main_fields_container align-self-start ">
+            {% include "presentacion.html" %}
+            {% block title %}{% endblock title %}
+            {% block child_content %}{% endblock child_content %}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,19 +1,22 @@
-from django.shortcuts import render, redirect
-from django.views.generic.edit import UpdateView
-from Vacunation_app.models import Paciente, Usuario
 from Vacunation_app.forms.updating_user_form import UpdatingUserForm
+from Vacunation_app.models import Paciente, Usuario
+from django.views.generic.edit import UpdateView
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 
 class ProfileUpdate(UpdateView):
     form_class = UpdatingUserForm
     model = Usuario
-    template_name= "edit_vaccinator_profile_view.html"
+    template_name= "edit_profile_view.html"
     permission_required = ("Vacunation_app.Vacunador","Vacunation_app.Paciente", )
 
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
-        self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
+        if self.get_object().has_perm("Vacunation_app.Paciente"):
+            self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
+        elif self.get_object().has_perm("Vacunation_app.Vacunador"):
+            self.initial={"zona": self.get_object().zona}
         context  = {
             "usuario": self.get_object(),
             "form": self.get_form(),

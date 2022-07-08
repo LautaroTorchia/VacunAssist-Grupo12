@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load encode_static %}
+{% load static %}
+
+{% block content %}
+    <img src="{% encode_static 'img/Valija.png' %}" alt="menu_icon" class="menu-icon align-self-center">
+    <h1>Historial de vacunas</h1>
+    <div class="card_container">
+        <div class="carde">
+            <h2>Vacunas COVID:</h2>
+            {% for instance in covid %}
+                <div class="vaccinator_list_container ml-auto p-2 align-self-center">
+                    <p><br> Zona: {{ instance.vacunatorio.zona }} 
+                        <br> Vacuna: {{ instance.vacuna }} 
+                        <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
+                </div>  
+                {% empty %}
+                <h3>No te diste vacunas de la COVID en VacunAssist</h3>
+            {% endfor %}
+        </div>
+        <div class="carde">
+            <h2>Vacunas Gripe:</h2>
+            {% for instance in gripe %}
+                <div class="vaccinator_list_container ml-auto p-2 align-self-center">
+                    <p><br> Zona: {{ instance.vacunatorio.zona }} 
+                        <br> Vacuna: {{ instance.vacuna }} 
+                        <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
+                </div>  
+                {% empty %}
+                <h3>No te diste vacunas de la Gripe en VacunAssist</h3>
+            {% endfor %}
+        </div>
+        <div class="carde">
+            <h2>Vacuna Fiebre:</h2>
+            {% for instance in fiebre %}
+                <div class="vaccinator_list_container ml-auto p-2 align-self-center">
+                    <p><br> Zona: {{ instance.vacunatorio.zona }} 
+                        <br> Vacuna: {{ instance.vacuna }} 
+                        <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
+                </div>  
+                {% empty %}
+                <h3>No te diste vacunas de la fiebre amarilla en VacunAssist</h3>
+            {% endfor %}
+        </div>
+
+        <h5>Administracion vacunAssist</h5>
+        <img src="{% encode_static 'img/firma_ministerio.png' %}" alt="menu_icon" class="menu-icon">
+    </div>
+{% endblock content %}

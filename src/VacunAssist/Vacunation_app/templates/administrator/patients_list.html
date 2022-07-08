@@ -1,0 +1,16 @@
+{% extends 'generic_card_list.html' %}
+
+{% block filter %} {% comment "TODO: Aca va el filtro por dni" %}{% endcomment %} {% endblock filter %}
+{% block card %}
+<p class="vaccinator_text"> 
+    Nombre: {{ instance.user.nombre_completo }}
+    <br> DNI: {{ instance.user.dni }} 
+    <br> Zona: {{ instance.user.zona }} 
+    <br> Fecha de Nacimiento: {{ instance.user.fecha_nac.date }} </p>
+    <div class="button_container ml-auto p-2 align-self-end">
+        <form method="GET" action='/administrator/patients_list/profile/{{ instance.user.get_absolute_url }}'>
+            <button class="btn button btn-block">Ver Perfil</button>
+        </form>
+    </div>
+{% endblock card %}
+    

@@ -1,0 +1,18 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'stock_view.css' %}">
+{% endblock child_css %}
+
+{% block title %}<h1> Cambiar nombre de vacunatorio</h1>{% endblock title %}
+{% block child_content %}
+    <div class="creacion_container">
+        <form action="" method="post"> 
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn-submit" value="Actualizar nombre">
+            {% include "messages.html" %}
+        </form>
+    </div>
+{% endblock child_content %}

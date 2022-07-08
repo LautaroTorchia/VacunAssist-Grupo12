@@ -1,0 +1,38 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    <link rel="stylesheet" href="{% static 'patient_profile.css' %}">
+{% endblock child_css %}
+
+{% block title %}<h1 class="title">Este es el perfil de {{ patient.user.nombre_completo }}</h1>{% endblock title %}
+{% block child_content %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile">
+            <p>
+                DNI: {{ patient.user.dni }}
+                <br>Fecha de nacimiento: {{patient.user.fecha_nac.date }}
+                <br>Zona: {{ patient.user.zona }}
+                <br>
+                {% if patient.es_de_riesgo %}
+                    Es de riesgo: Si
+                {% else %}
+                    Es de riesgo: No
+                {% endif %}
+                    Dosis de Covid: {{ patient.dosis_covid}}
+                <br>
+                {% if patient.fecha_gripe.year == 1980 %}
+                    Se vacunó contra la gripe: No
+                {% else %}
+                    Fecha de la última vacuna de gripe: {{ patient.fecha_gripe }}
+                {% endif %}
+                {% if patient.tuvo_fiebre_amarilla %}
+                    <br>Se vacunó contra la fiebre amarilla: Si
+                {% else %}
+                    <br>Se vacunó contra la fiebre amarilla: No
+                {% endif %}
+            </p>
+        </form>
+    <a id="volver" class="btn-submit" href='../'>Volver</a>
+{% endblock child_content %}

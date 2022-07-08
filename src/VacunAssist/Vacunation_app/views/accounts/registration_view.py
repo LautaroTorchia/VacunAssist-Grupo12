@@ -33,7 +33,7 @@ def registration_view(request):
             user=CustomUserManager()
             clave=generate_keycode()
             if not form.cleaned_data.get("tiene_gripe"):
-                form.cleaned_data["ultima_gripe"]=date(1990,1,1)
+                form.cleaned_data["ultima_gripe"]=date(1980,1,1)
 
             nombre=request.session["data"].get("nombre")
             fecha_nac=datetime.strptime(request.session["data"].get("fecha_nacimiento"),'%Y-%m-%dT%H:%M:%S%z')

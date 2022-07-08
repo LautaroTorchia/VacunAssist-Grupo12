@@ -1,0 +1,44 @@
+{% extends 'generic_page_template.html' %}
+{% load static %}
+
+{% block child_css %}
+    
+    <link rel="stylesheet" href="{% static 'stock_view.css' %}">
+    
+    
+{% endblock child_css %}
+
+{% block child_content %}
+    <div class="vaccines_form_container">
+        <div class="vaccination_center_container align-self-center">
+            {% for place in vaccination_center_info %}
+                <h2 class='title'> {{ place.nombre | capfirst }}</h2>
+                <div class="vaccines_container">
+                    <table summary="Vacunas en vacunatorios">
+                        <tr><th></th><th></th>
+                            {% for vaccine in vaccine_info %}
+                            {% if place.nombre == vaccine.vacunatorio.nombre %}
+                            <tr><td class="item">Vacunas de {{ vaccine.vacuna.nombre }} </td><td class="item">{{ vaccine.stock }}</td></tr>
+                            
+                            {% endif %}
+                            {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="form_container">
+            <form action="" method="post"> {% csrf_token %}
+                {{  form }}
+                <div class="buttons">
+                    <input type="submit" class="btn-submit" value="Aumentar stock" name="aumentar">
+                    <input type="submit" class="btn-submit" value="Disminuir stock" name="disminuir">
+                </div>
+                {% include "errors.html" %}
+                {% include "messages.html" %}
+            </form>
+        </div> 
+    </div>
+</div>
+
+
+{% endblock child_content %}

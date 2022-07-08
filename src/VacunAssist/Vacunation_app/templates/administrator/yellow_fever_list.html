@@ -1,0 +1,11 @@
+{% extends 'generic_card_list.html' %}
+
+{% block filter %} {% comment "TODO: Aca va el filtro por dni" %}{% endcomment %} {% endblock filter %}
+{% block card %}
+    <p class="vaccinator_text"> {{ instance }} </p>
+    <div class="button_container ml-auto align-self-end">
+        <form method="GET" action='/administrator/yellow_fever_list/confirmation/{{ instance.get_absolute_url }}'>
+            <button class="btn button btn-block">Administrar</button>
+        </form>
+    </div> 
+{% endblock card %}

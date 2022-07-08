@@ -22,7 +22,7 @@ class TurnsView(AbstractVaccinatorListView):
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         vacunatorio_del_vacunador=Vacunatorio.objects.get(zona=request.user.zona)
-        self.queryset= Turno.objects.filter(vacunatorio=vacunatorio_del_vacunador).filter(fecha__day= timezone.now().day)
+        self.queryset= Turno.objects.filter(vacunatorio=vacunatorio_del_vacunador,fecha__day= timezone.now().day).order_by("fecha")
         return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

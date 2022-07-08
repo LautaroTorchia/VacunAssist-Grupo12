@@ -1,0 +1,12 @@
+{% extends 'generic_card_list.html' %}
+
+{% block filter %} {% comment "TODO: Aca va el filtro por dni" %}{% endcomment %} {% endblock filter %}
+{% block card %}
+    <p class="vaccinator_text"> {{ instance }} </p>
+    <div class="button_container ml-auto align-self-end">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="reasignar">Reasignar</button>
+        </form>
+    </div> 
+{% endblock card %}

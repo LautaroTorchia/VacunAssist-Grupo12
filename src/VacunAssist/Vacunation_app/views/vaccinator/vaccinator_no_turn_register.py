@@ -23,7 +23,8 @@ class NoTurnView(FormView):
             if not success and data["mensaje de error"] == "DNI ya registrado":
                 try:
                     patient=Paciente.objects.get(user=Usuario.objects.get(dni=dni))
-                    vacunacion=Vacunacion.objects.create(vacuna=form.cleaned_data.get("vacuna"),vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
+                    vacunacion=Vacunacion.objects.create(vacuna=form.cleaned_data.get("vacuna")
+                    ,vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")
                 except:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")

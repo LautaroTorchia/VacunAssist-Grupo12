@@ -35,18 +35,17 @@ class TurnsView(AbstractVaccinatorListView):
         elif "asistencia" in request.POST:
             make_qr()
             turno=Turno.objects.get(id=request.POST["asistencia"])
-            pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
             paciente=Paciente.objects.get(user=turno.paciente.user)
-            self.update_user(paciente,turno)
-            self.update_stock(turno)
+            pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
+            update_user(paciente,turno)
+            update_stock(turno)
             Vacunacion.objects.create(vacuna=turno.vacuna,vacunatorio=turno.vacunatorio,paciente=turno.paciente,fecha=turno.fecha)
             turno.delete()
+            return HttpResponse(pdf, content_type='application/pdf')
+        return redirect(reverse_lazy("vaccinator_home"))
 
-        return HttpResponse(pdf, content_type='application/pdf')
-    
 
-
-    def update_stock(turno):
-        disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=turno.vacunatorio,vacuna=turno.vacuna)
-        disminucion_de_stock-=1
-        disminucion_de_stock.save()
+def update_stock(turno):
+    disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=turno.vacunatorio,vacuna=turno.vacuna)
+    disminucion_de_stock.stock-=1
+    disminucion_de_stock.save()

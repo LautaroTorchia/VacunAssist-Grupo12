@@ -23,6 +23,7 @@
                                 <input type="submit" class="login" name="crear_cuenta" value="Crear cuenta" disabled="true">
                             {% endif %}
                         </div>
+                        <br>
                         {% include "messages.html" %}
                         {% include "errors.html" %}
                         <a href={% url 'login' %} class="olvidaste_clave align-self-start">¿Ya tenes cuenta? Inicia sesion </a>

@@ -23,12 +23,12 @@ class NotificationView(ListView):
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         turno=Turno.objects.get(id=list(request.POST.keys())[1])
         paciente=Paciente.objects.get(user=request.user)
-        self.getnewturn(turno,paciente,request)
+        self.get_new_turn(turno,paciente,request)
         turno.delete()
 
         return redirect(reverse_lazy("notifications"))
 
-    def getnewturn(self,turn,paciente,request) -> Turno:
+    def get_new_turn(self,turn,paciente,request) -> Turno:
         assigner=self.getassigner(paciente,turn)
         if "COVID" in str(turn.vacuna):
             turn = assigner.assign_covid_turn()

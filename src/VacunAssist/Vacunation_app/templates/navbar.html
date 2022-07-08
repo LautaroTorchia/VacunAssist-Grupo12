@@ -12,10 +12,12 @@
                 <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
                 <a class="text_form" href="/zona">Zona</a>
             </div>
+            {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
             <div class="element_container">
                 <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
                 <a class="text_form" href="/notifications">Mis turnos</a>
             </div>
+            {% endif %}
             <div class="element_container">
                 <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon" class="icon_form">
                 <a class="text_form" href="/contact">Contactenos</a>

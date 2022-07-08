@@ -118,12 +118,31 @@ class TurnAssignerYellowFever():
     def assign_yellow_fever_turn(self,date,vacunatorio):
         return Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=self.patient,vacuna=self.vacuna)
 
-def getnewturn(turn) -> Turno:
+def get_turn(paciente: Paciente,vacuna: Vacuna)-> Turno:
+    turnos=list(map(lambda x : x.vacuna,Turno.objects.all().filter(paciente=paciente)))
+    if vacuna in turnos:
+        turno=Turno.objects.all().filter(paciente=paciente).get(vacuna=vacuna)
+        assigner=TurnAssignerRisk(paciente.user,turno.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user,turn.fecha)
+        update_user(paciente,turno)
+        if "COVID" in str(turno.vacuna):
+            assigner.assign_covid_turn()
+        turno.delete()
+
+
+def get_new_turn(turn) -> Turno:
     paciente=turn.paciente
-    assigner=TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo else TurnAssignerNonRisk(paciente.user,turn.fecha)
+    assigner=TurnAssignerRisk(paciente.user,turn.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() else TurnAssignerNonRisk(paciente.user,turn.fecha)
     if "COVID" in str(turn.vacuna):
         assigner.assign_covid_turn()
     elif "Gripe" in str(turn.vacuna):
         assigner.re_assign_gripe_turn()
     turn.delete()
 
+def update_user(paciente,turno):
+    if "gripe" in turno.vacuna.nombre:
+        paciente.fecha_gripe=date.today()
+    elif "COVID" in turno.vacuna.nombre:
+        paciente.dosis_covid+=1
+    else:
+        paciente.tuvo_fiebre_amarilla=True
+    paciente.save()

@@ -191,7 +191,7 @@ class Administrador(models.Model):
 class Vacuna(models.Model):
     class Vacunas(models.TextChoices):
         Gripe = "Gripe"
-        COVID_PFIZER = "COVID_PFIZER"
+        COVID_PFIZER = "COVID-PFIZER"
         COVID_Astrazeneca = "COVID-Astrazeneca"
         Fiebre_amarilla = "Fiebre amarilla"
 

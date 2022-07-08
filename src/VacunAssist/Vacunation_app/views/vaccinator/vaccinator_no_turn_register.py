@@ -7,6 +7,7 @@ from Vacunation_app.forms.no_turn_form import NoTurnForm
 from django.utils import timezone
 from django.contrib import messages
 from Vacunation_app.custom_functions import check_dni
+from Vacunation_app.turn_assignment import get_turn
 
 class NoTurnView(FormView):
     form_class=NoTurnForm
@@ -23,14 +24,15 @@ class NoTurnView(FormView):
                 try:
                     patient=Paciente.objects.get(user=Usuario.objects.get(dni=dni))
                     vacunacion=Vacunacion.objects.create(vacuna=form.cleaned_data.get("vacuna"),vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
-                    messages.success(request,f"Vacunación sin turno de {vacunacion} registrada")
+                    messages.success(request,f"Vacunación sin turno de {patient} registrada")
                 except:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")
+                get_turn(patient,form.cleaned_data.get("vacuna"))
             else:
                 if success:
                     vacunacion=NonRegisteredVacunacion.objects.create(
                         vacuna=form.cleaned_data.get("vacuna"),vacunatorio=vacunatorio,dni=dni,nombre_completo=data["nombre"],fecha=timezone.now())
-                    messages.success(request,f"Vacunación sin turno de {vacunacion} registrada")
+                    messages.success(request,f"Vacunación sin turno de {vacunacion.nombre_completo} registrada")
                 else:
                     messages.error(request,"El dni no es válido")
                     self.success_url: Optional[str]=reverse_lazy("vaccinator_no_turn")

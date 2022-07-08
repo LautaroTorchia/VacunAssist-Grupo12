@@ -1,6 +1,6 @@
 from datetime import date
 from Vacunation_app.models import Paciente, Turno, VacunaEnVacunatorio, Vacunacion, Vacunatorio
-from Vacunation_app.turn_assignment import getnewturn
+from Vacunation_app.turn_assignment import get_new_turn, update_user
 from Vacunation_app.custom_functions import render_to_pdf, make_qr
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
@@ -30,7 +30,7 @@ class TurnsView(AbstractVaccinatorListView):
             return redirect(reverse_lazy("vaccinator_no_turn"))
         if "falta" in request.POST:
             turno=Turno.objects.get(id=request.POST["falta"])
-            getnewturn(turno)
+            get_new_turn(turno)
             messages.success(request,f"Se informo la falta de {turno.paciente}")
         elif "asistencia" in request.POST:
             make_qr()
@@ -44,14 +44,7 @@ class TurnsView(AbstractVaccinatorListView):
 
         return HttpResponse(pdf, content_type='application/pdf')
     
-    def update_user(paciente,turno):
-        if "gripe" in turno.vacuna.nombre:
-            paciente.fecha_gripe=date.today()
-        elif "COVID" in turno.vacuna.nombre:
-            paciente.dosis_covid+=1
-        else:
-            paciente.tuvo_fiebre_amarilla=True
-        paciente.save()
+
 
     def update_stock(turno):
         disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=turno.vacunatorio,vacuna=turno.vacuna)

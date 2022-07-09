@@ -124,7 +124,7 @@ class TurnAssignerYellowFever():
     vacuna=None
     def __init__(self, patient) -> None:
         self.patient = patient
-        self.vacuna=Vacuna.objects.get(nombre="Fiebre_amarilla")
+        self.vacuna=Vacuna.objects.get(nombre="Fiebre amarilla")
     
     def assign_yellow_fever_turn(self,date,vacunatorio):
         return Turno.objects.create(fecha=date,vacunatorio=vacunatorio,paciente=self.patient,vacuna=self.vacuna)

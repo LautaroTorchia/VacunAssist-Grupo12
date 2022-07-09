@@ -8,4 +8,4 @@ class assigningYellowFeverTurn(PForm,forms.Form):
         widget=forms.DateInput(attrs={'type': 'date',"min":timezone.now().date()}),
         label="Fecha del turno")
     hora_del_turno = forms.TimeField(
-        widget=forms.TimeInput(attrs={'type': 'time','min': time(8,0,0) ,'max': time(16,0,0) }))
+        widget=forms.TimeInput(attrs={'type': 'time',"step": "900",'min': time(8,0,0) ,'max': time(16,0,0) }))

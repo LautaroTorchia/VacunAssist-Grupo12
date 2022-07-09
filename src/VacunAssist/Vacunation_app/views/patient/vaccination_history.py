@@ -27,6 +27,7 @@ class VaccinationHistoryView(AbstractAdminListView):
     
     def create_vaccines_lists(self,paciente):
         self.queryset=Turno.objects.filter(paciente=paciente)
+        
         vacunas_covid=list(filter(lambda x:"COVID" in x.vacuna.nombre,self.queryset))
         vacunas_gripe=list(filter(lambda x:"Gripe" in x.vacuna.nombre,self.queryset))
         vacunas_fiebre=list(filter(lambda x:"Fiebre" in x.vacuna.nombre,self.queryset))

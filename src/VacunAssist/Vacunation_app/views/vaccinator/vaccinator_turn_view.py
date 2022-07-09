@@ -1,6 +1,5 @@
 from datetime import date
-from Vacunation_app.models import Paciente, Turno, VacunaEnVacunatorio, Vacunacion, Vacunatorio
-from Vacunation_app.turn_assignment import get_new_turn
+from Vacunation_app.models import Turno, Vacunatorio
 from Vacunation_app.custom_functions import render_to_pdf, make_qr, vaccunassist_send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages

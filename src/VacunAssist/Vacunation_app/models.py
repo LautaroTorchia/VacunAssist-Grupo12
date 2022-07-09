@@ -246,8 +246,6 @@ class Turno(models.Model):
 
     def vacunar_de_turno(self):
         vacunacion=self.__crear_vacunacion_de_turno()
-        self.__update_patient()
-        self.__re_assign_after_vaccination()
         self.delete()
         return vacunacion
 
@@ -260,22 +258,6 @@ class Turno(models.Model):
             assigner.re_assign_gripe_turn()
         self.delete()
 
-
-    def __re_assign_after_vaccination(self):
-        from Vacunation_app.turn_assignment import TurnAssigner
-        assigner=TurnAssigner.get_assigner(self.paciente,self.fecha)
-        if "COVID" in self.vacuna.nombre:
-            assigner.assign_covid_turn()
-
-    def __update_patient(self):
-        if "Gripe" in self.vacuna.nombre:
-            self.paciente.fecha_gripe=timezone.now().date()
-        elif "COVID" in self.vacuna.nombre:
-            self.paciente.dosis_covid+=1
-        else:
-            self.paciente.tuvo_fiebre_amarilla=True
-        self.paciente.save()
-
     def __crear_vacunacion_de_turno(self):
         return Vacunacion.crear(fecha=self.fecha,vacunatorio=self.vacunatorio,paciente=self.paciente,vacuna=self.vacuna)
 
@@ -286,6 +268,13 @@ class listaDeEsperaCovid(models.Model):
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
+
+    def reassign_waitlist(self):
+        from Vacunation_app.turn_assignment import TurnAssigner
+        assigner=TurnAssigner.get_assigner(self.paciente)
+        if "COVID" in self.vacuna.nombre:
+            assigner.re_assign_covid_turn()
+        self.delete()
 
     def __str__(self) -> str:
         return f"{self.paciente} - {self.vacuna}"
@@ -318,9 +307,28 @@ class Vacunacion(AbstractVacunation):
 
     @classmethod
     def crear(cls,fecha,vacunatorio,vacuna,paciente):
+        Vacunacion._update_patient(vacuna,paciente)
+        Vacunacion._re_assign_after_vaccination(vacuna,paciente,fecha)
         AbstractVacunation._update_stock(vacunatorio,vacuna)
         vacunacion=Vacunacion.objects.create(vacuna=vacuna,vacunatorio=vacunatorio,paciente=paciente,fecha=fecha)
         return vacunacion
+
+    @staticmethod
+    def _re_assign_after_vaccination(vacuna,paciente,fecha):
+        from Vacunation_app.turn_assignment import TurnAssigner
+        assigner=TurnAssigner.get_assigner(paciente,fecha)
+        if "COVID" in vacuna.nombre:
+            assigner.assign_covid_turn()
+
+    @staticmethod
+    def _update_patient(vacuna,paciente):
+        if "Gripe" in vacuna.nombre:
+            paciente.fecha_gripe=timezone.now().date()
+        elif "COVID" in vacuna.nombre:
+            paciente.dosis_covid+=1
+        else:
+            paciente.tuvo_fiebre_amarilla=True
+        paciente.save()
 
     def __str__(self) -> str:
         return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

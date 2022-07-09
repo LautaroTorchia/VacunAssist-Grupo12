@@ -1,11 +1,11 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
-from Vacunation_app.custom_functions import AbstractAdminListView, render_to_pdf
+from Vacunation_app.custom_functions import AbstractPacienteListView, render_to_pdf
 from Vacunation_app.models import Paciente,Vacunacion
 from Vacunation_app.views.patient.patient_home_view import Usuario
 
 
-class PaseSanitarioView(AbstractAdminListView):
+class PaseSanitarioView(AbstractPacienteListView):
     template_name: str="patient/pase_sanitario.html"
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

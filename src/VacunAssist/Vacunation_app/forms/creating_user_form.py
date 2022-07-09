@@ -1,6 +1,5 @@
-from datetime import date
 from django import forms
-
+from django.utils import timezone
 from Vacunation_app.forms.p import PForm
 from ..models import Usuario
 
@@ -47,7 +46,7 @@ class CreatingPatientForm(PForm,forms.ModelForm):
         }
     tiene_gripe=forms.BooleanField(label="Se dio alguna vez la vacuna de la gripe",required=False)
     ultima_gripe = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date',"min":"1990-01-01","max":date.today()}),
+        widget=forms.DateInput(attrs={'type': 'date',"min":"1990-01-01","max":timezone.now().date()}),
         label="Ultima vacuna de gripe",required=False)
     cantidad_dosis_covid = forms.IntegerField(
         max_value=2,

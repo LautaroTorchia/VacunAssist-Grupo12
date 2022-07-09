@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model, logout
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from dateutil.relativedelta import relativedelta
-from datetime import date, datetime
+from django.utils import timezone
 
 
 from Vacunation_app.turn_assignment import TurnAssignerRisk
@@ -18,7 +18,7 @@ class HomeView(LoginRequiredMixin,TemplateView):
 
     def get(self, request, *args, **kwargs):
         paciente= Paciente.objects.get(user=request.user)
-        turnos= Turno.objects.filter(paciente=paciente,fecha__gt=datetime.today())
+        turnos= Turno.objects.filter(paciente=paciente,fecha__gt=timezone.now().date())
         waitlist_fiebre=listaDeEsperaFiebreAmarilla.objects.filter(paciente=paciente)
         waitlist_covid=listaDeEsperaCovid.objects.filter(paciente=paciente)
         self.extra_context={"turnos": turnos, 
@@ -38,11 +38,11 @@ class HomeView(LoginRequiredMixin,TemplateView):
         return redirect(".")
         
     def puede_fiebre_amarilla(self,paciente):
-        return paciente.user.fecha_nac.date()+relativedelta(years=60) >= date.today() and not paciente.tuvo_fiebre_amarilla
+        return paciente.user.fecha_nac.date()+relativedelta(years=60) >= timezone.now().date() and not paciente.tuvo_fiebre_amarilla
 
     def turno_vacuna(self,turnos,name):
         try:
-            return list(filter(lambda turno : name in turno.vacuna.nombre and turno.fecha.date() >= date.today(),turnos))[0]
+            return list(filter(lambda turno : name in turno.vacuna.nombre and turno.fecha.date() >= timezone.now().date(),turnos))[0]
         except:
             return None
         

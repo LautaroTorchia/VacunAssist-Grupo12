@@ -1,4 +1,3 @@
-from datetime import date
 from Vacunation_app.models import Turno, Vacunatorio
 from Vacunation_app.custom_functions import render_to_pdf, make_qr, vaccunassist_send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin

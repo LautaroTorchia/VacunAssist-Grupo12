@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
@@ -35,6 +36,7 @@ def registration_view(request):
             if not form.cleaned_data.get("tiene_gripe"):
                 form.cleaned_data["ultima_gripe"]=date(1980,1,1)
 
+
             nombre=request.session["data"].get("nombre")
             fecha_nac=datetime.strptime(request.session["data"].get("fecha_nacimiento"),'%Y-%m-%dT%H:%M:%S%z')
             patient=user.create_patient(
@@ -44,7 +46,7 @@ def registration_view(request):
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
 
-            if patient.es_de_riesgo or patient.user.fecha_nac.date()+relativedelta(years=60) >= date.today():
+            if patient.es_de_riesgo or patient.user.fecha_nac.date()+relativedelta(years=60) >= timezone.now().date():
                 assigner=TurnAssignerRisk(patient.user)
             else:
                 assigner=TurnAssignerNonRisk(patient.user)

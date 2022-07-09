@@ -5,8 +5,6 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VacunAssist.settings')
 django.setup()
 
-
-from datetime import datetime
 from Vacunation_app.models import CustomUserManager
 from Vacunation_app.custom_functions import check_dni
 dni=input("Ingrese el dni: ")

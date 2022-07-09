@@ -1,6 +1,5 @@
-from datetime import date
 from django import forms
-from ..models import Vacuna, Zona
+from Vacunation_app.models import Vacuna, Zona
 from Vacunation_app.forms.p import PForm
 
 

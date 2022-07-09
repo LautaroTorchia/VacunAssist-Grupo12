@@ -1,4 +1,5 @@
-from Vacunation_app.custom_functions import AbstractPacienteListView, create_turn_event
+from Vacunation_app.custom_classes import AbstractPatientListView
+from Vacunation_app.custom_functions import create_turn_event
 from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.models import Paciente, Turno
 from django.http import HttpRequest, HttpResponse
@@ -9,7 +10,7 @@ from typing import *
 
 
 
-class NotificationView(AbstractPacienteListView):
+class NotificationView(AbstractPatientListView):
     template_name: str="notifications.html"
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

@@ -1,18 +1,15 @@
+from Vacunation_app.custom_classes import AbstractVaccinatorListView
 from Vacunation_app.models import Turno, Vacunatorio
 from Vacunation_app.custom_functions import render_to_pdf, make_qr, vaccunassist_send_mail
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
 from django.utils import timezone
-from django.views.generic.list import ListView
 from typing import Any
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 
-class AbstractVaccinatorListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
-    paginate_by: int= 10
-    permission_required: Any= "Vacunation_app.Vacunador"
+
 
 class TurnsView(AbstractVaccinatorListView):
     template_name: str= "vaccinator/turn_list.html"

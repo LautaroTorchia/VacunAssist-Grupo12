@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import  reverse_lazy
-from Vacunation_app.custom_functions import AbstractAdminListView
+from Vacunation_app.custom_classes import AbstractAdminListView
 from Vacunation_app.models import Vacunador, Paciente, listaDeEsperaFiebreAmarilla, listaDeEsperaCovid
 from typing import Any
 from django.http import HttpResponse,HttpRequest
@@ -21,7 +21,7 @@ class PatientsList(AbstractAdminListView):
     queryset= Paciente.objects.all()
 
 
-class ReasingCovidList(AbstractAdminListView):
+class ReassingCovidList(AbstractAdminListView):
     template_name: str="administrator/covid_list.html"
     queryset= listaDeEsperaCovid.objects.all()
 

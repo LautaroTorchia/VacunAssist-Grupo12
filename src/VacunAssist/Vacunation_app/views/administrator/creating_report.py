@@ -3,7 +3,8 @@ from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from Vacunation_app.custom_functions import AbstractAdminListView, render_to_pdf
+from Vacunation_app.custom_classes import AbstractAdminListView
+from Vacunation_app.custom_functions import render_to_pdf
 from Vacunation_app.forms.filters import FiltersSelectorForm
 from Vacunation_app.models import Turno
 from django.contrib import messages

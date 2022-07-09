@@ -17,8 +17,6 @@ from django.contrib.staticfiles.finders import find as find_static_file
 from PIL import Image
 import qrcode
 import os
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.list import ListView
 from typing import Any
 from django.http import HttpResponse,HttpRequest
 from VacunAssist.settings import DEFAULT_FROM_EMAIL,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
@@ -39,15 +37,6 @@ def vaccunassist_send_mail(html_template,html_context: dict, subject, email, fil
             mail.attach("Certificado.pdf",content=file_attachment,mimetype="application/pdf")
         return mail.send()
 
-
-class AbstractPacienteListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
-    paginate_by= 5
-    permission_required: Any="Vacunation_app.Paciente"
-    raise_exception: bool=True
-
-class AbstractAdminListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
-    paginate_by= 10
-    permission_required: Any= "Vacunation_app.Administrador"
 
 def make_qr(data:str=reverse_lazy("login")):
     qr = qrcode.QRCode(

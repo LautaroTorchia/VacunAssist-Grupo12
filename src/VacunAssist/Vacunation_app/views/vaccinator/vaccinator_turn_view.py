@@ -29,16 +29,15 @@ class TurnsView(AbstractVaccinatorListView):
             return redirect(reverse_lazy("vaccinator_no_turn"))
         if "falta" in request.POST:
             turno=Turno.objects.get(id=request.POST["falta"])
-            get_new_turn(turno)
+            turno.reassign_turn()
             messages.success(request,f"Se informo la falta de {turno.paciente}")
         elif "asistencia" in request.POST:
             make_qr()
             turno=Turno.objects.get(id=request.POST["asistencia"])
             pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
-            paciente=Paciente.objects.get(user=turno.paciente.user)
             vacunacion=turno.vacunar_de_turno()
             vaccunassist_send_mail(
-                "emails/registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":paciente}
+                "emails/registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":turno.paciente}
                 ,"Vacunación en Vacunassist",turno.paciente.user.email,pdf)
             messages.success(request,f"Se guardo la vacunación de {turno.paciente}")
 

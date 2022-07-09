@@ -26,19 +26,17 @@ class NoTurnView(FormView):
             if not success and data["mensaje de error"] == "DNI ya registrado":
                 try:
                     patient=Paciente.objects.get(user=Usuario.objects.get(dni=dni))
-                    vacunacion=Vacunacion.objects.create(vacuna=vacuna
+                    vacunacion=Vacunacion.crear(vacuna=vacuna
                     ,vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")
                     vaccinate(patient,vacuna)
-                    update_stock(vacunatorio=vacunatorio,vacuna=vacuna)
-                    vaccunassist_send_mail("emails/noturn_registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":patient,"login_url":request.build_absolute_uri('/accounts/login')},"Vacunación sin turno",email)
+                    vaccunassist_send_mail("emails/noturn_registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":patient,"register_url":request.build_absolute_uri('/accounts/login')},"Vacunación sin turno",email)
                 except:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")
             else:
                 if success:
-                    vacunacion=NonRegisteredVacunacion.objects.create(
+                    vacunacion=NonRegisteredVacunacion.crear(
                         vacuna=vacuna,vacunatorio=vacunatorio,dni=dni,nombre_completo=data["nombre"],fecha=timezone.now())
-                    update_stock(vacunatorio=vacunatorio,vacuna=vacuna)
                     messages.success(request,f"Vacunación sin turno de {vacunacion.nombre_completo} registrada")
                     vaccunassist_send_mail("emails/nonregistered_vacunated_email.html",{"vacunacion":vacunacion,"register_url":request.build_absolute_uri('/accounts/registration')},"Vacunación sin turno",email)
                 else:

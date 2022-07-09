@@ -23,7 +23,7 @@ from VacunAssist.settings import DEFAULT_FROM_EMAIL,EMAIL_HOST_USER,EMAIL_HOST_P
 from django.core.mail import get_connection,EmailMultiAlternatives
 from django.utils.html import strip_tags
 
-def vaccunassist_send_mail(html_template,html_context: dict, subject, email, file_attachment)-> int:
+def vaccunassist_send_mail(html_template,html_context: dict, subject, email, file_attachment=None)-> int:
         html_message = render_to_string(html_template, html_context)
         html_text=strip_tags(html_message)
         connection = get_connection(username=EMAIL_HOST_USER,password=EMAIL_HOST_PASSWORD)

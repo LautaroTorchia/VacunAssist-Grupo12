@@ -7,8 +7,11 @@ import random
 class TurnAssigner():
     @staticmethod
     def get_assigner(paciente,fecha):
-        return TurnAssignerRisk(paciente.user,fecha) if paciente.es_de_riego_o_tiene_mas_de_60() else TurnAssignerNonRisk(paciente.user,fecha)
-
+        if fecha:
+            return TurnAssignerRisk(paciente.user,fecha) if paciente.es_de_riego_o_tiene_mas_de_60() else TurnAssignerNonRisk(paciente.user,fecha)
+        else:
+            return TurnAssignerRisk(paciente.user) if paciente.es_de_riego_o_tiene_mas_de_60() else TurnAssignerNonRisk(paciente.user)
+    
     def __init__(self,user,gripe_date) -> None:
         self.patient=Paciente.objects.get(user=user)
         self.vacunatorio=Vacunatorio.objects.get(zona=self.patient.user.zona)

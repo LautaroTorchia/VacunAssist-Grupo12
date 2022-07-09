@@ -243,12 +243,23 @@ class Turno(models.Model):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
 
+
     def vacunar_de_turno(self):
-        self.__update_stock()
+        vacunacion=self.__crear_vacunacion_de_turno()
         self.__update_patient()
         self.__re_assign_after_vaccination()
         self.delete()
-        return self.__crear_vacunacion_de_turno()
+        return vacunacion
+
+    def reassign_turn(self):
+        from Vacunation_app.turn_assignment import TurnAssigner
+        assigner=TurnAssigner.get_assigner(self.paciente)
+        if "COVID" in self.vacuna.nombre:
+            assigner.assign_covid_turn()
+        elif "Gripe" in self.vacuna.nombre:
+            assigner.re_assign_gripe_turn()
+        self.delete()
+
 
     def __re_assign_after_vaccination(self):
         from Vacunation_app.turn_assignment import TurnAssigner
@@ -257,7 +268,7 @@ class Turno(models.Model):
             assigner.assign_covid_turn()
 
     def __update_patient(self):
-        if "gripe" in self.vacuna.nombre:
+        if "Gripe" in self.vacuna.nombre:
             self.paciente.fecha_gripe=timezone.now().date()
         elif "COVID" in self.vacuna.nombre:
             self.paciente.dosis_covid+=1
@@ -265,13 +276,8 @@ class Turno(models.Model):
             self.paciente.tuvo_fiebre_amarilla=True
         self.paciente.save()
 
-    def __update_stock(self):
-        disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=self.vacunatorio,vacuna=self.vacuna)
-        disminucion_de_stock.stock-=1
-        disminucion_de_stock.save()
-
     def __crear_vacunacion_de_turno(self):
-        return Vacunacion(fecha=self.fecha,vacunatorio=self.vacunatorio,paciente=self.paciente,vacuna=self.vacuna)
+        return Vacunacion.crear(fecha=self.fecha,vacunatorio=self.vacunatorio,paciente=self.paciente,vacuna=self.vacuna)
 
     def __str__(self) -> str:
         return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "
@@ -301,17 +307,35 @@ class AbstractVacunation(models.Model):
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
 
+    @staticmethod
+    def _update_stock(vacunatorio,vacuna):
+        disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=vacunatorio,vacuna=vacuna)
+        disminucion_de_stock.stock-=1
+        disminucion_de_stock.save()
+
 class Vacunacion(AbstractVacunation):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
+
+    @classmethod
+    def crear(cls,fecha,vacunatorio,vacuna,paciente):
+        AbstractVacunation._update_stock(vacunatorio,vacuna)
+        vacunacion=Vacunacion.objects.create(vacuna=vacuna,vacunatorio=vacunatorio,paciente=paciente,fecha=fecha)
+        return vacunacion
 
     def __str__(self) -> str:
         return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "
 
 class NonRegisteredVacunacion(AbstractVacunation):
     dni = models.CharField(max_length=15,
-                           validators=[validate_decimal],
-                           unique=True)
+                           validators=[validate_decimal])
     nombre_completo = models.CharField(max_length=50)  
+
+    @classmethod
+    def crear(cls,fecha,vacunatorio,vacuna,dni,nombre_completo):
+        AbstractVacunation._update_stock(vacunatorio,vacuna)
+        vacunacion=NonRegisteredVacunacion.objects.create(
+            vacuna=vacuna,vacunatorio=vacunatorio,dni=dni,nombre_completo=nombre_completo,fecha=fecha)
+        return vacunacion
 
     def __str__(self) -> str:
         return f"{self.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

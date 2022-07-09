@@ -310,8 +310,7 @@ class Vacunacion(AbstractVacunation):
         Vacunacion._update_patient(vacuna,paciente)
         Vacunacion._re_assign_after_vaccination(vacuna,paciente,fecha)
         AbstractVacunation._update_stock(vacunatorio,vacuna)
-        vacunacion=Vacunacion.objects.create(vacuna=vacuna,vacunatorio=vacunatorio,paciente=paciente,fecha=fecha)
-        return vacunacion
+        return Vacunacion.objects.create(vacuna=vacuna,vacunatorio=vacunatorio,paciente=paciente,fecha=fecha)
 
     @staticmethod
     def _re_assign_after_vaccination(vacuna,paciente,fecha):
@@ -341,9 +340,8 @@ class NonRegisteredVacunacion(AbstractVacunation):
     @classmethod
     def crear(cls,fecha,vacunatorio,vacuna,dni,nombre_completo):
         AbstractVacunation._update_stock(vacunatorio,vacuna)
-        vacunacion=NonRegisteredVacunacion.objects.create(
+        return NonRegisteredVacunacion.objects.create(
             vacuna=vacuna,vacunatorio=vacunatorio,dni=dni,nombre_completo=nombre_completo,fecha=fecha)
-        return vacunacion
 
     def __str__(self) -> str:
         return f"{self.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

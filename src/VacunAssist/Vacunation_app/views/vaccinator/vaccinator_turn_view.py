@@ -1,6 +1,6 @@
 from datetime import date
 from Vacunation_app.models import Paciente, Turno, VacunaEnVacunatorio, Vacunacion, Vacunatorio
-from Vacunation_app.turn_assignment import get_new_turn, update_user, update_stock, vaccinate
+from Vacunation_app.turn_assignment import get_new_turn
 from Vacunation_app.custom_functions import render_to_pdf, make_qr, vaccunassist_send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
@@ -36,8 +36,7 @@ class TurnsView(AbstractVaccinatorListView):
             turno=Turno.objects.get(id=request.POST["asistencia"])
             pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
             paciente=Paciente.objects.get(user=turno.paciente.user)
-            vaccinate(paciente=paciente,vacuna=turno.vacuna)
-            vacunacion=Vacunacion.objects.create(vacuna=turno.vacuna,vacunatorio=turno.vacunatorio,paciente=turno.paciente,fecha=turno.fecha)
+            vacunacion=turno.vacunar_de_turno()
             vaccunassist_send_mail(
                 "emails/registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":paciente}
                 ,"Vacunación en Vacunassist",turno.paciente.user.email,pdf)

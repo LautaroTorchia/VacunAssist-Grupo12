@@ -5,6 +5,9 @@ from django.utils import timezone
 import random
 
 class TurnAssigner():
+    @staticmethod
+    def get_assigner(paciente,fecha):
+        return TurnAssignerRisk(paciente.user,fecha) if paciente.es_de_riego_o_tiene_mas_de_60() else TurnAssignerNonRisk(paciente.user,fecha)
 
     def __init__(self,user,gripe_date) -> None:
         self.patient=Paciente.objects.get(user=user)
@@ -24,8 +27,6 @@ class TurnAssigner():
         return self.patient.fecha_gripe+relativedelta(years=1) < date.today()
     
     def needs_covid_vaccine(self):
-        print(self.patient.dosis_covid < 2)
-        print(self.patient.dosis_covid)
         return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) <= date.today())
     
     def today_turns_are_full(self,date):
@@ -127,7 +128,6 @@ def vaccinate(paciente: Paciente,vacuna: Vacuna)-> Turno:
         update_stock(turno.vacunatorio,vacuna)
         update_user(paciente,turno) 
         assigner=TurnAssignerRisk(paciente.user,turno.fecha) if paciente.es_de_riesgo or paciente.user.fecha_nac.date()+relativedelta(years=60) <= date.today() else TurnAssignerNonRisk(paciente.user,turno.fecha)
-        print(type(assigner))
         if "COVID" in str(turno.vacuna):
             assigner.assign_covid_turn()
         turno.delete()

@@ -3,6 +3,8 @@ from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import Permission
 from django.forms import ValidationError
 from django.db import models
+from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 
 
 def validate_alpha(nombre):
@@ -171,6 +173,8 @@ class Paciente(models.Model):
              "Correspondiente al rol de Paciente en la documentación"),
         ]
 
+    def es_de_riego_o_tiene_mas_de_60(self):
+        return self.es_de_riesgo or self.user.fecha_nac.date()+relativedelta(years=60) <= timezone.now().date()
 
     def __str__(self):
         return f"{self.user}"
@@ -231,11 +235,43 @@ class VacunaEnVacunatorio(models.Model):
         return f"{self.vacunatorio}-{self.vacuna}"
 
 
+
+
 class Turno(models.Model):
     fecha=models.DateTimeField()
     vacunatorio=models.ForeignKey(Vacunatorio,on_delete=models.CASCADE)
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
+
+    def vacunar_de_turno(self):
+        self.__update_stock()
+        self.__update_patient()
+        self.__re_assign_after_vaccination()
+        self.delete()
+        return self.__crear_vacunacion_de_turno()
+
+    def __re_assign_after_vaccination(self):
+        from Vacunation_app.turn_assignment import TurnAssigner
+        assigner=TurnAssigner.get_assigner(self.paciente,self.fecha)
+        if "COVID" in self.vacuna.nombre:
+            assigner.assign_covid_turn()
+
+    def __update_patient(self):
+        if "gripe" in self.vacuna.nombre:
+            self.paciente.fecha_gripe=timezone.now().date()
+        elif "COVID" in self.vacuna.nombre:
+            self.paciente.dosis_covid+=1
+        else:
+            self.paciente.tuvo_fiebre_amarilla=True
+        self.paciente.save()
+
+    def __update_stock(self):
+        disminucion_de_stock=VacunaEnVacunatorio.objects.get(vacunatorio=self.vacunatorio,vacuna=self.vacuna)
+        disminucion_de_stock.stock-=1
+        disminucion_de_stock.save()
+
+    def __crear_vacunacion_de_turno(self):
+        return Vacunacion(fecha=self.fecha,vacunatorio=self.vacunatorio,paciente=self.paciente,vacuna=self.vacuna)
 
     def __str__(self) -> str:
         return f"{self.paciente.user.nombre_completo}- {self.fecha.date()} a las {self.fecha.time()} "

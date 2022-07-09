@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from Vacunation_app.models import Usuario
@@ -5,6 +6,7 @@ import requests
 import random
 import string
 import os
+from icalendar import Calendar, Event, vCalAddress, vText
 load_dotenv()
 from django.template.loader import render_to_string
 from io import BytesIO
@@ -143,3 +145,23 @@ def generate_random_password():
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(10))
 
+from dateutil.relativedelta import relativedelta
+from icalendar import vCalAddress, vText
+
+def create_turn_event(fecha,nombre,vacuna,vacunatorio):
+    cal = Calendar()
+    cal.add('prodid', '-//Vacunassist//vacunassist.com//')
+    cal.add('version', '2.0')
+    event = Event()
+    event.add("summary",f"Turno de vacunacion de {vacuna} para {nombre}")
+    event.add("description","Recuerde avisar de forma anticipada si no podrá asistir a su turno")
+    event.add('dtstart', fecha)
+    event.add('dtend', fecha+relativedelta(hours=1))
+    event.add('dtstamp', fecha)
+    organizer = vCalAddress('MAILTO:noreply@vacunassist.com')
+    organizer.params['cn'] = vText('Vacunassist')
+    event['organizer'] = organizer
+    event['location'] = vText(f'{vacunatorio}')
+    event['uid'] = f'{str(fecha)}/noreply@vacunassist.com'
+    cal.add_component(event)
+    return cal.to_ical()

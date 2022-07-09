@@ -13,15 +13,19 @@
             <br>Vacuna: {{ instance.vacuna.nombre }}
         </p>
             <div class="button_container ml-auto p-2 align-self-right">
+                <form action="" method="post"> 
+                    {% csrf_token %}
+                    <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="Recordar">Recordar</button>
+                </form>
                 {% if instance.vacuna.nombre == "Fiebre amarilla" %}
                 <form action="" method="post" onsubmit="return confirm('Seguro que quiere cancelar su turno?')"> 
                     {% csrf_token %}
-                    <input type="submit" value="Cancelar" name="{{ instance.id }}" class="btn button btn-block">
+                    <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="Cancelar">Cancelar</button>
                 </form>
                 {% else %}
                 <form action="" method="post" onsubmit="return confirm('Seguro que quiere reasignar su turno?')"> 
                     {% csrf_token %}
-                    <input type="submit" value="Reasignar" name="{{ instance.id }}" class="btn button btn-block">
+                    <button class="btn button btn-block" type="submit" value="{{ instance.id }}" name="Reasignar">Reasignar</button>
                 </form>
                 {% endif %}
             </div>

@@ -11,7 +11,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 
-class AbstractVaccinatorListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
+class AbstractVaccinatorListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     paginate_by: int= 10
     permission_required: Any= "Vacunation_app.Vacunador"
 

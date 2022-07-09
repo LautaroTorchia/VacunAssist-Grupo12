@@ -40,7 +40,7 @@ def vaccunassist_send_mail(html_template,html_context: dict, subject, email, fil
 
 
 
-class AbstractAdminListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
+class AbstractAdminListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     paginate_by= 10
     permission_required: Any= "Vacunation_app.Administrador"
 

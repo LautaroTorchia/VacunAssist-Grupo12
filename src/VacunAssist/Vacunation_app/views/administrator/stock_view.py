@@ -1,16 +1,16 @@
-
 from Vacunation_app.models import VacunaEnVacunatorio, Vacunatorio
 from Vacunation_app.forms.stock_form import StockForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import FormView
 from typing import Any
-from django.http import HttpRequest,HttpResponse,HttpResponseNotModified
+from django.http import HttpRequest,HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 
 
-class StockView(FormView,LoginRequiredMixin,PermissionRequiredMixin):
+
+class StockView(LoginRequiredMixin,PermissionRequiredMixin,FormView):
     template_name: str="administrator/stock_view.html"
     form_class= StockForm
     permission_required="Vacunation_app.Administrador"

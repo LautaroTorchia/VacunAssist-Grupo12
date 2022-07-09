@@ -9,35 +9,25 @@ from django.contrib import messages
 
 class VaccinatorsList(AbstractAdminListView):
     template_name: str="administrator/vaccinators_list.html"
-
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        self.queryset= Vacunador.objects.all()
-        return super().get(request, *args, **kwargs)
+    queryset= Vacunador.objects.all()
 
 class YellowFeverList(AbstractAdminListView):
     template_name: str="administrator/yellow_fever_list.html"
+    queryset= listaDeEsperaFiebreAmarilla.objects.all()
 
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        self.queryset= listaDeEsperaFiebreAmarilla.objects.all()
-        return super().get(request, *args, **kwargs)
 
 class PatientsList(AbstractAdminListView):
     template_name: str="administrator/patients_list.html"
+    queryset= Paciente.objects.all()
 
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        self.queryset= Paciente.objects.all()
-        return super().get(request, *args, **kwargs)
 
 class ReasingCovidList(AbstractAdminListView):
     template_name: str="administrator/covid_list.html"
-
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        self.queryset= listaDeEsperaCovid.objects.all()
-        return super().get(request, *args, **kwargs)
+    queryset= listaDeEsperaCovid.objects.all()
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if "reasignar" in request.POST:
-            turno_a_reasignar=listaDeEsperaCovid.objects.get(id=request.POST.get("reasignar"))
+        if "asignar" in request.POST:
+            turno_a_reasignar=listaDeEsperaCovid.objects.get(id=request.POST.get("asignar"))
             turno_a_reasignar.reassign_waitlist()
             messages.success(request,f"Turno reasignado {turno_a_reasignar}")
         return redirect(reverse_lazy("covid_wait_list"))

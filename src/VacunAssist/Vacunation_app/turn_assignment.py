@@ -97,7 +97,7 @@ class TurnAssignerNonRisk(TurnAssigner):
     
     def __init__(self, patient,reference_date=timezone.now()) -> None:
         self.old_turn_date=reference_date
-        self.covid_date=reference_date+relativedelta(days=7)
+        self.covid_date=reference_date+relativedelta(days=14)
         gripe_date=reference_date+relativedelta(months=+6)
         super().__init__(patient,gripe_date)
     

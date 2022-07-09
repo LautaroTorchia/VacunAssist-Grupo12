@@ -2,23 +2,24 @@ from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, Tu
 from Vacunation_app.models import Paciente, Turno
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.list import ListView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from typing import *
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-
-class NotificationView(ListView):
+class AbstractPacienteListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     paginate_by= 10
+    permission_required: Any="Vacunation_app.Paciente"
+    raise_exception: bool=True
+
+class NotificationView(AbstractPacienteListView):
     template_name: str="notifications.html"
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if request.user.has_perm("Vacunation_app.Paciente"):
-            paciente=Paciente.objects.get(user=request.user)
-            self.queryset=Turno.objects.filter(paciente=paciente).order_by("fecha")
-            self.extra_context={"is_staff":False}
-            return super().get(request, *args, **kwargs)
-        return render(request,self.template_name,{"is_staff":True})
+        paciente=Paciente.objects.get(user=request.user)
+        self.queryset=Turno.objects.filter(paciente=paciente).order_by("fecha")
+        return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         turno=Turno.objects.get(id=list(request.POST.keys())[1])

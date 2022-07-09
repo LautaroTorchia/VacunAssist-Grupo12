@@ -1,6 +1,7 @@
 from django import forms
 from Vacunation_app.models import Vacuna, Zona
 from Vacunation_app.forms.p import PForm
+from django.utils import timezone
 
 
 Choices =(
@@ -22,8 +23,8 @@ class FiltersSelectorForm(PForm,forms.Form):
         ),
     }
 
-    fecha_ini=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":date.today()}))
-    fecha_fin=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":date.today()}))
+    fecha_ini=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":timezone.now().date()}))
+    fecha_fin=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":timezone.now().date()}))
     filter=forms.ChoiceField(choices=Choices)
     order=forms.ChoiceField(choices=ChoicesOrder)
     dni_to_filter=forms.CharField(widget=forms.TextInput(),required=False)

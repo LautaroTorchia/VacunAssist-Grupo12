@@ -38,7 +38,10 @@ def vaccunassist_send_mail(html_template,html_context: dict, subject, email, fil
         return mail.send()
 
 
-
+class AbstractPacienteListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
+    paginate_by= 5
+    permission_required: Any="Vacunation_app.Paciente"
+    raise_exception: bool=True
 
 class AbstractAdminListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     paginate_by= 10

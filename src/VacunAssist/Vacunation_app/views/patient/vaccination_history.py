@@ -1,13 +1,10 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
-from django.urls import reverse
-from Vacunation_app.custom_functions import AbstractAdminListView, render_to_pdf
-from Vacunation_app.models import Paciente, Turno
-from Vacunation_app.views.patient.patient_home_view import Usuario
+from Vacunation_app.custom_functions import AbstractPacienteListView, render_to_pdf
+from Vacunation_app.models import Paciente,  Vacunacion
 
 
-class VaccinationHistoryView(AbstractAdminListView):
+class VaccinationHistoryView(AbstractPacienteListView):
     template_name: str="patient/vaccination_history.html"
     
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
@@ -25,9 +22,10 @@ class VaccinationHistoryView(AbstractAdminListView):
     
     
     def create_vaccines_lists(self,paciente):
-        self.queryset=Turno.objects.filter(paciente=paciente)
+        self.queryset=Vacunacion.objects.filter(paciente=paciente)
 
-        vacunas_covid=list(filter(lambda x:"COVID" in x.vacuna.nombre,self.queryset))
+        vacunas_covid=self.queryset.filter(vacuna__nombre__contains="COVID")
+
         vacunas_gripe=list(filter(lambda x:"Gripe" in x.vacuna.nombre,self.queryset))
         vacunas_fiebre=list(filter(lambda x:"Fiebre" in x.vacuna.nombre,self.queryset))
         return vacunas_covid,vacunas_gripe,vacunas_fiebre

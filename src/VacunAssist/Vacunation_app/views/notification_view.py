@@ -1,17 +1,13 @@
+from Vacunation_app.custom_functions import AbstractPacienteListView
 from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.models import Paciente, Turno
 from django.http import HttpRequest, HttpResponse
-from django.views.generic.list import ListView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from typing import *
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-class AbstractPacienteListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
-    paginate_by= 10
-    permission_required: Any="Vacunation_app.Paciente"
-    raise_exception: bool=True
+
 
 class NotificationView(AbstractPacienteListView):
     template_name: str="notifications.html"

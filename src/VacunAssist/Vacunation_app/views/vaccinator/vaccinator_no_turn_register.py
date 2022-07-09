@@ -22,27 +22,35 @@ class NoTurnView(FormView):
             dni=form.cleaned_data.get("dni")
             email=form.cleaned_data.get("email")
             vacuna=form.cleaned_data.get("vacuna")
-            success,data=check_dni(dni)
-            if not success and data["mensaje de error"] == "DNI ya registrado":
-                try:
-                    patient=Paciente.objects.get(user=Usuario.objects.get(dni=dni))
+
+            try: 
+                user=Usuario.objects.get(dni=dni)
+                if Paciente.objects.filter(user=user).exists():     
+                    patient=Paciente.objects.get(user=user)
                     vacunacion=Vacunacion.crear(vacuna=vacuna
                     ,vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")
                     vaccinate(patient,vacuna)
                     vaccunassist_send_mail("emails/noturn_registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":patient,"register_url":request.build_absolute_uri('/accounts/login')},"Vacunación sin turno",email)
-                except:
+                    return super().post(request, *args, **kwargs)
+                else:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")
-            else:
+                    return super().post(request, *args, **kwargs)
+            except:
+                success,data=check_dni(dni)
                 if success:
                     vacunacion=NonRegisteredVacunacion.crear(
                         vacuna=vacuna,vacunatorio=vacunatorio,dni=dni,nombre_completo=data["nombre"],fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {vacunacion.nombre_completo} registrada")
                     vaccunassist_send_mail("emails/nonregistered_vacunated_email.html",{"vacunacion":vacunacion,"register_url":request.build_absolute_uri('/accounts/registration')},"Vacunación sin turno",email)
-                else:
+                    return super().post(request, *args, **kwargs)
+                
+                if not success:
                     messages.error(request,"El dni no es válido")
                     self.success_url: Optional[str]=reverse_lazy("vaccinator_no_turn")
-        return super().post(request, *args, **kwargs)
+                    return super().post(request, *args, **kwargs)
+
+
 
 
 

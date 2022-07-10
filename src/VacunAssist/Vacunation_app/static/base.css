@@ -1,3 +1,7 @@
 .alert{
     width: 30vh;
 }
+
+a:hover {
+    text-decoration: none;
+}

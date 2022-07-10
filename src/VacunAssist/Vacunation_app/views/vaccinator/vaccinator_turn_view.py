@@ -1,6 +1,6 @@
 from Vacunation_app.custom_classes import AbstractVaccinatorListView
 from Vacunation_app.models import Turno, Vacunatorio
-from Vacunation_app.custom_functions import render_to_pdf, make_qr, vaccunassist_send_mail
+from Vacunation_app.custom_functions import render_to_pdf, make_qr, vacunassist_send_mail
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
 from django.utils import timezone
@@ -31,7 +31,7 @@ class TurnsView(AbstractVaccinatorListView):
             turno=Turno.objects.get(id=request.POST["asistencia"])
             pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
             vacunacion=turno.vacunar_de_turno()
-            vaccunassist_send_mail(
+            vacunassist_send_mail(
                 "emails/registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":turno.paciente}
                 ,"Vacunación en Vacunassist",turno.paciente.user.email,pdf)
             messages.success(request,f"Se guardo la vacunación de {turno.paciente}")

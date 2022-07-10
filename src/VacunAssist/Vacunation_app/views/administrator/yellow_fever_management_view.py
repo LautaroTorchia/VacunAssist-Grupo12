@@ -1,45 +1,49 @@
+from Vacunation_app.custom_classes import AdministratorPermissionsMixin
+from Vacunation_app.custom_functions import vacunassist_send_mail
 from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
 from Vacunation_app.models import listaDeEsperaFiebreAmarilla, Turno
 from Vacunation_app.turn_assignment import TurnAssignerYellowFever
-from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from django.contrib.auth.decorators import login_required, permission_required
-from django.template.loader import render_to_string
-from django.shortcuts import render, redirect
-from django.utils.html import strip_tags
-from django.core.mail import send_mail
-from django.contrib import messages
 from django.urls import reverse
-import datetime
+from django.views.generic import RedirectView,FormView
+from django.http.response import HttpResponseBase
+from django.http import HttpRequest,HttpResponse
+from django.contrib import messages
+from typing import Any
+from datetime import datetime
 
+class ConfirmYellowFever(AdministratorPermissionsMixin,FormView):
+    template_name="administrator/yellow_fever_confirmation.html"
+    form_class=assigningYellowFeverTurn
 
-@permission_required("Vacunation_app.Administrador")
-@login_required()
-def yellow_fever_confirmation_view(request, id):
-    petition = listaDeEsperaFiebreAmarilla.objects.get(id=id)
-    form=assigningYellowFeverTurn(request.POST or None)
-    if form.is_valid():
-        fecha=datetime.datetime.combine(form.cleaned_data["fecha_del_turno"],form.cleaned_data["hora_del_turno"])
-        try:
-            if Turno.objects.get(fecha=fecha):
-                messages.error(request,"Esa fecha y hora ya tiene un turno registrado, asigne otra fecha")
-        except:
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        petition = listaDeEsperaFiebreAmarilla.objects.get(id=kwargs.get("id"))
+        self.extra_context={"petition":petition}
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        petition = listaDeEsperaFiebreAmarilla.objects.get(id=kwargs.get("id"))
+        form=self.get_form()
+        form.is_valid()
+        fecha=datetime.combine(form.cleaned_data["fecha_del_turno"],form.cleaned_data["hora_del_turno"])
+        if Turno.objects.filter(fecha=fecha).exists:
+            messages.error(request,"Esa fecha y hora ya tiene un turno registrado, asigne otra fecha")
+            self.success_url= reverse("yellow_fever_confirmation",args=[kwargs.get("id")])
+        else:
             TurnAssignerYellowFever(petition.paciente).assign_yellow_fever_turn(fecha,petition.vacunatorio)
-            messages.success(request,f"turno asignado con exito en {fecha}")
-            html_message = render_to_string('emails/exito_fiebre.html',{"fecha":fecha})
-            send_mail("Registro de vacunador a VacunAssist",strip_tags(html_message),from_email=DEFAULT_FROM_EMAIL,recipient_list=[petition.paciente.user.email],
-            fail_silently=False,html_message=html_message)
+            vacunassist_send_mail('emails/rechazo_fiebre.html',{"fecha":fecha},"Tu solicitud de turno de fiebre amarilla fue aceptada",petition.paciente.user.email)
             petition.delete()
-            return redirect(reverse("yellow_fever_list"))
-    context = {"petition": petition, "form":form}
-    return render(request, "administrator/yellow_fever_confirmation.html", context)
+            messages.success(request,f"Turno asignado con exito en {fecha}")
+            self.success_url= reverse("yellow_fever_list")
+        return super().post(request, *args, **kwargs)
 
-@permission_required("Vacunation_app.Administrador")
-@login_required()
-def reject_petition_view(request,id):
-    petition = listaDeEsperaFiebreAmarilla.objects.get(id=id)
-    messages.success(request,"Turno rechazado")
-    html_message = render_to_string('emails/rechazo_fiebre.html',{})
-    send_mail("Registro de vacunador a VacunAssist",strip_tags(html_message),from_email=DEFAULT_FROM_EMAIL,recipient_list=[petition.paciente.user.email],
-    fail_silently=False,html_message=html_message)
-    petition.delete()
-    return redirect(reverse("yellow_fever_list"))
+class RejectYellowFever(AdministratorPermissionsMixin,RedirectView):
+    pattern_name="yellow_fever_list"
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
+        petition = listaDeEsperaFiebreAmarilla.objects.get(id=kwargs.get("id"))
+        vacunassist_send_mail('emails/rechazo_fiebre.html',{},"Tu solicitud de turno de fiebre amarilla fue rechazada",petition.paciente.user.email)
+        petition.delete()
+        messages.success(request,"Turno rechazado")
+        kwargs={}
+        return super().get(request, *args, **kwargs)
+    

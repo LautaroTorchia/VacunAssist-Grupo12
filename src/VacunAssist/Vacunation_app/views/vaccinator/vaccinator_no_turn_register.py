@@ -6,7 +6,7 @@ from Vacunation_app.models import Usuario, Vacunacion, Vacunatorio, NonRegistere
 from Vacunation_app.forms.no_turn_form import NoTurnForm
 from django.utils import timezone
 from django.contrib import messages
-from Vacunation_app.custom_functions import check_dni, vaccunassist_send_mail
+from Vacunation_app.custom_functions import check_dni, vacunassist_send_mail
 
 
 class NoTurnView(FormView):
@@ -29,7 +29,7 @@ class NoTurnView(FormView):
                     vacunacion=Vacunacion.crear(vacuna=vacuna
                     ,vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")
-                    vaccunassist_send_mail("emails/noturn_registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":patient,"register_url":request.build_absolute_uri('/accounts/login')},"Vacunación sin turno",email)
+                    vacunassist_send_mail("emails/noturn_registered_vacunated_email.html",{"vacunacion":vacunacion,"paciente":patient,"register_url":request.build_absolute_uri('/accounts/login')},"Vacunación sin turno",email)
                     return super().post(request, *args, **kwargs)
                 else:
                     messages.error(request,"Sos parte del personal, no podes vacunarte")
@@ -40,7 +40,7 @@ class NoTurnView(FormView):
                     vacunacion=NonRegisteredVacunacion.crear(
                         vacuna=vacuna,vacunatorio=vacunatorio,dni=dni,nombre_completo=data["nombre"],fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {vacunacion.nombre_completo} registrada")
-                    vaccunassist_send_mail("emails/nonregistered_vacunated_email.html",{"vacunacion":vacunacion,"register_url":request.build_absolute_uri('/accounts/registration')},"Vacunación sin turno",email)
+                    vacunassist_send_mail("emails/nonregistered_vacunated_email.html",{"vacunacion":vacunacion,"register_url":request.build_absolute_uri('/accounts/registration')},"Vacunación sin turno",email)
                     return super().post(request, *args, **kwargs)
                 
                 if not success:

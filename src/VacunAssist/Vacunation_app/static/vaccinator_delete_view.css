@@ -44,7 +44,33 @@ form{
 
 }
 
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+input[type="time"],
+input[type="date"] {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+    width: 363px;
+    height: 49px;
+    background: #FFFFFF;
+    border: 2px solid #C4C4C4;
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    order: 0;
+    flex-grow: 0;
+}
+
 a:hover {
-    text-decoration: none;
     color: #FFFFFF;
 }

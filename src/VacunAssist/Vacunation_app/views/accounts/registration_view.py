@@ -1,12 +1,8 @@
 from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
-from Vacunation_app.custom_functions import check_dni, generate_keycode
+from Vacunation_app.custom_functions import check_dni, generate_keycode, vacunassist_send_mail
 from Vacunation_app.models import CustomUserManager
-from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from django.template.loader import render_to_string
 from django.shortcuts import redirect, render
-from django.utils.html import strip_tags
-from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import timezone
 from django.urls import reverse
@@ -51,11 +47,8 @@ def registration_view(request):
             else:
                 assigner=TurnAssignerNonRisk(patient.user)
             assigner.assign_turns()
-
-            html_message = render_to_string('emails/registro_paciente.html', 
-            {"clave":clave, "dni":form.cleaned_data["dni"]})
-            send_mail("Registro de vacunador a VacunAssist",strip_tags(html_message),from_email=DEFAULT_FROM_EMAIL,recipient_list=[form.cleaned_data["email"]],
-            fail_silently=False,html_message=html_message)
+            vacunassist_send_mail('emails/registro_paciente.html',{"clave":clave, "dni":form.cleaned_data["dni"]}
+            ,"Registro de vacunador a VacunAssist",form.cleaned_data.get("email"))
             request.session["dni_validated"]=False
             messages.success(request, f"Su clave de autenticación es {clave}")
             messages.success(request, "Cuenta creada Correctamente")

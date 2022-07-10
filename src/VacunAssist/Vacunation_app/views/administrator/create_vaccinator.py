@@ -1,5 +1,5 @@
 from VacunAssist.settings import DEFAULT_FROM_EMAIL
-from Vacunation_app.custom_functions import generate_keycode, generate_random_password, get_referer,check_dni
+from Vacunation_app.custom_functions import generate_keycode, generate_random_password, get_referer,check_dni, vacunassist_send_mail
 from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm,EnteringDniForm
 from Vacunation_app.models import CustomUserManager
 from django.contrib import messages
@@ -54,7 +54,7 @@ def creating_vaccinator_view(request):
             request.session["fecha_to_create"], user_instance.email, clave,
             user_instance.zona)
         user_creation_form = CreatingVaccinatorForm()
-
+        #Crear un template para esto y usar vacunassist_send_mail
         send_mail("Registro de vacunador a VacunAssist",
                   f"""Hola, {user_instance.nombre_completo}
         Se ha registrado una cuenta en VacunAssist a su nombre aqui estan sus credenciales: 

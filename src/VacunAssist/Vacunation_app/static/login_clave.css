@@ -183,9 +183,7 @@ input[type="submit"]:disabled{
     color: #2D2C2C;
 }
 
-a:hover {
-    text-decoration: none;
-}
+
 
 .buttons {
     gap: 10px;

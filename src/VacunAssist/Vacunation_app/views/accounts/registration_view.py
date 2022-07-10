@@ -1,7 +1,7 @@
 from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode, vacunassist_send_mail
-from Vacunation_app.models import CustomUserManager
+from Vacunation_app.models import CustomUserManager, NonRegisteredVacunacion, Vacunacion
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.utils import timezone
@@ -52,6 +52,8 @@ def registration_view(request):
             request.session["dni_validated"]=False
             messages.success(request, f"Su clave de autenticación es {clave}")
             messages.success(request, "Cuenta creada Correctamente")
+            for vacu in NonRegisteredVacunacion.objects.filter(dni=form.cleaned_data["dni"]):
+                Vacunacion.crear_de_no_registrado(vacu,patient)
             return redirect(reverse("login"))
     try:
         context={

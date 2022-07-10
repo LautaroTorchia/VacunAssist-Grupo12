@@ -307,6 +307,11 @@ class Vacunacion(AbstractVacunation):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
 
     @classmethod
+    def crear_de_no_registrado(cls,nonregisvacu,paciente):
+        Vacunacion._update_patient(nonregisvacu.vacuna,paciente)
+        return Vacunacion.objects.create(vacuna=nonregisvacu.vacuna,vacunatorio=nonregisvacu.vacunatorio,paciente=paciente,fecha=nonregisvacu.fecha)
+
+    @classmethod
     def crear(cls,fecha,vacunatorio,vacuna,paciente):
         Vacunacion._update_patient(vacuna,paciente)
         Vacunacion._re_assign_after_vaccination(vacuna,paciente,fecha)

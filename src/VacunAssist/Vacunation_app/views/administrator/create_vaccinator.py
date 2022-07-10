@@ -4,8 +4,7 @@ from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm,Enter
 from Vacunation_app.models import CustomUserManager, Vacunador
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import redirect
 from django.urls import reverse,reverse_lazy
 from django.views.generic import FormView
 from typing import Any,Optional
@@ -25,8 +24,10 @@ class ValidateVaccinatorDNI(AdministratorPermissionsMixin,FormView):
             success, data = check_dni(dni)
             if success:
                 request.session['vaccinator_data']={"dni":dni,"fecha_nacimiento":data["fecha_nacimiento"],"nombre":data["nombre"]}
+                return redirect(self.success_url)
             else:
                 messages.error(request, data["mensaje de error"])
+                return redirect(reverse_lazy("creating_vaccinator_view"))
         return super().post(request, *args, **kwargs)
 
 

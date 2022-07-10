@@ -10,7 +10,7 @@
         <h1 class="title">Panel de solicitud de turno para el paciente {{ petition.paciente.user.nombre_completo }}</h1>
         <h2>En el vacunatorio: {{ petition.vacunatorio.nombre }}</h2>
         {{ form.as_p }}
-        <p><input class="btn-submit" type="submit" value="Crear" name="create"/> <a id="rechazar" class="btn-submit" href="/administrator/yellow_fever_list/reject/{{ petition.get_absolute_url }}">Rechazar</a>
+        <p><input class="btn-submit" type="submit" value="Crear" name="create"/> <a id="rechazar" class="btn-submit" href= {% url 'reject_petition' petition.get_absolute_url %}>Rechazar</a>
             {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
                     {{ message }}

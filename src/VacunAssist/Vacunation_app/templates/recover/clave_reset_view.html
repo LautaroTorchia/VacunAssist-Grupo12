@@ -18,7 +18,7 @@
                     {{ form.as_p }}
                     <button type="submit" class=login >Enviar</button>
                 </form>
-                <a href="/accounts/login/" class="olvidaste_clave align-self-start">Volver </a>
+                <a href="{% url 'login' %}" class="olvidaste_clave align-self-start">Volver </a>
                 {% include "messages.html" %}
         </div>
     </div>

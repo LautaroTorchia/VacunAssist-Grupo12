@@ -15,8 +15,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href={{ request.session.editar_perfil_url }}>Editar Perfil</a> 
-                <a class="dropdown-item" href="/contact">Soporte y ayuda</a>
-                <a class="dropdown-item" href="/logout">Cerrar sesion</a>
+                <a class="dropdown-item" href="{% url 'contact_us' %}">Soporte y ayuda</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a>
             </div>
             
         </div>

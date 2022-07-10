@@ -10,26 +10,26 @@
         <div class="options_container container-fluid">
             <div class="element_container container-fluid">
                 <img src="{% static 'img/location_icon.svg' %}" alt="loc_icon">
-                <a class="text_form" href="/zona">Zona</a>
+                <a class="text_form" href="{% url 'zona' %}">Zona</a>
             </div>
             {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
             <div class="element_container">
                 <img src="{% static 'img/notification_icon.svg' %}" alt="loc_icon" class="icon_form">
-                <a class="text_form" href="/notifications">Mis turnos</a>
+                <a class="text_form" href="{% url 'notifications' %}">Mis turnos</a>
             </div>
             {% endif %}
             <div class="element_container">
                 <img src="{% static 'img/contact_icon.svg' %}" alt="loc_icon" class="icon_form">
-                <a class="text_form" href="/contact">Contactenos</a>
+                <a class="text_form" href="{% url 'contact_us' %}">Contactenos</a>
             </div>
             {% if "Vacunation_app.Paciente" in request.user.get_all_permissions %}
                 <div class="element_container ">
                     <img src="{% static 'img/historial.svg' %}" alt="loc_icon" class=" icon_form">
-                    <a class="text_form" href="/patient/vaccination_history/{{request.user.id }}">Historial de vacunacion</a>
+                    <a class="text_form" href="{% url 'vaccination_history' request.user.id %}">Historial de vacunacion</a>
                 </div>
                 <div class="element_container ">
                     <img src="{% static 'img/pase.svg' %}" alt="loc_icon" class=" icon_form">
-                    <a class="text_form" href="/patient/print_pase_sanitario">Pase sanitario</a>
+                    <a class="text_form" href="{% url 'pase_sanitario' %}">Pase sanitario</a>
                 </div>
             {% endif %}
         </div>

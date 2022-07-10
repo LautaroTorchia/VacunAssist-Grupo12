@@ -1,13 +1,6 @@
-from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.views.generic import TemplateView
+from Vacunation_app.custom_classes import AdministratorPermissionsMixin
 
 
-@permission_required("Vacunation_app.Administrador", raise_exception=True)
-@login_required()
-def administrator_home_view(request):
-    if "logout" in request.POST:
-        logout(request)
-        return redirect(reverse("login"))
-    return render(request, "administrator/administrator_view.html", {})
+class AdministratorHomeView(AdministratorPermissionsMixin,TemplateView):
+    template_name: str="administrator/administrator_view.html"

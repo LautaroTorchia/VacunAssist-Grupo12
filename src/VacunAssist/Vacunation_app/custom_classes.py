@@ -10,7 +10,7 @@ class VaccinatorPermissionsMixin(LoginRequiredMixin, PermissionRequiredMixin):
     permission_required: Any= "Vacunation_app.Vacunador"
 
 class PatientPermissionsMixin(LoginRequiredMixin, PermissionRequiredMixin):
-    permission_required: Any= "Vacunation_app.Vacunador"
+    permission_required: Any= "Vacunation_app.Paciente"
 
 class AbstractAdminListView(AdministratorPermissionsMixin,ListView):
     paginate_by: int= 5

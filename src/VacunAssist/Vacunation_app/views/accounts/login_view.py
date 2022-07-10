@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.urls import reverse
 from Vacunation_app.forms.login_form import LoginForm, LoginClaveForm
 from Vacunation_app.custom_functions import get_referer
+from Vacunation_app.models import Paciente
+from Vacunation_app.turn_assignment import TurnAssigner
 
 #TODO: Usar isvalid para los datos como en cambiarNombre
 Usuario = get_user_model()
@@ -54,6 +56,11 @@ class CustomLoginClave(LoginView):
         user = authenticate(request, username=dni, password=clave)
         if user is not None:
             login(request, user)
+            if user.has_perm("Vacunation_app.Paciente") and not user.has_perm("Vacunation_app.Administrador"):
+                paciente=Paciente.objects.get(user=request.user)
+                assigner=TurnAssigner.get_assigner(paciente)
+                assigner.assign_gripe_turn()
+                
             return redirect("/")
         else:
             messages.error(self.request, "Código incorrecto")

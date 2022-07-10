@@ -15,6 +15,9 @@ class PaseSanitarioView(AbstractPatientListView):
         if paciente.dosis_covid==2:
             self.queryset=Vacunacion.objects.filter(paciente=paciente)
             self.queryset=list(filter(lambda x:"COVID" in x.vacuna.nombre,self.queryset))
+            if len(self.queryset)<2:
+                self.extra_context={"dosis_viejas":True}
+                
 
         return super().get(request, *args, **kwargs)
 

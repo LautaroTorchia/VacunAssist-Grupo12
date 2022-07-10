@@ -3,6 +3,7 @@
 
 {% block child_css %}
     <link rel="stylesheet" href="{% static 'generic_card_list.css' %}">
+    <link rel="stylesheet" href="{% static 'vaccination_history.css' %}">
 {% endblock child_css %}
 
 {% block child_content %}
@@ -11,7 +12,9 @@
 
     <div class="card_container">
         <div class="carde">
-            <h2>Vacunas COVID:</h2>
+            <div class="titulo">
+                <p class="texto_del_titulo">Vacunas COVID:</p>
+            </div>
             {% for instance in covid %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
                     <p><br> Zona: {{ instance.vacunatorio.zona }} 
@@ -23,7 +26,9 @@
             {% endfor %}
         </div>
         <div class="carde">
-            <h2>Vacunas Gripe:</h2>
+            <div class="titulo">
+                <p class="texto_del_titulo">Gripe:</p>
+            </div>
             {% for instance in gripe %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
                     <p><br> Zona: {{ instance.vacunatorio.zona }} 
@@ -35,7 +40,9 @@
             {% endfor %}
         </div>
         <div class="carde">
-            <h2>Vacuna Fiebre:</h2>
+            <div class="titulo">
+                <p class="texto_del_titulo">Vacunas Fiebre amarilla:</p>
+            </div>
             {% for instance in fiebre %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
                     <p><br> Zona: {{ instance.vacunatorio.zona }} 
@@ -53,7 +60,7 @@
     <div class="extra_content">
         <form action="" method="post">
             {% csrf_token %}
-            <input type="submit" value="Descargar historial de vacunas">
+            <input type="submit" value="Descargar historial de vacunas" class="btn-submit">
         </form>
     </div>
 {% endblock child_content %}

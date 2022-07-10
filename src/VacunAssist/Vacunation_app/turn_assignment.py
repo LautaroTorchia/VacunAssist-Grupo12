@@ -31,7 +31,9 @@ class TurnAssigner():
             return  self.create_turn(self.covid_date)
 
     def needs_gripe_vaccine(self):
-        return self.patient.fecha_gripe+relativedelta(years=1) < timezone.now().date()
+        gripe=Vacuna.objects.get(nombre="Gripe")
+        return (self.patient.fecha_gripe+relativedelta(years=1) < timezone.now().date() 
+        and not Turno.objects.filter(paciente=self.patient,vacuna=gripe).exists())
     
     def needs_covid_vaccine(self):
         return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) <= timezone.now().date())

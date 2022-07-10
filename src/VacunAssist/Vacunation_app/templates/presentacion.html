@@ -3,7 +3,11 @@
 
 <div class="text_container container-fluid">    
     <div class="presentacion_container container-fluid">
-        <h1 id="titulo">Bienvenido, {{ request.user.nombre_completo }}</h1>
+        {% if nombre_completo %}
+            <h1 id="titulo">Bienvenido, {{ nombre_completo }}</h1>
+        {% else %}
+            <h1 id="titulo">Bienvenido, {{ request.user.nombre_completo }}</h1>
+        {% endif %}
         <h5 id="slogan">Vacunate, mas facil</h5>
     </div>
     <div class="perfil_container">

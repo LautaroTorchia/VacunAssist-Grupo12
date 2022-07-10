@@ -46,7 +46,7 @@ def make_qr(data:str=reverse_lazy("login")):
     qr.add_data(data)
     qr.make(fit=True)
     img_qr = qr.make_image().convert('RGB')
-    valija=Image.open(find_static_file("img/Logo_con_texto.PNG")).reduce((9,7))
+    valija=Image.open(find_static_file("img/Logo_con_texto.png")).reduce((9,7))
     pos = ((img_qr.size[0] - valija.size[0]) // 2, (img_qr.size[1] - valija.size[1]) // 2)
     img_qr.paste(valija, pos)
     img_qr.save(find_static_file("qr/qr.png"), format="png")

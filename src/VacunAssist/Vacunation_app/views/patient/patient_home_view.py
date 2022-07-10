@@ -1,5 +1,5 @@
+from Vacunation_app.custom_classes import PatientPermissionsMixin
 from Vacunation_app.models import Paciente,Turno, listaDeEsperaCovid,listaDeEsperaFiebreAmarilla
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
 from django.contrib.auth import get_user_model, logout
 from django.shortcuts import redirect, render
@@ -12,9 +12,8 @@ from Vacunation_app.turn_assignment import TurnAssignerRisk
 Usuario=get_user_model()
 
 
-class HomeView(LoginRequiredMixin,TemplateView):
+class HomeView(PatientPermissionsMixin,TemplateView):
     template_name="patient/patient_homepage.html"
-    permission_required = ("Vacunation_app.Paciente", )
 
     def get(self, request, *args, **kwargs):
         paciente= Paciente.objects.get(user=request.user)

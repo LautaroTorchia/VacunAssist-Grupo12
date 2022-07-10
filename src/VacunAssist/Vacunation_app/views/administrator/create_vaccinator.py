@@ -16,7 +16,6 @@ class ValidateVaccinatorDNI(AdministratorPermissionsMixin,FormView):
     success_url: Optional[str]=reverse_lazy("create_vaccinator_step2")
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        print("holis")
         return super().get(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

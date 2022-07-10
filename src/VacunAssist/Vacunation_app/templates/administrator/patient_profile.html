@@ -12,26 +12,17 @@
             <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile">
             <p>
                 DNI: {{ object.user.dni }}
-                <br>Fecha de nacimiento: {{object.user.fecha_nac.date }}
-                <br>Zona: {{ object.user.zona }}
-                <br>
-                {% if object.es_de_riesgo %}
-                    Es de riesgo: Si
-                {% else %}
-                    Es de riesgo: No
-                {% endif %}
-                    Dosis de Covid: {{ object.dosis_covid}}
+                <br> Fecha de nacimiento: {{object.user.fecha_nac.date }}
+                <br> Zona: {{ object.user.zona }}
+                <br> Es de riesgo: {% if object.es_de_riesgo %} Si {% else %} No {% endif %}
+                <br> Dosis de Covid: {{ object.dosis_covid}}
                 <br>
                 {% if object.fecha_gripe.year == 1980 %}
                     Se vacunó contra la gripe: No
                 {% else %}
                     Fecha de la última vacuna de gripe: {{ object.fecha_gripe }}
                 {% endif %}
-                {% if object.tuvo_fiebre_amarilla %}
-                    <br>Se vacunó contra la fiebre amarilla: Si
-                {% else %}
-                    <br>Se vacunó contra la fiebre amarilla: No
-                {% endif %}
+                <br>Se vacunó contra la fiebre amarilla: {% if object.tuvo_fiebre_amarilla %} Si {% else %} No {% endif %}
             </p>
         </form>
     <a id="volver" class="btn-submit" href='../'>Volver</a>

@@ -25,11 +25,11 @@ class FiltersSelectorForm(PForm,forms.Form):
 
     fecha_ini=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":timezone.now().date()}))
     fecha_fin=forms.DateField(widget=forms.DateInput(attrs={'type': 'date',"min":"2010-01-01","max":timezone.now().date()}))
-    filter=forms.ChoiceField(choices=Choices)
-    order=forms.ChoiceField(choices=ChoicesOrder)
-    dni_to_filter=forms.CharField(widget=forms.TextInput(),required=False)
-    vaccine_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Vacuna.objects.all(),required=False)
-    zona_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Zona.objects.all(),required=False)
+    filter=forms.ChoiceField(choices=Choices,label="Filtro")
+    order=forms.ChoiceField(choices=ChoicesOrder,label="Orden")
+    dni_to_filter=forms.CharField(widget=forms.TextInput(),required=False,label="DNI a filtrar")
+    vaccine_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Vacuna.objects.all(),required=False,label="Vacuna a filtrar")
+    zona_to_filter=forms.ModelChoiceField(widget=forms.Select,queryset=Zona.objects.all(),required=False,label="Zona a filtrar")
 
 
     def clean_fecha_fin(self):

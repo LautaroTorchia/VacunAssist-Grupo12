@@ -13,10 +13,7 @@ class ValidateVaccinatorDNI(AdministratorPermissionsMixin,FormView):
     form_class=EnteringDniForm
     template_name: str="administrator/dni_validation_view.html"
     success_url: Optional[str]=reverse_lazy("create_vaccinator_step2")
-
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        return super().get(request, *args, **kwargs)
-
+    
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         form=self.get_form()
         if form.is_valid():

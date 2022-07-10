@@ -27,8 +27,10 @@ class NotificationView(AbstractPatientListView):
 
         if "Cancelar" in request.POST:
             turno=Turno.objects.get(id=request.POST["Cancelar"])
+
         if "Reasignar" in request.POST:
             turno=Turno.objects.get(id=request.POST["Reasignar"])
+
         self.get_new_turn(turno,request)
         turno.delete()
         return redirect(reverse_lazy("notifications"))
@@ -37,7 +39,7 @@ class NotificationView(AbstractPatientListView):
 
     def get_new_turn(self,turn,request) -> Turno:
         paciente=turn.paciente
-        assigner=TurnAssigner.get_assigner(paciente)
+        assigner=TurnAssigner.get_assigner(paciente,turn.fecha)
         if "COVID" in turn.vacuna.nombre:
             turn = assigner.assign_covid_turn()
             if paciente.es_de_riesgo:

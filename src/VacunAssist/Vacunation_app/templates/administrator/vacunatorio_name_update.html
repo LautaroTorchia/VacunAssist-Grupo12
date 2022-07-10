@@ -12,7 +12,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" class="btn-submit" value="Actualizar nombre">
-            {% include "messages.html" %}
         </form>
+        {% include "messages.html" %}
     </div>
 {% endblock child_content %}

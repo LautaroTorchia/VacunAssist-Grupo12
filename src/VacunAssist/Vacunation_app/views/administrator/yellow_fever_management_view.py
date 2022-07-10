@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from Vacunation_app.custom_classes import AdministratorPermissionsMixin
 from Vacunation_app.custom_functions import vacunassist_send_mail
 from Vacunation_app.forms.yellow_fever_turn_form import assigningYellowFeverTurn
@@ -25,7 +26,7 @@ class ConfirmYellowFever(AdministratorPermissionsMixin,FormView):
         form=self.get_form()
         form.is_valid()
         fecha=datetime.combine(form.cleaned_data["fecha_del_turno"],form.cleaned_data["hora_del_turno"])
-        if Turno.objects.filter(fecha=fecha).exists:
+        if Turno.objects.filter(fecha=fecha).exists():
             messages.error(request,"Esa fecha y hora ya tiene un turno registrado, asigne otra fecha")
             self.success_url= reverse("yellow_fever_confirmation",args=[kwargs.get("id")])
         else:
@@ -34,6 +35,7 @@ class ConfirmYellowFever(AdministratorPermissionsMixin,FormView):
             petition.delete()
             messages.success(request,f"Turno asignado con exito en {fecha}")
             self.success_url= reverse("yellow_fever_list")
+
         return super().post(request, *args, **kwargs)
 
 class RejectYellowFever(AdministratorPermissionsMixin,RedirectView):

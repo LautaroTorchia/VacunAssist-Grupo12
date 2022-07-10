@@ -4,8 +4,7 @@ from Vacunation_app.forms.creating_user_form import CreatingVaccinatorForm,Enter
 from Vacunation_app.models import CustomUserManager, Vacunador
 from django.contrib import messages
 from django.http import HttpRequest,HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import redirect
 from django.urls import reverse,reverse_lazy
 from django.views.generic import FormView
 from typing import Any,Optional

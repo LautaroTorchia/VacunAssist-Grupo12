@@ -1,6 +1,6 @@
+from Vacunation_app.custom_classes import AdministratorPermissionsMixin
 from Vacunation_app.forms.update_name_form import NameUpdateForm
 from Vacunation_app.models import Vacunatorio
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -9,10 +9,9 @@ from typing import Any
 from django.http import HttpRequest,HttpResponse
 
 
-class NameUpdate(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+class NameUpdate(AdministratorPermissionsMixin, FormView):
     form_class = NameUpdateForm
     template_name = "administrator/vacunatorio_name_update.html"
-    permission_required = ("Vacunation_app.Administrador", )
     raise_exception = True
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

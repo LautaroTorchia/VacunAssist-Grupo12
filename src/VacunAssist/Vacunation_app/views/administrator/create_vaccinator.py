@@ -25,8 +25,10 @@ class ValidateVaccinatorDNI(AdministratorPermissionsMixin,FormView):
             success, data = check_dni(dni)
             if success:
                 request.session['vaccinator_data']={"dni":dni,"fecha_nacimiento":data["fecha_nacimiento"],"nombre":data["nombre"]}
+                return redirect(self.success_url)
             else:
                 messages.error(request, data["mensaje de error"])
+                return redirect(reverse_lazy("creating_vaccinator_view"))
         return super().post(request, *args, **kwargs)
 
 

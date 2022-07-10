@@ -50,8 +50,6 @@ def profile_pic_check(user,cleaned_data):
 
 def riesgo_check(user,cleaned_data):
     paciente=Paciente.objects.get(user=user)
-    print("cleaned_data[riesgo]",cleaned_data["riesgo"])
-    print("paciente.es_de_riesgo",paciente.es_de_riesgo)
     if cleaned_data["riesgo"]==paciente.es_de_riesgo:
         return False
     else:

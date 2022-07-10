@@ -73,10 +73,8 @@ class ReportListView(AbstractAdminListView):
             else:
                 messages.error(request,"Las fechas estan cruzadas, introduzca fechas validas")
         else:
-            print("Query:",self.queryset)
             if self.queryset:
                 pdf=render_to_pdf("pdfs/report_pdf.html",context_dict={"object_list":self.valor_a_imprimir})
-                print("hice el pdf")
                 return HttpResponse(pdf, content_type='application/pdf')
             
         return redirect(reverse("generate_report"))

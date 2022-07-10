@@ -172,6 +172,9 @@ class Paciente(models.Model):
             ("Paciente",
              "Correspondiente al rol de Paciente en la documentación"),
         ]
+        
+    def get_absolute_url(self):
+        return f"{self.id}"
 
     def es_de_riego_o_tiene_mas_de_60(self):
         return self.es_de_riesgo or self.user.fecha_nac.date()+relativedelta(years=60) <= timezone.now().date()

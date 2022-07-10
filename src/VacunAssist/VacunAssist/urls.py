@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from Vacunation_app.views.accounts.login_view import CustomLogin, CustomLoginClave
 from Vacunation_app.views.accounts.registration_view import registration_view
-from Vacunation_app.views.patient.patient_home_view import contact_view, logout_view, zona_view
+from Vacunation_app.views.patient.patient_home_view import Contact, LogOut, Zona
 from Vacunation_app.views.notification_view import NotificationView
 from Vacunation_app.views.redirect_view import HomeRedirectView
 from django.views.generic import TemplateView
@@ -26,7 +26,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path("logout", logout_view, name="logout"),
+    path("logout", LogOut.as_view(), name="logout"),
     path("accounts/registration", registration_view, name="registrate"),
     path('admin/', admin.site.urls),
     path('accounts/login/', CustomLogin.as_view(), name="login"),
@@ -34,8 +34,8 @@ urlpatterns = [
     path('', HomeRedirectView.as_view(), name='redirectHome'),
     path("notifications", NotificationView.as_view(), name="notifications"),
     path("information/",TemplateView.as_view(template_name = "patient/information.html"),name="information"),
-    path("zona", zona_view, name="zona"),
-    path("contact", contact_view, name="contact_us"),
+    path("zona", Zona.as_view(), name="zona"),
+    path("contact", Contact.as_view(), name="contact_us"),
     path("administrator/",include("Vacunation_app.urls.administrator_urls"),name="admin_views"),
     path("vaccinator/",include("Vacunation_app.urls.vaccinator_urls"),name="vaccinator_views"),
     path("patient/",include("Vacunation_app.urls.patient_urls"),name="patient_views"),

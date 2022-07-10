@@ -1,17 +1,17 @@
-from datetime import date, datetime
-from django.utils import timezone
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from VacunAssist.settings import DEFAULT_FROM_EMAIL
+from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode
-from django.contrib import messages
-from django.core.mail import send_mail
 from Vacunation_app.models import CustomUserManager
-from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
+from VacunAssist.settings import DEFAULT_FROM_EMAIL
 from django.template.loader import render_to_string
+from django.shortcuts import redirect, render
 from django.utils.html import strip_tags
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.utils import timezone
+from django.urls import reverse
 from dateutil.relativedelta import relativedelta
+from datetime import date, datetime
 
 def registration_view(request):
     form=CreatingPatientForm(request.POST or None)

@@ -22,6 +22,5 @@ class PaseSanitarioView(AbstractPatientListView):
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         paciente=Paciente.objects.get(user=request.user)
         pdf=render_to_pdf("pdfs/pase_sanitario_pdf.html",context_dict={"paciente":paciente})
-        print("hice el pdf")
         return HttpResponse(pdf, content_type='application/pdf')
 

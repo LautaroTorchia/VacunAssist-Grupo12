@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
+from Vacunation_app.custom_classes import PatientPermissionsMixin
 from Vacunation_app.models import Usuario
-from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse,HttpRequest
+from django.views.generic import TemplateView
+from django.shortcuts import redirect
 from django.urls import reverse
+from typing import Any
 
-
-@permission_required("Vacunation_app.Administrador")
-@login_required()
-def vaccinator_delete_view(request, id):
-    vacunador = Usuario.objects.get(id=id)
-    if request.method == "POST":
+class VaccinatorDelete(PatientPermissionsMixin,TemplateView):
+    template_name: str="administrator/vaccinator_delete.html"
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        vacunador = Usuario.objects.get(id=kwargs.get("id"))
         vacunador.delete()
         return redirect(reverse("vaccinators_list"))
-    context = {"vacunador": vacunador}
-    return render(request, "administrator/vaccinator_delete.html", context)
+

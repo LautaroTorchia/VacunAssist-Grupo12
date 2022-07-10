@@ -1,11 +1,15 @@
 from Vacunation_app.custom_classes import PatientPermissionsMixin
 from Vacunation_app.models import Paciente,Turno, listaDeEsperaCovid,listaDeEsperaFiebreAmarilla
-from django.views.generic.base import TemplateView
+from django.views.generic import TemplateView,RedirectView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model, logout
+from django.views.generic.base import TemplateView
+from django.http.response import HttpResponseBase
 from django.shortcuts import redirect, render
-from django.urls import reverse
-from dateutil.relativedelta import relativedelta
 from django.utils import timezone
+from django.http import HttpRequest
+from dateutil.relativedelta import relativedelta
+from typing import Any
 
 
 from Vacunation_app.turn_assignment import TurnAssignerRisk
@@ -46,12 +50,14 @@ class HomeView(PatientPermissionsMixin,TemplateView):
             return None
         
 
-def logout_view(request):
-    logout(request)
-    return redirect(reverse("login"))
-    
-def zona_view(request):
-    return render(request,"zona.html",{})
+class LogOut(LoginRequiredMixin,RedirectView):
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
+        logout(request)
+        self.pattern_name="login"
+        return super().get(request, *args, **kwargs)
 
-def contact_view(request):
-    return render(request,"contact.html",{})
+class Zona(LoginRequiredMixin,TemplateView):
+    template_name: str="zona.html"
+
+class Contact(LoginRequiredMixin,TemplateView):
+    template_name: str="contact.html"

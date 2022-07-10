@@ -1,0 +1,10 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Hola, {{nombre_completo}} Se ha registrado una cuenta en VacunAssist a su nombre aqui estan sus credenciales: {% endblocktranslate %}
+
+<h1> {% translate "Contraseña: " %} {{password}}</h1>
+
+<h5>{% translate "Clave: " %} {{clave}}</h5>
+
+<h5>{% blocktranslate %} Administración Vacunassist {% endblocktranslate %}</h5>
+
+{% endautoescape %}

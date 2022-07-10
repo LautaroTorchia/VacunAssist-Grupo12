@@ -18,9 +18,7 @@ def validate_decimal(dni):
         raise ValidationError(f"El dni debe ser numerico")
 
 
-class CustomUserManager(
-        BaseUserManager
-):  #Cambiar para que se vea más como elde la página o create superuser
+class CustomUserManager(BaseUserManager):  
     def create_user(self, dni, password, nombre_completo, fecha_nac, email,
                     clave, zona, **extra_fields):
         if not dni:

@@ -5,15 +5,15 @@ from Vacunation_app.views.administrator.stock_view import StockView
 from Vacunation_app.views.administrator.vaccinator_list_view import VaccinatorDelete
 from Vacunation_app.views.administrator.administrator_home_view import AdministratorHomeView
 from Vacunation_app.views.administrator.patient_profile_view import AdminViewProfile
-from Vacunation_app.views.administrator.create_vaccinator import creating_vaccinator_view, validating_dni_for_vaccinator_view
+from Vacunation_app.views.administrator.create_vaccinator import CreateVaccinatorDNI, ValidateVaccinatorDNI
 from Vacunation_app.views.administrator.yellow_fever_management_view import RejectYellowFever, ConfirmYellowFever
 from Vacunation_app.views.administrator.administrator_lists import VaccinatorsList,PatientsList,YellowFeverList,ReassingCovidList
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path("", AdministratorHomeView.as_view(), name="admin_home"),
-    path("create_vaccinator/", validating_dni_for_vaccinator_view,name="creating-vaccinator-view"),
-    path("create_vaccinator/step2", creating_vaccinator_view,name="create_vaccinator_step2"),
+    path("create_vaccinator/", ValidateVaccinatorDNI.as_view(),name="creating_vaccinator_view"),
+    path("create_vaccinator/step2", CreateVaccinatorDNI.as_view(),name="create_vaccinator_step2"),
     path("vaccinators_list/", VaccinatorsList.as_view(), name="vaccinators_list"),
     path("patients_list/", PatientsList.as_view(), name="patients_list"),
     path("stock/", StockView.as_view(), name="stock_view"),

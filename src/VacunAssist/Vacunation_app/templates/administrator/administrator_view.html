@@ -8,7 +8,7 @@
 {% block child_content %}
     <div class="button_container">
         <div class="row_container">
-            <form method="GET" action="create_vaccinator/">
+            <form method="GET" action="{% url 'creating_vaccinator_view' %}">
                 <input type="submit" class="text_button_form" value="Crear cuenta de vacunador"/>
             </form>
             <form method="GET" action="vaccinators_list/">

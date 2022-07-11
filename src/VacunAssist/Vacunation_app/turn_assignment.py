@@ -36,7 +36,7 @@ class TurnAssigner():
         and not Turno.objects.filter(paciente=self.patient,vacuna=gripe).exists())
     
     def needs_covid_vaccine(self):
-        return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) >= timezone.now().date())
+        return (self.patient.dosis_covid < 2) and (self.patient.user.fecha_nac.date()+relativedelta(years=18) <= timezone.now().date())
     
     def today_turns_are_full(self,date):
         return len(list(filter(lambda turno: turno.fecha.date()==date.date(),self.turnos)))==8*4*self.cant_in_vacunatorio

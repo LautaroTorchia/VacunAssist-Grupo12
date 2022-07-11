@@ -9,21 +9,26 @@
 {% block child_content %}
         <form action="" method="POST">
             {% csrf_token %}
-            <img src="/static{{request.user.profile_pic.url}}" alt="profile" id="profile">
-            <p>
-                DNI: {{ object.user.dni }}
-                <br> Fecha de nacimiento: {{object.user.fecha_nac.date }}
-                <br> Zona: {{ object.user.zona }}
-                <br> Es de riesgo: {% if object.es_de_riesgo %} Si {% else %} No {% endif %}
-                <br> Dosis de Covid: {{ object.dosis_covid}}
-                <br>
-                {% if object.fecha_gripe.year == 1980 %}
-                    Se vacunó contra la gripe: No
-                {% else %}
-                    Fecha de la última vacuna de gripe: {{ object.fecha_gripe }}
-                {% endif %}
-                <br>Se vacunó contra la fiebre amarilla: {% if object.tuvo_fiebre_amarilla %} Si {% else %} No {% endif %}
-            </p>
+            <div class=information>
+                <img class=profile_pic src="/static{{object.user.profile_pic.url}}" alt="profile" id="profile">
+            </div>
+            <div class=information>
+                <p>
+                    DNI: {{ object.user.dni }}
+                    <br> Fecha de nacimiento: {{object.user.fecha_nac.date }}
+                    <br> Zona: {{ object.user.zona }}
+                    <br> Es de riesgo: {% if object.es_de_riesgo %} Si {% else %} No {% endif %}
+                    <br> Dosis de Covid: {{ object.dosis_covid}}
+                    <br>
+            
+                    {% if object.fecha_gripe.year == 1980 %}
+                        Se vacunó contra la gripe: No
+                    {% else %}
+                        Fecha de la última vacuna de gripe: {{ object.fecha_gripe }}
+                    {% endif %}
+                    <br>Se vacunó contra la fiebre amarilla: {% if object.tuvo_fiebre_amarilla %} Si {% else %} No {% endif %}
+                </p>
+            </div>
         </form>
     <a id="volver" class="btn-submit" href='../'>Volver</a>
 {% endblock child_content %}

@@ -31,7 +31,22 @@ class StatsView(AdministratorPermissionsMixin,TemplateView):
         df = pd.DataFrame(nombres,columns=["Cantidad"])
         series = df.groupby(["Cantidad"])["Cantidad"].count()
         df=pd.DataFrame(series)
-        fig=px.bar(df, title='Pacientes por zona')
+        fig=px.bar(df)
+        fig.update_layout(
+                title_x=0.5,
+                height=500, 
+                width=800, 
+                hovermode='x unified', 
+                xaxis_tickformat =',d',
+                ## this will change the formatting for BOTH subplots
+                yaxis=dict(tickformat ='d'),
+                # template=symbol_template, 
+                separators=".", 
+                title={
+                    'text':"Pacientes por zona",
+                    'x':0.5
+                }
+            )
         return fig.to_html()
 
     def pacientes_por_edad(self):

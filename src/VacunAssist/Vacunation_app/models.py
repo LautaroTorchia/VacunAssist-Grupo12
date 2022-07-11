@@ -326,7 +326,8 @@ class Vacunacion(AbstractVacunation):
         from Vacunation_app.turn_assignment import TurnAssigner
         assigner=TurnAssigner.get_assigner(paciente,fecha)
         if "COVID" in vacuna.nombre:
-            assigner.assign_covid_turn()
+            assigner.assign_covid_turn()#ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            #Esto crea un elemento de lista de espera, si no tiene riesgo
 
     @staticmethod
     def _update_patient(vacuna,paciente):

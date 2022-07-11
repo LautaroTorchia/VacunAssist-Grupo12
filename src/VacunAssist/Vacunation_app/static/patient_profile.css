@@ -5,8 +5,23 @@
 
 form{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    gap: 5px;
+    margin: 15px;
+}
+
+.information{
+    border: none;
+    display: inline;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.profile_pic{
+    width: 100%;
+    max-width: 300px;
+    clip-path: circle();
 }
 
 .title {

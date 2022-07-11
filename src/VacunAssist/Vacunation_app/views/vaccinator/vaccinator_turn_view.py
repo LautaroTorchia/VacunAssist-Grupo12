@@ -28,7 +28,7 @@ class TurnsView(AbstractVaccinatorListView):
             messages.success(request,f"Se informo la falta de {turno.paciente}")
         elif "asistencia" in request.POST:
             turno=Turno.objects.get(id=request.POST["asistencia"])
-            make_qr(request.build_absolute_uri().split("vaccinator/")[0]+reverse('vaccination_history',args=[turno.paciente.user.id]))
+            make_qr(request.build_absolute_uri().split("/vaccinator/")[0]+reverse('vaccination_history',args=[turno.paciente.user.id]))
             turno=Turno.objects.get(id=request.POST["asistencia"])
             pdf=render_to_pdf("pdfs/presence_certificate_pdf.html",{"turno":turno})
             vacunacion=turno.vacunar_de_turno()

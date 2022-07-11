@@ -303,6 +303,9 @@ class AbstractVacunation(models.Model):
         disminucion_de_stock.stock-=1
         disminucion_de_stock.save()
 
+    def __str__(self) -> str:
+        return f"Vacunacion de {self.vacuna} en {self.vacuna} el {self.fecha.date()} a las {self.fecha.time()} "
+
 class Vacunacion(AbstractVacunation):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
 

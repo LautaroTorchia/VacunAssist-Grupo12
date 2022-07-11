@@ -22,6 +22,11 @@ from django.http import HttpResponse,HttpRequest
 from VacunAssist.settings import DEFAULT_FROM_EMAIL,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
 from django.core.mail import get_connection,EmailMultiAlternatives
 from django.utils.html import strip_tags
+from django.utils import timezone
+
+def calculate_age(born):
+    today = timezone.now().date()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 def vacunassist_send_mail(html_template,html_context: dict, subject, email, file_attachment=None)-> int:
         html_message = render_to_string(html_template, html_context)

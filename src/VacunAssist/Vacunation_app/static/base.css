@@ -5,3 +5,7 @@
 a:hover {
     text-decoration: none;
 }
+
+.bolded {
+    font-weight: bold;
+}

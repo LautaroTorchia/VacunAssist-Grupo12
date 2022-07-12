@@ -22,6 +22,11 @@ from django.http import HttpResponse,HttpRequest
 from VacunAssist.settings import DEFAULT_FROM_EMAIL,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
 from django.core.mail import get_connection,EmailMultiAlternatives
 from django.utils.html import strip_tags
+from django.utils import timezone
+
+def calculate_age(born):
+    today = timezone.now().date()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 def vacunassist_send_mail(html_template,html_context: dict, subject, email, file_attachment=None)-> int:
         html_message = render_to_string(html_template, html_context)
@@ -46,7 +51,7 @@ def make_qr(data:str=reverse_lazy("login")):
     qr.add_data(data)
     qr.make(fit=True)
     img_qr = qr.make_image().convert('RGB')
-    valija=Image.open(find_static_file("img/Logo_con_texto.PNG")).reduce((9,7))
+    valija=Image.open(find_static_file("img/Logo_con_texto.png")).reduce((9,7))
     pos = ((img_qr.size[0] - valija.size[0]) // 2, (img_qr.size[1] - valija.size[1]) // 2)
     img_qr.paste(valija, pos)
     img_qr.save(find_static_file("qr/qr.png"), format="png")

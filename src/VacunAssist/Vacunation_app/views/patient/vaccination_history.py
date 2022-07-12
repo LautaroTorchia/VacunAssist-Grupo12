@@ -1,22 +1,26 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
 from Vacunation_app.custom_functions import render_to_pdf
-from Vacunation_app.custom_classes import AbstractPatientListView
+from django.views.generic.list import ListView
 from Vacunation_app.models import Paciente,  Vacunacion
+from Vacunation_app.views.patient.patient_home_view import Usuario
 
 
-class VaccinationHistoryView(AbstractPatientListView):
+class VaccinationHistoryView(ListView):
+    paginate_by: int=5
     template_name: str="patient/vaccination_history.html"
     
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        paciente=Paciente.objects.get(user=request.user)
+        user=Usuario.objects.get(id=kwargs["pk"])
+        paciente=Paciente.objects.get(user=user)
         vacunas_covid,vacunas_gripe,vacunas_fiebre=self.create_vaccines_lists(paciente)
-        self.extra_context={"covid":vacunas_covid,"gripe":vacunas_gripe,"fiebre":vacunas_fiebre}
+        self.extra_context={"covid":vacunas_covid,"gripe":vacunas_gripe,"fiebre":vacunas_fiebre,"nombre_completo":user.nombre_completo}
         return super().get(request, *args, **kwargs)
 
     
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        paciente=Paciente.objects.get(user=request.user)
+        user=Usuario.objects.get(id=kwargs["pk"])
+        paciente=Paciente.objects.get(user=user)
         vacunas_covid,vacunas_gripe,vacunas_fiebre=self.create_vaccines_lists(paciente)
         pdf=render_to_pdf("pdfs/vaccine_history.html",context_dict={"covid":vacunas_covid,"gripe":vacunas_gripe,"fiebre":vacunas_fiebre})
         return HttpResponse(pdf, content_type='application/pdf')

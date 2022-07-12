@@ -8,6 +8,7 @@ from Vacunation_app.views.administrator.patient_profile_view import AdminViewPro
 from Vacunation_app.views.administrator.create_vaccinator import CreateVaccinatorDNI, ValidateVaccinatorDNI
 from Vacunation_app.views.administrator.yellow_fever_management_view import RejectYellowFever, ConfirmYellowFever
 from Vacunation_app.views.administrator.administrator_lists import VaccinatorsList,PatientsList,YellowFeverList,ReassingCovidList
+from Vacunation_app.views.administrator.statistics import StatsView
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     path("covid_wait_list/", ReassingCovidList.as_view(),name="covid_wait_list"),
     path("yellow_fever_list/confirmation/<int:id>",ConfirmYellowFever.as_view(),name="yellow_fever_confirmation"),
     path('update_administrator',TemplateView.as_view(template_name="administrator/administrator_edit_contact.html"),name="admin_contact"),
-    path('generate_report',ReportListView.as_view(),name="generate_report")
+    path('generate_report',ReportListView.as_view(),name="generate_report"),
+    path('statistics/',StatsView.as_view(),name="statistics"),
 ]

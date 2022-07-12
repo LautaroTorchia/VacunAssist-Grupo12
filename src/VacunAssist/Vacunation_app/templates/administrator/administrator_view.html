@@ -33,7 +33,7 @@
             <form method="GET" action="generate_report">
                 <input type="submit" class="text_button_form" value="Generar reportes" id="cambiar_nombre_vacunatorio"/>
             </form>
-            <form method="GET" action="generate_statistic/">
+            <form method="GET" action="{% url 'statistics' %}">
                 <input type="submit" class="text_button_form" value="Ver estadisticas" id="ver_listado_de_pacientes"/>
             </form>
             <form method="GET" action="covid_wait_list/">

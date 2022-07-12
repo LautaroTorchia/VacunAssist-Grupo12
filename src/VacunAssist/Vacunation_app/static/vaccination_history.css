@@ -10,13 +10,12 @@
 }
 
 .texto_del_titulo{
-    font-family: 'Open Sans';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 600;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 17px;
     color: #FFFFFF;
-
 }
 
 .btn-submit {

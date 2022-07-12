@@ -303,8 +303,16 @@ class AbstractVacunation(models.Model):
         disminucion_de_stock.stock-=1
         disminucion_de_stock.save()
 
+    def __str__(self) -> str:
+        return f"Vacunacion de {self.vacuna} en {self.vacuna} el {self.fecha.date()} a las {self.fecha.time()} "
+
 class Vacunacion(AbstractVacunation):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
+
+    @classmethod
+    def crear_de_no_registrado(cls,nonregisvacu,paciente):
+        Vacunacion._update_patient(nonregisvacu.vacuna,paciente)
+        return Vacunacion.objects.create(vacuna=nonregisvacu.vacuna,vacunatorio=nonregisvacu.vacunatorio,paciente=paciente,fecha=nonregisvacu.fecha)
 
     @classmethod
     def crear(cls,fecha,vacunatorio,vacuna,paciente):
@@ -318,7 +326,8 @@ class Vacunacion(AbstractVacunation):
         from Vacunation_app.turn_assignment import TurnAssigner
         assigner=TurnAssigner.get_assigner(paciente,fecha)
         if "COVID" in vacuna.nombre:
-            assigner.assign_covid_turn()
+            assigner.assign_covid_turn()#ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            #Esto crea un elemento de lista de espera, si no tiene riesgo
 
     @staticmethod
     def _update_patient(vacuna,paciente):

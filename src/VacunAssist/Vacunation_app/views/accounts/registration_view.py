@@ -49,7 +49,8 @@ def registration_view(request):
             assigner.assign_turns()
             vacunassist_send_mail('emails/registro_paciente.html',{"clave":clave, "dni":form.cleaned_data["dni"]}
             ,"Registro de vacunador a VacunAssist",form.cleaned_data.get("email"))
-            request.session["dni_validated"]=False
+            request.session["dni_validated"]=False      
+              
             messages.success(request, f"Su clave de autenticación es {clave}")
             messages.success(request, "Cuenta creada Correctamente")
             return redirect(reverse("login"))

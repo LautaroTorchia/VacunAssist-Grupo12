@@ -24,7 +24,7 @@
     flex-grow: 0;
 }
 
-input[type="password"],[type="text"],
+input[type="password"],[type="text"],[type="email"],
 select {
     box-sizing: border-box;
     display: flex;

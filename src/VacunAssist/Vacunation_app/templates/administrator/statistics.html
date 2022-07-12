@@ -2,11 +2,13 @@
 {% load static %}
 
 {% block child_css %}
-    <link rel="stylesheet" href="{% static 'vaccinator_creation_step2.css' %}">
+    <link rel="stylesheet" href="{% static 'statistics.css' %}">
 {% endblock child_css %}
 
 {% block child_content %}
-    {{ chart|safe }}
-    {{ chart2|safe }}
+    <div class="charts">
+        {{ chart|safe }}
+        {{ chart2|safe }}
+    </div>
     {{ chart3|safe }}
 {% endblock child_content %}

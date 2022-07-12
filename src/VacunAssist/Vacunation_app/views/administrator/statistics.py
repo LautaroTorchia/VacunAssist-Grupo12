@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from typing import Any
 from django.http import HttpRequest,HttpResponse
 from Vacunation_app.custom_functions import calculate_age
-from Vacunation_app.models import AbstractVacunation, Paciente
+from Vacunation_app.models import AbstractVacunation, Paciente, Turno, Vacuna, Vacunatorio
 import plotly.express as px
 import pandas as pd
 from django.shortcuts import render
@@ -17,7 +17,8 @@ class StatsView(AdministratorPermissionsMixin,TemplateView):
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         #series = df.groupby(["vacuna__nombre"])["vacuna__nombre"].count()
 
-        self.extra_context={"chart":self.proporcion_vacunaciones_chart(),"chart2":self.pacientes_por_zona(),"chart3":self.pacientes_por_grupo_etario()}
+        self.extra_context={"chart":self.proporcion_vacunaciones_chart(),"chart2":self.pacientes_por_zona()
+            ,"chart3":self.pacientes_por_grupo_etario(),"chart4":self.vacunas_pendientes_por_vacunatorio()}
         return render(request,self.template_name,self.extra_context)
         
     def proporcion_vacunaciones_chart(self):
@@ -50,9 +51,27 @@ class StatsView(AdministratorPermissionsMixin,TemplateView):
         fig = go.Figure(go.Indicator(
             mode = "number+delta",
             value = sum(edades)/len(edades),
-            title = {"text": "Edad promedio de los pacientes"},
             domain = {'y': [0, 1], 'x': [0.25, 0.75]}))
         fig.add_trace(go.Bar(
             y=grupos["Edad"],x=grupos.unstack()["Edad"].index))
         fig.update_layout(yaxis={"dtick":1},title="Cantidad de pacientes por grupo etario")
+        return fig.to_html()
+
+    def vacunas_pendientes_por_vacunatorio(self):
+        turnos=pd.DataFrame(Turno.objects.all().values())[["vacuna_id","vacunatorio_id"]]
+        vacunatorios=pd.DataFrame(Vacunatorio.objects.values())[["id","nombre"]]
+        vacunas=pd.DataFrame(Vacuna.objects.values())[["id","nombre"]]
+
+
+        turnos.vacunatorio_id.replace(list(vacunatorios["id"]),list(vacunatorios["nombre"]),inplace=True)
+        turnos.vacuna_id.replace(list(vacunas["id"]),list(vacunas["nombre"]),inplace=True)
+        turnos.insert(0, 'Num', 1)
+        fig = px.bar(turnos, x='vacunatorio_id', y='Num',color='vacuna_id',labels={
+                     "Num": "",
+                     "vacunatorio_id": "Vacunatorio",
+                     "vacuna_id":"Vacuna"
+                 })
+        fig.update_layout(yaxis={"dtick":1},title="Vacunas que se necesitaran en el futuro")
+
+
         return fig.to_html()

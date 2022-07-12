@@ -8,7 +8,7 @@
     <div class="card_container">
         <div class="carde">
             <div class="titulo">
-                <p class="texto_del_titulo">Vacunas COVID:</p>
+                <h2><p class="texto_del_titulo">Vacunas COVID:</p></h2>
             </div>
             {% for instance in covid %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
@@ -17,12 +17,12 @@
                         <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
                 </div>  
                 {% empty %}
-                <h3>No te diste vacunas de la COVID en VacunAssist</h3>
+                <p>No te diste vacunas de la COVID en VacunAssist</p>
             {% endfor %}
         </div>
         <div class="carde">
             <div class="titulo">
-                <p class="texto_del_titulo">Vacunas Gripe:</p>
+                <h2><p class="texto_del_titulo">Vacunas Gripe:</p></h2>
             </div>
             {% for instance in gripe %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
@@ -31,12 +31,12 @@
                         <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
                 </div>  
                 {% empty %}
-                <h3>No te diste vacunas de la Gripe en VacunAssist</h3>
+                <p>No te diste vacunas de la Gripe en VacunAssist</p>
             {% endfor %}
         </div>
         <div class="carde">
             <div class="titulo">
-                <p class="texto_del_titulo">Vacunas Fiebre amarilla:</p>
+                <h2><p class="texto_del_titulo">Vacunas Fiebre amarilla:</p></h2>
             </div>
             {% for instance in fiebre %}
                 <div class="vaccinator_list_container ml-auto p-2 align-self-center">
@@ -45,7 +45,7 @@
                         <br> Fecha de la vacunacion: {{ instance.fecha }} </p>
                 </div>  
                 {% empty %}
-                <h3>No te diste vacunas de la fiebre amarilla en VacunAssist</h3>
+                <p>No te diste vacunas de la fiebre amarilla en VacunAssist</p>
             {% endfor %}
         </div>
 

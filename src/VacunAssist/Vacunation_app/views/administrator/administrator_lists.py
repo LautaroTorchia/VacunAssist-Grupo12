@@ -28,6 +28,6 @@ class ReassingCovidList(AbstractAdminListView):
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if "asignar" in request.POST:
             turno_a_reasignar=listaDeEsperaCovid.objects.get(id=request.POST.get("asignar"))
-            turno_a_reasignar.reassign_waitlist()
+            turno_a_reasignar.reassign_waitlist(turno_a_reasignar.paciente.user)
             messages.success(request,f"Turno reasignado {turno_a_reasignar}")
         return redirect(reverse_lazy("covid_wait_list"))

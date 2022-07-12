@@ -4,6 +4,7 @@ from django.utils import timezone
 import random
 
 class TurnAssigner():
+    
     @staticmethod
     def get_assigner(paciente,fecha=None):
         if fecha:
@@ -79,10 +80,13 @@ class TurnAssigner():
             self.vacuna=Vacuna.objects.get(nombre="Gripe")
             return self.create_turn(self.gripe_date)
     
-    def re_assign_gripe_turn(self):
-        self.vacuna=Vacuna.objects.get(nombre="Gripe")
-        self.gripe_date=self.old_turn_date+relativedelta(days=7)
-        return self.create_turn(self.gripe_date)
+
+    
+    def re_assign_covid_turn(self):
+        if self.needs_covid_vaccine():
+            self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
+            self.covid_date=self.covid_date+relativedelta(days=21)
+            return  self.create_turn(self.covid_date)
     
 
 
@@ -98,10 +102,13 @@ class TurnAssignerRisk(TurnAssigner):
         if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
             return  self.create_turn(self.covid_date)
+    
+    def re_assign_gripe_turn(self):
+        self.vacuna=Vacuna.objects.get(nombre="Gripe")
+        self.gripe_date=self.old_turn_date+relativedelta(days=7)
+        return self.create_turn(self.gripe_date)
 
     
-
-
 
 class TurnAssignerNonRisk(TurnAssigner):
     
@@ -118,11 +125,13 @@ class TurnAssignerNonRisk(TurnAssigner):
         if self.needs_covid_vaccine():
             self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
             self.create_wait_list_request()
+
+    def re_assign_gripe_turn(self):
+        self.vacuna=Vacuna.objects.get(nombre="Gripe")
+        self.gripe_date=self.old_turn_date+relativedelta(months=+1)
+        return self.create_turn(self.gripe_date)
     
-    def re_assign_covid_turn(self):
-        if self.needs_covid_vaccine():
-            self.vacuna=Vacuna.objects.get(nombre=random.choice(["COVID-PFIZER","COVID-Astrazeneca"]))
-            return  self.create_turn(self.covid_date)
+
 
 class TurnAssignerYellowFever():
     patient=None

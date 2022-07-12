@@ -270,9 +270,9 @@ class listaDeEsperaCovid(models.Model):
     paciente=models.ForeignKey(Paciente,on_delete=models.CASCADE)
     vacuna=models.ForeignKey(Vacuna,on_delete=models.CASCADE)
 
-    def reassign_waitlist(self):
-        from Vacunation_app.turn_assignment import TurnAssigner
-        assigner=TurnAssigner.get_assigner(self.paciente)
+    def reassign_waitlist(self,patient):
+        from Vacunation_app.turn_assignment import TurnAssignerRisk
+        assigner=TurnAssignerRisk(patient)
         if "COVID" in self.vacuna.nombre:
             assigner.re_assign_covid_turn()
         self.delete()
@@ -326,8 +326,7 @@ class Vacunacion(AbstractVacunation):
         from Vacunation_app.turn_assignment import TurnAssigner
         assigner=TurnAssigner.get_assigner(paciente,fecha)
         if "COVID" in vacuna.nombre:
-            assigner.assign_covid_turn()#ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            #Esto crea un elemento de lista de espera, si no tiene riesgo
+            assigner.re_assign_covid_turn()
 
     @staticmethod
     def _update_patient(vacuna,paciente):

@@ -1,4 +1,4 @@
-from Vacunation_app.turn_assignment import TurnAssignerNonRisk, TurnAssignerRisk
+from Vacunation_app.turn_assignment import TurnAssigner, TurnAssignerNonRisk, TurnAssignerRisk
 from Vacunation_app.forms.creating_user_form import CreatingPatientForm
 from Vacunation_app.custom_functions import check_dni, generate_keycode, vacunassist_send_mail
 from Vacunation_app.models import CustomUserManager, NonRegisteredVacunacion, Vacunacion
@@ -42,10 +42,9 @@ def registration_view(request):
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
 
-            if patient.es_de_riesgo or patient.user.fecha_nac.date()+relativedelta(years=60) >= timezone.now().date():
-                assigner=TurnAssignerRisk(patient.user)
-            else:
-                assigner=TurnAssignerNonRisk(patient.user)
+            assigner=TurnAssigner.get_assigner(patient)
+            for vacu in NonRegisteredVacunacion.objects.filter(dni=form.cleaned_data["dni"]):
+                Vacunacion.crear_de_no_registrado(vacu,patient)
             assigner.assign_turns()
             vacunassist_send_mail('emails/registro_paciente.html',{"clave":clave, "dni":form.cleaned_data["dni"]}
             ,"Registro de vacunador a VacunAssist",form.cleaned_data.get("email"))
@@ -53,8 +52,7 @@ def registration_view(request):
               
             messages.success(request, f"Su clave de autenticación es {clave}")
             messages.success(request, "Cuenta creada Correctamente")
-            for vacu in NonRegisteredVacunacion.objects.filter(dni=form.cleaned_data["dni"]):
-                Vacunacion.crear_de_no_registrado(vacu,patient)
+            
             return redirect(reverse("login"))
     try:
         context={

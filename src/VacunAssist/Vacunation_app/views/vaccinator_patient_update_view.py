@@ -1,5 +1,5 @@
 from Vacunation_app.forms.updating_patient_form import UpdatingPatientForm
-from Vacunation_app.forms.updating_vaccinator_form import UpdatingVaccinatorFormr
+from Vacunation_app.forms.updating_vaccinator_form import UpdatingVaccinatorForm
 from Vacunation_app.models import Paciente, Usuario
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect
@@ -18,7 +18,7 @@ class ProfileUpdate(UpdateView):
             self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
             self.form_class = UpdatingPatientForm
         elif self.get_object().has_perm("Vacunation_app.Vacunador"):
-            self.form_class = UpdatingVaccinatorFormr
+            self.form_class = UpdatingVaccinatorForm
             self.initial={"zona": self.get_object().zona}
         context  = {
             "usuario": self.get_object(),
@@ -28,6 +28,10 @@ class ProfileUpdate(UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
+        if self.get_object().has_perm("Vacunation_app.Paciente"):
+            self.form_class = UpdatingPatientForm
+        elif self.get_object().has_perm("Vacunation_app.Vacunador"):
+            self.form_class = UpdatingVaccinatorForm
         form= self.get_form()
         user= self.get_object()
         if "Aceptar" in request.POST:

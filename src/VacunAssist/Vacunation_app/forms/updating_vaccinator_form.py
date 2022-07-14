@@ -2,7 +2,7 @@ from django import forms
 from Vacunation_app.forms.p import PForm
 from Vacunation_app.models import Usuario
 
-class UpdatingVaccinatorFormr(PForm,forms.ModelForm):
+class UpdatingVaccinatorForm(PForm,forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ["zona","profile_pic"]

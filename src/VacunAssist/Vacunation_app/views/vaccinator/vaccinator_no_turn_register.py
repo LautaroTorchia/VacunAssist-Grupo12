@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 from typing import *
 from django.http import HttpRequest,HttpResponse
-from Vacunation_app.models import Usuario, Vacunacion, Vacunatorio, NonRegisteredVacunacion, Paciente
+from Vacunation_app.models import Turno, Usuario, Vacunacion, Vacunatorio, NonRegisteredVacunacion, Paciente
 from Vacunation_app.forms.no_turn_form import NoTurnForm
 from django.utils import timezone
 from django.contrib import messages
@@ -26,6 +26,10 @@ class NoTurnView(FormView):
                 user=Usuario.objects.get(dni=dni)
                 if Paciente.objects.filter(user=user).exists():     
                     patient=Paciente.objects.get(user=user)
+                    for turn in Turno.objects.filter(paciente=patient):
+                        if vacuna.nombre==turn.vacuna.nombre:
+                            turn.delete()
+                            break
                     vacunacion=Vacunacion.crear(vacuna=vacuna
                     ,vacunatorio=vacunatorio,paciente=patient,fecha=timezone.now())
                     messages.success(request,f"Vacunación sin turno de {patient} registrada")

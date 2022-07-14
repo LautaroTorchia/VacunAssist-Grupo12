@@ -61,9 +61,11 @@ class CustomLoginClave(LoginView):
                 paciente=Paciente.objects.get(user=request.user)
                 assigner=TurnAssigner.get_assigner(paciente)
                 assigner.assign_gripe_turn()
-
-            if request.session["next"] and "logout" not in request.session["next"]:
-                return redirect(request.session.get("next"))
+            try:
+                if request.session["next"]:
+                    return redirect(request.session.get("next"))
+            except:
+                pass
             return redirect("/")
         else:
             messages.error(self.request, "Código incorrecto")

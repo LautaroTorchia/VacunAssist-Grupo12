@@ -42,12 +42,11 @@ def registration_view(request):
                 form.cleaned_data["tuvo_amarilla"],form.cleaned_data["es_de_riesgo"]
                 )
 
-            assigner=TurnAssigner.get_assigner(patient)
             for vacu in NonRegisteredVacunacion.objects.filter(dni=form.cleaned_data["dni"]):
                 Vacunacion.crear_de_no_registrado(vacu,patient)
                 vacu.delete()
-                
-            print(patient.dosis_covid)
+        
+            assigner=TurnAssigner.get_assigner(patient)
             assigner.assign_turns()
             vacunassist_send_mail('emails/registro_paciente.html',{"clave":clave, "dni":form.cleaned_data["dni"]}
             ,"Registro de vacunador a VacunAssist",form.cleaned_data.get("email"))

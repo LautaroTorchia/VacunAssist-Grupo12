@@ -2,7 +2,7 @@ from django import forms
 from Vacunation_app.forms.p import PForm
 from Vacunation_app.models import Usuario
 
-class UpdatingUserForm(PForm,forms.ModelForm):
+class UpdatingPatientForm(PForm,forms.ModelForm):
     riesgo = forms.BooleanField(
         required=False
     )

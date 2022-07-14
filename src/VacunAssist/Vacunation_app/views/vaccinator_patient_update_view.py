@@ -1,4 +1,5 @@
-from Vacunation_app.forms.updating_user_form import UpdatingUserForm
+from Vacunation_app.forms.updating_patient_form import UpdatingPatientForm
+from Vacunation_app.forms.updating_vaccinator_form import UpdatingVaccinatorFormr
 from Vacunation_app.models import Paciente, Usuario
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect
@@ -6,16 +7,18 @@ from django.contrib import messages
 from django.urls import reverse
 
 class ProfileUpdate(UpdateView):
-    form_class = UpdatingUserForm
+    
     model = Usuario
     template_name= "edit_profile_view.html"
-    permission_required = ("Vacunation_app.Vacunador","Vacunation_app.Paciente", )
+    permission_required = ("Vacunation_app.Vacunador","Vacunation_app.Paciente")
 
     def get(self, request, *args, **kwargs):
         self.success_url= self.request.path_info
         if self.get_object().has_perm("Vacunation_app.Paciente"):
             self.initial={"zona": self.get_object().zona,"riesgo": Paciente.objects.get(user=self.get_object()).es_de_riesgo}
+            self.form_class = UpdatingPatientForm
         elif self.get_object().has_perm("Vacunation_app.Vacunador"):
+            self.form_class = UpdatingVaccinatorFormr
             self.initial={"zona": self.get_object().zona}
         context  = {
             "usuario": self.get_object(),
@@ -49,10 +52,13 @@ def profile_pic_check(user,cleaned_data):
     return True
 
 def riesgo_check(user,cleaned_data):
-    paciente=Paciente.objects.get(user=user)
-    if cleaned_data["riesgo"]==paciente.es_de_riesgo:
+    try:
+        paciente=Paciente.objects.get(user=user)
+        if cleaned_data["riesgo"]==paciente.es_de_riesgo:
+            return False
+        else:
+            paciente.es_de_riesgo=cleaned_data["riesgo"]
+            paciente.save()
+            return True
+    except:
         return False
-    else:
-        paciente.es_de_riesgo=cleaned_data["riesgo"]
-        paciente.save()
-        return True

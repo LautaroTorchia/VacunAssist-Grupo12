@@ -21,6 +21,7 @@ class CustomLogin(LoginView):
 
     def get(self, request, *args, **kwargs):
         request.session["dni_validated"]=False
+        request.session["next"]=request.GET.get("next")
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -60,7 +61,9 @@ class CustomLoginClave(LoginView):
                 paciente=Paciente.objects.get(user=request.user)
                 assigner=TurnAssigner.get_assigner(paciente)
                 assigner.assign_gripe_turn()
-                
+
+            if request.session["next"]:
+                return redirect(request.session.get("next"))
             return redirect("/")
         else:
             messages.error(self.request, "Código incorrecto")

@@ -4,9 +4,9 @@ from Vacunation_app.custom_functions import render_to_pdf
 from django.views.generic.list import ListView
 from Vacunation_app.models import Paciente,  Vacunacion
 from Vacunation_app.views.patient.patient_home_view import Usuario
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class VaccinationHistoryView(ListView):
+class VaccinationHistoryView(LoginRequiredMixin,ListView):
     paginate_by: int=5
     template_name: str="patient/vaccination_history.html"
     

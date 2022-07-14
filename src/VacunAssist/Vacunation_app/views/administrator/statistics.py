@@ -48,7 +48,7 @@ class StatsView(AdministratorPermissionsMixin,TemplateView):
         labels = ['Menor de 18','Entre 18 y 60','60 o más']
         grupos['GrupoEtario'] = pd.cut(grupos['Edad'], bins=bins, labels=labels, right=False)
         grupos=grupos.groupby("GrupoEtario").count()
-        fig = go.Figure(go.Indicator(value = sum(edades)/len(edades)))
+        fig = go.Figure(go.Indicator(value = sum(edades)/len(edades),title = {"text": "Edad promedio de los pacientes"}))
         fig.add_trace(go.Bar(
             y=grupos["Edad"],x=grupos.unstack()["Edad"].index))
         fig.update_layout(yaxis={"dtick":1},title="Cantidad de pacientes por grupo etario")
@@ -58,8 +58,6 @@ class StatsView(AdministratorPermissionsMixin,TemplateView):
         turnos=pd.DataFrame(Turno.objects.all().values())[["vacuna_id","vacunatorio_id"]]
         vacunatorios=pd.DataFrame(Vacunatorio.objects.values())[["id","nombre"]]
         vacunas=pd.DataFrame(Vacuna.objects.values())[["id","nombre"]]
-
-
         turnos.vacunatorio_id.replace(list(vacunatorios["id"]),list(vacunatorios["nombre"]),inplace=True)
         turnos.vacuna_id.replace(list(vacunas["id"]),list(vacunas["nombre"]),inplace=True)
         turnos.insert(0, 'Num', 1)

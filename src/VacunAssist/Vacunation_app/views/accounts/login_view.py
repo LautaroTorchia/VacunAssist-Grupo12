@@ -62,7 +62,7 @@ class CustomLoginClave(LoginView):
                 assigner=TurnAssigner.get_assigner(paciente)
                 assigner.assign_gripe_turn()
 
-            if request.session["next"]:
+            if request.session["next"] and "logout" not in request.session["next"]:
                 return redirect(request.session.get("next"))
             return redirect("/")
         else:

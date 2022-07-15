@@ -332,7 +332,7 @@ class Vacunacion(AbstractVacunation):
     def _update_patient(vacuna,paciente):
         if "Gripe" in vacuna.nombre:
             paciente.fecha_gripe=timezone.now().date()
-        elif "COVID" in vacuna.nombre:
+        elif "COVID" in vacuna.nombre and paciente.dosis_covid<2:
             paciente.dosis_covid+=1
         else:
             paciente.tuvo_fiebre_amarilla=True

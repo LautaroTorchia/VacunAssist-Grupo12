@@ -5,7 +5,7 @@ Este proyecto fue desarrollado durante el transcurso de la catedra Ingenieria de
 
 ## Funcionalidades Generales:
 
-### .Usuarios con 3 roles distintos, Vacunador, Administrador y Paciente
+### Usuarios con 3 roles distintos, Vacunador, Administrador y Paciente
 ### Administracion de usuarios y asignacion de turnos por parte del Administrador
 ### Administracion de turnos de vacunacion y marcado de asistencia a turnos por parte del Vacunador
 ### Revision de turnos pendientes y descargo del pase sanitario de la Pcia de Bs As por parte del Paciente
